@@ -78,9 +78,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MiniCube.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <ToolkitTexture Include="Resources\Textures\Default.jpg" />
     <ToolkitTexture Include="Resources\Textures\Grass.jpg" />
     <ToolkitFont Include="Resources\Arial16.xml" />
