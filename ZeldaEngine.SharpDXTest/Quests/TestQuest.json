@@ -1,0 +1,703 @@
+{
+    "Name": "Test Quest",
+    "Version": "1.0.0",
+    "MinimumEngineVersion": "0.0",
+    "AuthorName": "albus95",
+
+    "Enemies": [
+        {
+            "Name": "TestEnemy",
+            "Demage": 10,
+            "Life": 100
+        }
+    ],
+
+    "Items": [
+        {
+
+        }
+    ],
+
+    "GameObjects": [
+        {
+            "Name": "Grass",
+            "Properties": {
+				"TestString": "Test",
+            }
+        }
+    ],
+
+    "Scripts": 
+    {
+        "TestScript":  "TestScript.cs"
+    },
+
+    "Maps": [
+        {
+            //Map Description
+            "Name": "TestMap",
+            "StartPositionX": 0,
+            "StartPositionY": 0,
+            "SubScreenName": "TestSubScreen",
+
+            "Screens": [
+                {
+                    "ScreenId": 0,
+                    "ScreenName": "Test",
+                    "ScreenType": "Level",
+                    "SongName": "TestSong",
+                    "ColorPalette": 0,
+                    "IntroText": "Test Intro",
+
+                    "PlayerStartPositionX": 10,
+                    "PlayerStartPositionY": 20,
+
+                    "Enemies": [
+                        {
+                            "Name": "TestEnemy",
+                            "SpawnLocation": "ScreenTop",
+                            "Count": 10,
+
+                            "Properties":
+                            {
+                                "Life": 100,
+                                "DemagedBy": "All",
+                                "WalkVelocity": 1.0
+                            }
+                        }
+                    ],
+
+                    "Tiles": [
+                        //Wall 1
+                        {
+                            "TilePositionX": 0,
+                            "TilePositionY": 0,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+                                    "test": 20,
+                                    "Pippo":  "Abba"
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 0,
+                            "TilePositionY": 1,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 0,
+                            "TilePositionY": 2,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 0,
+                            "TilePositionY": 3,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 0,
+                            "TilePositionY": 4,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 0,
+                            "TilePositionY": 5,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        //Second wall
+                        {
+                            "TilePositionX": 5,
+                            "TilePositionY": 0,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 5,
+                            "TilePositionY": 1,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 5,
+                            "TilePositionY": 2,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 5,
+                            "TilePositionY": 3,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 5,
+                            "TilePositionY": 4,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 5,
+                            "TilePositionY": 5,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        //Third Wall
+                        {
+                            "TilePositionX": 5,
+                            "TilePositionY": 5,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 4,
+                            "TilePositionY": 5,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 3,
+                            "TilePositionY": 5,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 2,
+                            "TilePositionY": 5,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 1,
+                            "TilePositionY": 5,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 0,
+                            "TilePositionY": 5,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        //Fourth Wall
+                        {
+                            "TilePositionX": 0,
+                            "TilePositionY": 5,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 0,
+                            "TilePositionY": 4,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                               "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 0,
+                            "TilePositionY": 3,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 0,
+                            "TilePositionY": 2,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 0,
+                            "TilePositionY": 1,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                               "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        },
+
+                        {
+                            "TilePositionX": 0,
+                            "TilePositionY": 0,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Solid",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0,
+
+                            "GameObject": {
+                                "Name": "Grass",
+                                "Properties": {
+                                    "WalkVelocity": 1.0,
+                                    "IsVisible": false
+                                }
+                            },
+
+                            "GameScript": {
+                                "Name": "TestScript",
+                                "Properties": {
+
+                                }
+                            }
+                        }
+                    ]
+                },
+
+                {
+                    "ScreenId": 1,
+                    "ScreenName": "Test",
+                    "ScreenType": "Level",
+                    "SongName": "TestSong",
+                    "ColorPalette": 0,
+                    "IntroText": "Test Intro",
+
+                    "PlayerStartPositionX": 60,
+                    "PlayerStartPositionY": 10,
+
+                    "Tiles": [
+                        {
+
+                            "TilePositionX": 10,
+                            "TilePositionY": 10,
+                            "TextureAssetName": "Grass",
+
+                            "TileType": "Walkable",
+                            "TileColor": "COLOR_DEFAULT",
+                            "LayerNumber": 0
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,120 @@
+﻿using SharpDX.Toolkit;
+using SharpDX.Toolkit.Graphics;
+using ZeldaEngine.Base;
+using ZeldaEngine.Base.Abstracts.Game;
+using ZeldaEngine.Base.Abstracts.ScriptEngine;
+using ZeldaEngine.Base.Game.Abstracts;
+using ZeldaEngine.Base.Game.GameObjects;
+using ZeldaEngine.Base.ValueObjects;
+using ZeldaEngine.SharpDx.DataFormat;
+using ZeldaEngine.SharpDx.GameEngineClasses;
+
+namespace ZeldaEngine.SharpDx
+{
+    // Use these namespaces here to override SharpDX.Direct3D11
+    
+    /// <summary>
+    /// Simple ZeldaEngineSharpDXTest game using SharpDX.Toolkit.
+    /// </summary>
+    public class SharpDxCoreEngine : Game, IGameEngine
+    {
+        private readonly IGame _currentGame;
+
+        private readonly GraphicsDeviceManager _graphicsDeviceManager;
+
+        private SpriteBatch _spriteBatch;
+
+        public Config Configuration { get; set; }
+
+        public IInputManager InputManager { get; set; }
+
+        public IRenderEngine RenderEngine { get; set; }
+
+        public IScriptEngine ScriptEngine { get; set; }
+
+        public IAudioEngine AudioEngine { get; set; }
+
+        public IContentLoader ResourceLoader { get; private set; }
+
+        public ILogger Logger { get; private set; }
+
+        public IResourceData TextureData(string assetName)
+        {
+            return new Texture2DResourceData(ResourceLoader.Load<Texture2D>(assetName));
+        }
+
+        public SharpDxCoreEngine(IGame game, Config config, ILogger logger)
+        {
+            Logger = logger;
+
+            _graphicsDeviceManager = new GraphicsDeviceManager(this);
+
+            Content.RootDirectory = config.GameConfig.ResourceDirectory;
+
+            Configuration = config;
+
+            ResourceLoader = new CustomResourceLoader(this);
+            new GameObjectFactory(this);
+
+            InputManager = new CustomInputManager(this, ConfigurationManager.GetInputConfiguration());
+            
+            AudioEngine = new CustomAudioEngine(this);
+
+            game.GameEngine = this;
+            _currentGame = game;
+
+            _graphicsDeviceManager.PreferredBackBufferWidth = Configuration.GameConfig.ScreenWidth;
+            _graphicsDeviceManager.PreferredBackBufferHeight = Configuration.GameConfig.ScreenHeight;
+
+#if DEBUG
+            IsMouseVisible = true;
+#endif
+        }
+
+        protected override void Initialize()
+        {
+            Window.Title = "ZeldaEngineSharpDXTest";
+            Window.AllowUserResizing = false;
+            
+
+            base.Initialize();
+
+            Logger.LogInfo("Core Engine Initialized Successfully");
+        }
+
+        protected override void LoadContent()
+        {
+            _spriteBatch = ToDisposeContent(new SpriteBatch(GraphicsDevice));
+            RenderEngine = new CustomRenderEngine(this, _spriteBatch, GraphicsDevice);
+
+            _currentGame.Init();
+
+            base.LoadContent();
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            ((CustomInputManager) InputManager).Update();
+
+            //GameObjectFactory.Update(gameTime.ElapsedGameTime.Milliseconds);
+
+            _currentGame.HandleInput(gameTime.ElapsedGameTime.Milliseconds);
+            _currentGame.Update(gameTime.ElapsedGameTime.Milliseconds);
+
+            base.Update(gameTime);
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(SharpDX.Color.Black);
+
+            RenderEngine.UpdateRenderGameTime(gameTime.ElapsedGameTime.Milliseconds);
+
+            //GameObjectFactory.Draw(RenderEngine);
+
+            _currentGame.Render(RenderEngine);
+
+            base.Draw(gameTime);
+        }
+    }
+}

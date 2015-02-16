@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CF09735E-6093-4F65-9BA1-62F1FEAAD7F3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ZeldaEngine.Base</RootNamespace>
+    <AssemblyName>ZeldaEngine.Base</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstracts\Game\IContentLoader.cs" />
+    <Compile Include="Abstracts\Game\IGameComponent.cs" />
+    <Compile Include="Abstracts\Game\IGameEngine.cs" />
+    <Compile Include="Abstracts\Game\IGameObject.cs" />
+    <Compile Include="Abstracts\Game\IGameResourceLoader.cs" />
+    <Compile Include="Abstracts\Game\IInputManager.cs" />
+    <Compile Include="Abstracts\Game\IRenderEngine.cs" />
+    <Compile Include="Abstracts\Game\IResourceData.cs" />
+    <Compile Include="Abstracts\Game\IScreenScriptRepository.cs" />
+    <Compile Include="Abstracts\ScriptEngine\IDependencyResolver.cs" />
+    <Compile Include="Abstracts\Game\IGameView.cs" />
+    <Compile Include="Abstracts\Game\ILogger.cs" />
+    <Compile Include="Abstracts\ScriptEngine\IScriptManager.cs" />
+    <Compile Include="Abstracts\ScriptEngine\IScriptActivator.cs" />
+    <Compile Include="Abstracts\ScriptEngine\IScriptRepository.cs" />
+    <Compile Include="ConfigurationManager.cs" />
+    <Compile Include="GameLogger.cs" />
+    <Compile Include="Game\Abstracts\IAudioEngine.cs" />
+    <Compile Include="Game\Abstracts\IGame.cs" />
+    <Compile Include="Game\Abstracts\IQuestLoader.cs" />
+    <Compile Include="Game\AudioEngine.cs" />
+    <Compile Include="Game\BaseGameView.cs" />
+    <Compile Include="BaseScriptEngine.cs" />
+    <Compile Include="CSharpScriptCompiler.cs" />
+    <Compile Include="DependencyResolver.cs" />
+    <Compile Include="Game\Extensions\ScriptMenagerExtensions.cs" />
+    <Compile Include="Game\BaseGameClass.cs" />
+    <Compile Include="Game\Extensions\TypeExtensions.cs" />
+    <Compile Include="Game\GameComponent.cs" />
+    <Compile Include="Game\GameComponents\ColliderComponent.cs" />
+    <Compile Include="Game\GameComponents\ColliderGameComponent.cs" />
+    <Compile Include="Game\GameComponents\MovableTestGameComponent.cs" />
+    <Compile Include="Game\GameComponents\TestComponent.cs" />
+    <Compile Include="Game\GameComponents\TextureDrawerComponent.cs" />
+    <Compile Include="Game\GameEngineClasses\GameEngine.cs" />
+    <Compile Include="Game\GameEngineClasses\Resource.cs" />
+    <Compile Include="Game\GameObjects\GameObject.cs" />
+    <Compile Include="Game\GameObjects\DefaultGameObject.cs" />
+    <Compile Include="Game\GameObjects\DrawableGameObject.cs" />
+    <Compile Include="Game\GameObjects\EnemyGameObject.cs" />
+    <Compile Include="Game\GameObjects\GameObjectFactory.cs" />
+    <Compile Include="Game\GameObjects\ItemGameObject.cs" />
+    <Compile Include="Game\GameObjects\MovableGameObject.cs" />
+    <Compile Include="Game\GameObjects\PlayerGameObject.cs" />
+    <Compile Include="Game\GameObjects\TileGameObject.cs" />
+    <Compile Include="Game\GameScripts\EmptyGameScript.cs" />
+    <Compile Include="Game\Map.cs" />
+    <Compile Include="Game\Quest.cs" />
+    <Compile Include="Game\QuestManager.cs" />
+    <Compile Include="Game\MapLoaders\JsonMapLoader.cs" />
+    <Compile Include="Game\MapLoaders\MyMapLoader.cs" />
+    <Compile Include="Game\RenderingEngine\ResourceManager\TextureResources.cs" />
+    <Compile Include="Game\ValueObjects\EnemyDefinition.cs" />
+    <Compile Include="Game\ValueObjects\EnemySpawnLocation.cs" />
+    <Compile Include="Game\ValueObjects\GameConfigurationDefinition.cs" />
+    <Compile Include="Game\ValueObjects\GameObjectDefinition.cs" />
+    <Compile Include="Game\ValueObjects\GameScriptDefinition.cs" />
+    <Compile Include="Game\ValueObjects\InputConfigurationDefinition.cs" />
+    <Compile Include="Game\ValueObjects\ItemDefinition.cs" />
+    <Compile Include="Game\ValueObjects\MapDefinition.cs" />
+    <Compile Include="Game\ValueObjects\QuestDefinition.cs" />
+    <Compile Include="Game\ValueObjects\ScreenDefinition.cs" />
+    <Compile Include="Game\ValueObjects\ScreenEnemyDefinition.cs" />
+    <Compile Include="Game\ValueObjects\TileDefinition.cs" />
+    <Compile Include="ScriptManager.cs" />
+    <Compile Include="ProjectUtil.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScriptRepository.cs" />
+    <Compile Include="Services\AutofacDependecyResolver.cs" />
+    <Compile Include="Services\InternalDependecyResolver.cs" />
+    <Compile Include="Services\InternalScriptActivator.cs" />
+    <Compile Include="ValueObjects\Game\ScreenType.cs" />
+    <Compile Include="ValueObjects\Game\ObjectType.cs" />
+    <Compile Include="ValueObjects\Game\ScriptState.cs" />
+    <Compile Include="ValueObjects\Game\ScriptTuple.cs" />
+    <Compile Include="ValueObjects\Game\Tile.cs" />
+    <Compile Include="ValueObjects\Game\TileType.cs" />
+    <Compile Include="ValueObjects\Game\WarpPoint.cs" />
+    <Compile Include="ValueObjects\ScriptEngine\CompiledScript.cs" />
+    <Compile Include="ValueObjects\Config.cs" />
+    <Compile Include="ValueObjects\GameConfig.cs" />
+    <Compile Include="ValueObjects\GameEviromentCollection.cs" />
+    <Compile Include="Abstracts\Game\IItem.cs" />
+    <Compile Include="Abstracts\Game\INpc.cs" />
+    <Compile Include="Abstracts\ScriptEngine\IScriptCompiler.cs" />
+    <Compile Include="Abstracts\ScriptEngine\IScriptEngine.cs" />
+    <Compile Include="Abstracts\ScriptEngine\IScriptParamaterProvider.cs" />
+    <Compile Include="ValueObjects\GameScriptConfig.cs" />
+    <Compile Include="ValueObjects\ScriptEngine\RuntimeScript.cs" />
+    <Compile Include="ValueObjects\ScriptEngine\ScriptInfo.cs" />
+    <Compile Include="ValueObjects\Vector2.cs" />
+    <Compile Include="GameScript.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
