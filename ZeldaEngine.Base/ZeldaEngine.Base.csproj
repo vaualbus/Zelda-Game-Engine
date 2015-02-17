@@ -65,9 +65,9 @@
     <Compile Include="Abstracts\ScriptEngine\IScriptRepository.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="GameLogger.cs" />
-    <Compile Include="Game\Abstracts\IAudioEngine.cs" />
-    <Compile Include="Game\Abstracts\IGame.cs" />
-    <Compile Include="Game\Abstracts\IQuestLoader.cs" />
+    <Compile Include="Abstracts\Game\IAudioEngine.cs" />
+    <Compile Include="Abstracts\Game\IGame.cs" />
+    <Compile Include="Abstracts\Game\IQuestLoader.cs" />
     <Compile Include="Game\AudioEngine.cs" />
     <Compile Include="Game\BaseGameView.cs" />
     <Compile Include="BaseScriptEngine.cs" />
@@ -92,6 +92,7 @@
     <Compile Include="Game\GameObjects\ItemGameObject.cs" />
     <Compile Include="Game\GameObjects\MovableGameObject.cs" />
     <Compile Include="Game\GameObjects\PlayerGameObject.cs" />
+    <Compile Include="Game\GameObjects\ScriptableGameObject.cs" />
     <Compile Include="Game\GameObjects\TileGameObject.cs" />
     <Compile Include="Game\GameScripts\EmptyGameScript.cs" />
     <Compile Include="Game\Map.cs" />

@@ -1,6 +1,6 @@
 ﻿using ZeldaEngine.Base.Game.ValueObjects;
 
-namespace ZeldaEngine.Base.Game.Abstracts
+namespace ZeldaEngine.Base.Abstracts.Game
 {
     public interface IQuestLoader
     {

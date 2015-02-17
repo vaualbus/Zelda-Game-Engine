@@ -49,7 +49,7 @@ namespace ZeldaEngine.ScriptEngine
                 .As<IScriptParamaterProvider>()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<CSharpScriptCompiler>()
+            builder.RegisterType<RoslynCSharpScriptCompiler>()
                    .As<IScriptCompiler>()
                    .SingleInstance();
 

@@ -1,6 +1,4 @@
 ﻿using ZeldaEngine.Base;
-using ZeldaEngine.Base.Game;
-using ZeldaEngine.Base.ValueObjects;
 
 namespace ZeldaEngine.Tests.Scripts
 {
@@ -8,7 +6,7 @@ namespace ZeldaEngine.Tests.Scripts
     {
         public void Run(string text)
         {
-            _logger.LogWarning("Receive {0}", text);
+            Logger.LogWarning("Receive {0}", text);
 
             //if (Input.IsKeyDown(Keys.A))
             //    GameObject.Position.X += 21;
@@ -16,7 +14,7 @@ namespace ZeldaEngine.Tests.Scripts
 
         public void TestFunc()
         {
-            _logger.LogError("Test Script Excuted!");
+            Logger.LogError("Test Script Excuted!");
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Linq;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using ZeldaEngine.Base.Game.Abstracts;
+using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game.ValueObjects;
 
 namespace ZeldaEngine.Tests.GameTests

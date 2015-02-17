@@ -9,7 +9,6 @@ using ZeldaEngine.Base;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
 using ZeldaEngine.Base.Game;
-using ZeldaEngine.Base.Game.Abstracts;
 using ZeldaEngine.Base.Game.GameComponents;
 using ZeldaEngine.Base.Game.GameEngineClasses;
 using ZeldaEngine.Base.Game.GameObjects;

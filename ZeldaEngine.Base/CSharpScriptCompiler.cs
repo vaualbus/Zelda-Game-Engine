@@ -50,6 +50,7 @@ namespace ZeldaEngine.Base
             compilerParams.ReferencedAssemblies.Add("System.Data.dll");
             compilerParams.ReferencedAssemblies.Add("System.Xml.dll");
             compilerParams.ReferencedAssemblies.Add("System.Linq.dll");
+            compilerParams.ReferencedAssemblies.Add("System.Drawing.dll");
             compilerParams.ReferencedAssemblies.Add("mscorlib.dll");
 
             compilerParams.ReferencedAssemblies.AddRange(AdditionalAssemblies.Select(t => t.Location).ToArray());

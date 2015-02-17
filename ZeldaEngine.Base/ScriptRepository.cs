@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
+using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 
 namespace ZeldaEngine.Base
@@ -159,6 +161,12 @@ namespace ZeldaEngine.Base
 
             var screen = Scripts.Where(t => t.Key.GameView == gameScreen);
             return screen.ToDictionary(t => t.Value.CurrentMenagedScript, t => t.Value);
+        }
+
+        public void AddScript<TGameObject>(string scriptName, CompiledScript compiledScript) where TGameObject : ScriptableGameObject
+        {
+            var go = GameObjectFactory.Find<TGameObject>().FirstOrDefault();
+            throw new NotImplementedException();
         }
     }
 }

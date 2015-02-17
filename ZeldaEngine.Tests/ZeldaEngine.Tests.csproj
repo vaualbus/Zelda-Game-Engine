@@ -54,6 +54,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,8 +64,13 @@
   <ItemGroup>
     <Compile Include="Abstracts\IDataProvider.cs" />
     <Compile Include="DataProvider.cs" />
+    <Compile Include="GameTests\GameObjectTests\ScriptableGoTests.cs" />
     <Compile Include="GameTests\MapLoaderTests.cs" />
+    <Compile Include="GameTests\TestGameEngine.cs" />
     <Compile Include="Script Engine Test\ScriptEngineTest.cs" />
+    <Compile Include="Scripts\GameObjectScriptTest.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Scripts\Script2.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -76,9 +82,9 @@
     <None Include="MapsTest\MapTest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\TestScript.cs">
+    <Compile Include="Scripts\TestScript.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Compile>
     <Compile Include="ScriptManagerTest.cs" />
     <Compile Include="TestRig\ProjectGameScriptEngine.cs" />
     <Compile Include="TestRig\TestLogger.cs" />

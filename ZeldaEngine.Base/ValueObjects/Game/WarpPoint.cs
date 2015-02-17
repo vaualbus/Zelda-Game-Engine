@@ -7,7 +7,5 @@ namespace ZeldaEngine.Base.ValueObjects.Game
         Vector2 Position { get; set; }
 
         IGameView ToScreen { get; set; }
-
-
     }
 }

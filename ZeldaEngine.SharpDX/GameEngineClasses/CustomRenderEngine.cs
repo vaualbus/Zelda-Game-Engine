@@ -42,22 +42,17 @@ namespace ZeldaEngine.SharpDx.GameEngineClasses
             }
         }
 
-        public void RenderCircle(Vector2 position, float radious, Color fillColor)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void RenderTriangle(Vector2 position, float radious, Color fillColor)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public void RenderUI(UIContext uiContext)
         {
             throw new System.NotImplementedException();
         }
 
-        public void RenderCollisionLines(GameObject go, IEnumerable<GameObject> nearestObjects)
+        public void DrawBox(Base.ValueObjects.Vector2 position, int width, Color color)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawCollisionLines(GameObject go, IEnumerable<GameObject> nearestObjects)
         {
             throw new System.NotImplementedException();
         }
@@ -69,6 +64,16 @@ namespace ZeldaEngine.SharpDx.GameEngineClasses
 
         public void UpdateRenderGameTime(int milliseconds)
         {
+        }
+
+        public void DrawCircle(Base.ValueObjects.Vector2 position, float radious, Color fillColor)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawTriangle(Base.ValueObjects.Vector2 position, float radious, Color fillColor)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void RenderTexture(string test, Vector2 position, global::SharpDX.Color color, int layer = 0)

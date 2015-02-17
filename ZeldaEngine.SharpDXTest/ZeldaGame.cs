@@ -6,7 +6,6 @@ using SharpDX.Toolkit.Graphics;
 using ZeldaEngine.Base;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game;
-using ZeldaEngine.Base.Game.Abstracts;
 using ZeldaEngine.Base.Game.GameComponents;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.Game.MapLoaders;

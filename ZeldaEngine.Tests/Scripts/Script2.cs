@@ -1,8 +1,5 @@
-﻿using Autofac;
-using ZeldaEngine.Base;
-using ZeldaEngine.Base.Abstracts.ScriptEngine;
+﻿using ZeldaEngine.Base;
 using ZeldaEngine.ScriptEngine.Attributes;
-using ZeldaEngine.Tests.Abstracts;
 
 namespace ZeldaEngine.Tests.Scripts
 {

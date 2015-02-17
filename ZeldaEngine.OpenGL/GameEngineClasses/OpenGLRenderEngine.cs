@@ -1,7 +1,10 @@
-﻿using OpenTK.Graphics.OpenGL;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using OpenTK.Graphics.OpenGL;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game;
 using ZeldaEngine.Base.Game.GameObjects;
+using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.OpenGL.GameEngineClasses.ResourceLoader;
 
 namespace ZeldaEngine.OpenGL.GameEngineClasses
@@ -26,6 +29,26 @@ namespace ZeldaEngine.OpenGL.GameEngineClasses
 
         public void UpdateRenderGameTime(int milliseconds)
         {
+        }
+
+        public void DrawCircle(Vector2 position, float radious, Color fillColor)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawTriangle(Vector2 position, float radious, Color fillColor)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawBox(Vector2 position, int width, Color color)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawCollisionLines(GameObject go, IEnumerable<GameObject> nearestObjects)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

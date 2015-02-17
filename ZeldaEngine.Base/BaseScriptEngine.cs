@@ -254,6 +254,7 @@ namespace ZeldaEngine.Base
                     ScriptCompiler.AdditionalAssemblies.Add(assemblyDirAssemblyInfo);
                 }
 
+                //Add System.Drwaing
                 ScriptCompiler.AdditionalAssemblies.Add(loadedAssembly);
             }
         }

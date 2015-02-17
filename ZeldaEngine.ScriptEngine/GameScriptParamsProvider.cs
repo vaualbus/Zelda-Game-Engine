@@ -59,5 +59,26 @@ namespace ZeldaEngine.ScriptEngine
                 ? _paramaters[_engine.ScriptRepository.GetScript(screen, scriptName)]
                 : new object[] {};
         }
+
+        public object[] GetParamatersForScript(GameScript gameScript)
+        {
+            return  _paramaters[gameScript];
+        }
+
+        public bool AddParamater(GameScript gameScript, object[] @params)
+        {
+            if (_paramaters.ContainsKey(gameScript))
+                return false;
+
+            if (@params == null)
+            {
+                _paramaters.Add(gameScript, new object[] { });
+                _logger.LogInfo("Adding null value to {0}", gameScript.ToString());
+                return false;
+            }
+
+            _paramaters.Add(gameScript, @params.ToArray());
+            return true;
+        }
     }
 }

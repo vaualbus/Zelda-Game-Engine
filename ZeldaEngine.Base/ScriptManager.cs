@@ -60,9 +60,10 @@ namespace ZeldaEngine.Base
             _currentCachedScriptInstance =  objValue;
 
             //Set the script fields to the current engine
-            SetScriptFields("_engine", _engine);
-            SetScriptFields("_scriptInfo", scriptDesc);
-            SetScriptFields("_logger", _logger);
+            SetScriptFields("Engine", _engine);
+            SetScriptFields("ScriptInfo", scriptDesc);
+            SetScriptFields("Logger", _logger);
+            //SetScriptFields("RenderEngine", );
 
             return _currentCachedScriptInstance;
         }
@@ -84,9 +85,10 @@ namespace ZeldaEngine.Base
             _currentCachedScriptInstance = objValue;
 
             //Set script engine to the current engine
-            SetScriptFields("_engine", _engine);
-            SetScriptFields("_scriptInfo", scriptDesc);
-            SetScriptFields("_logger", _logger);
+            SetScriptFields("Engine", _engine);
+            SetScriptFields("ScriptInfo", scriptDesc);
+            SetScriptFields("Logger", _logger);
+            SetScriptFields("RenderEngine", null);
 
             return true;
         }

@@ -13,5 +13,7 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine
         void RemoveParamaters(IGameView screen, string scriptName);
 
         object[] GetParamatersForScript(IGameView screen, string scriptName);
+
+        object[] GetParamatersForScript(GameScript gameScript);
     }  
 }

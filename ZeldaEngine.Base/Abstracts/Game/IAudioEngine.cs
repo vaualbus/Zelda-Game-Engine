@@ -1,4 +1,4 @@
-﻿namespace ZeldaEngine.Base.Game.Abstracts
+﻿namespace ZeldaEngine.Base.Abstracts.Game
 {
     public interface IAudioEngine
     {

@@ -9,11 +9,13 @@ namespace ZeldaEngine.Base
 {
     public class GameScript
     {
-        protected readonly IScriptEngine _engine;
+        protected IScriptEngine Engine;
 
-        protected readonly ScriptInfo _scriptInfo;
+        protected  ScriptInfo ScriptInfo;
 
-        protected readonly ILogger _logger;
+        protected  ILogger Logger;
+
+        protected IRenderEngine RenderEngine;
 
         public IGameObject GameObject { get; set; }
 

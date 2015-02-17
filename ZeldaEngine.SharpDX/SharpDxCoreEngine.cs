@@ -3,7 +3,6 @@ using SharpDX.Toolkit.Graphics;
 using ZeldaEngine.Base;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
-using ZeldaEngine.Base.Game.Abstracts;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.SharpDx.DataFormat;

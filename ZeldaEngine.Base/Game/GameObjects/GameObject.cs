@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using ZeldaEngine.Base.Abstracts.Game;
-using ZeldaEngine.Base.Game.Abstracts;
 using ZeldaEngine.Base.Game.GameComponents;
 using ZeldaEngine.Base.Game.GameEngineClasses;
 using ZeldaEngine.Base.ValueObjects;

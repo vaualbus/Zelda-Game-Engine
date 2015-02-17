@@ -56,5 +56,10 @@ namespace ZeldaEngine.Tests.TestRig
         {
             return _paramaters[_engine.ScriptRepository.GetScript(screen, scriptName)];
         }
+
+        public object[] GetParamatersForScript(GameScript gameScript)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

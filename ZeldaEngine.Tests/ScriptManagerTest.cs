@@ -77,8 +77,8 @@ namespace ZeldaEngine.Tests
         [Test]
         public void CanGenerateProjectFile()
         {
-            var config = new Config(new GameScriptConfig(@"C:\Users\alberto\Documents\Visual Studio 2013\Projects\ZeldaEngine\ZeldaEngine.Tests", 
-                                                         @"C:\Users\alberto\Documents\Visual Studio 2013\Projects\ZeldaEngine\ZeldaEngine.Tests",
+            var config = new Config(new GameScriptConfig(@"C:\Users\alberto\Documents\Visual Studio 2015\Projects\ZeldaEngine\ZeldaEngine.Tests",
+                                                         @"C:\Users\alberto\Documents\Visual Studio 2015\Projects\ZeldaEngine\ZeldaEngine.Tests",
                                                         "TestProj"), null);
 
             var engine = new ProjectGameScriptEngine(config);

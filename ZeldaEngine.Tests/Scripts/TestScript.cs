@@ -1,6 +1,4 @@
-﻿using System;
-using ZeldaEngine.Base;
-using ZeldaEngine.Base.ValueObjects;
+﻿using ZeldaEngine.Base;
 using ZeldaEngine.ScriptEngine.Attributes;
 
 namespace ZeldaEngine.Tests.Scripts
@@ -14,19 +12,19 @@ namespace ZeldaEngine.Tests.Scripts
 
         public int TestFunc1(int a)
         {
-            _logger.LogWarning("Test {0}", a);
+            Logger.LogWarning("Test {0}", a);
             return a;
         }
 
         public void TestLog()
         {
-            _logger.LogWarning("Test: 10");
+            Logger.LogWarning("Test: 10");
         }
 
        // [GameEntryPoint]
         public void Run(int x, int y)
         {
-            _logger.LogInfo("X: {0}, Y: {1}", x, y);
+            Logger.LogInfo("X: {0}, Y: {1}", x, y);
         }
     }
 }

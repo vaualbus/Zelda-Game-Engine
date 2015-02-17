@@ -1,5 +1,4 @@
 ﻿using ZeldaEngine.Base.Abstracts.ScriptEngine;
-using ZeldaEngine.Base.Game.Abstracts;
 using ZeldaEngine.Base.ValueObjects;
 
 namespace ZeldaEngine.Base.Abstracts.Game

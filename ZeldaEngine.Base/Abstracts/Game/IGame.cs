@@ -1,9 +1,6 @@
 ﻿using System;
-using ZeldaEngine.Base.Abstracts.Game;
-using ZeldaEngine.Base.Abstracts.ScriptEngine;
-using ZeldaEngine.Base.ValueObjects;
 
-namespace ZeldaEngine.Base.Game.Abstracts
+namespace ZeldaEngine.Base.Abstracts.Game
 {
     public interface IGame : IDisposable
     {
