@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using ZeldaEngine.Base.Abstracts.Game;
@@ -209,7 +210,7 @@ namespace ZeldaEngine.Base
         {
             try
             {
-                var method = _currentCompiledScript.Methods.FirstOrDefault(t => t.Name == funcName && t.GetParameters().Length == @params.Length);
+                var method = _currentCompiledScript.Methods.FirstOrDefault(t => t.Name == funcName && t.GetParameters().Length == @params.Length && MatchTypes(t, @params));
                 if (method == null)
                 {
                     _logger.LogError("Cannot find a method with the given Name {0} and the given paramaters {1}", funcName, string.Join(", ", @params));
@@ -234,5 +235,26 @@ namespace ZeldaEngine.Base
                 return null;
             }
         }
+
+            private bool MatchTypes(MethodInfo methodInfo, object[] @params)
+    {
+        var paramsTypes = @params.Select(t => t.GetType()).ToArray();
+        var providedMethodTypes = methodInfo.GetParameters().Select(t => t.ParameterType).ToArray();
+
+        Debug.Assert(paramsTypes.Length == providedMethodTypes.Length);
+
+        var results = new List<bool>();
+        for (var i = 0; i < @params.Length; i++)
+        {
+            //Json.Net deserilize int value into int64 so we need to consider that a int32 instead.
+            //if (paramsTypes[i] == typeof(Int64) && providedMethodTypes[i] == typeof(int))
+            //    results.Add(true);
+
+            if (paramsTypes[i] == providedMethodTypes[i])
+                results.Add(true);
+        }
+
+        return results.Count == paramsTypes.Length;
+    }
     }
 }
