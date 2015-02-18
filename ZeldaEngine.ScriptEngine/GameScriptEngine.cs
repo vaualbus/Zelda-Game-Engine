@@ -12,6 +12,7 @@ using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
 using ZeldaEngine.Base.Game;
 using ZeldaEngine.Base.ValueObjects;
+using ZeldaEngine.Base.ValueObjects.Extensions;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 
 namespace ZeldaEngine.ScriptEngine
@@ -68,7 +69,7 @@ namespace ZeldaEngine.ScriptEngine
 
                 var paramsForScript = ParamsProvider.GetParamatersForScript(screen, script.RuntimeScript.Name);
                 var runMethod = script.CurrentMenagedScript.GetType().GetMethods()
-                    .FirstOrDefault(t => (t.Name == "Run" || t.Name == "RunScript")  && t.GetParameters().Length == paramsForScript.Length && MatchMethodParamWithProvidedTypes(t, paramsForScript));
+                    .FirstOrDefault(t => (t.Name == "Run" || t.Name == "RunScript")  && t.GetParameters().Length == paramsForScript.Length && t.MatchTypes(paramsForScript));
 
                 if (runMethod != null)
                 {
@@ -87,27 +88,6 @@ namespace ZeldaEngine.ScriptEngine
                 else
                     Logger.LogWarning("Try calling Method Run with mismatched arguments.");
             }
-        }
-
-        private bool MatchMethodParamWithProvidedTypes(MethodInfo methodInfo, object[] @params)
-        {
-            var paramsTypes = @params.Select(t => t.GetType()).ToArray();
-            var providedMethodTypes = methodInfo.GetParameters().Select(t => t.ParameterType).ToArray();
-
-            Debug.Assert(paramsTypes.Length == providedMethodTypes.Length);
-
-            var results = new List<bool>();
-            for (var i = 0; i < @params.Length; i++)
-            {
-                //Json.Net deserilize int value into int64 so we need to consider that a int32 instead.
-                //if (paramsTypes[i] == typeof(Int64) && providedMethodTypes[i] == typeof(int))
-                //    results.Add(true);
-
-                if (paramsTypes[i] == providedMethodTypes[i])
-                    results.Add(true);
-            }
-
-            return results.Count == paramsTypes.Length;
         }
 
         #endregion

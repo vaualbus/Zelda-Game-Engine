@@ -120,6 +120,7 @@
     <Compile Include="Services\AutofacDependecyResolver.cs" />
     <Compile Include="Services\InternalDependecyResolver.cs" />
     <Compile Include="Services\InternalScriptActivator.cs" />
+    <Compile Include="ValueObjects\Extensions\TypeExtensions.cs" />
     <Compile Include="ValueObjects\Game\ScreenType.cs" />
     <Compile Include="ValueObjects\Game\ObjectType.cs" />
     <Compile Include="ValueObjects\Game\ScriptState.cs" />
