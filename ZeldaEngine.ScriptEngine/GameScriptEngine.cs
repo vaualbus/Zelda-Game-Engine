@@ -20,8 +20,8 @@ namespace ZeldaEngine.ScriptEngine
     {
         #region Proxy Fields
 
-        public GameScriptEngine(Config config)
-            : base(config)
+        public GameScriptEngine(Config config, IGameEngine gameEngine = null)
+            : base(config, gameEngine)
         {
         }
 

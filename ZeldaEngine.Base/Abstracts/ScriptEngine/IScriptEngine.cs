@@ -20,6 +20,8 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine
 
 #endregion
 
+        IGameEngine GameEngine { get; }
+
         IScriptRepository ScriptRepository { get; }
 
         IScriptParamaterProvider ParamsProvider { get; }

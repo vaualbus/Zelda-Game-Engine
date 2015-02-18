@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using ZeldaEngine.Base.Abstracts.Game;
@@ -26,9 +27,13 @@ namespace ZeldaEngine.Base
             get { return _currentCachedScriptInstance; }
         }
 
-        public RuntimeScript RuntimeScript { get { return _runtimeScript; } }
+        public RuntimeScript RuntimeScript
+        {
+            get { return _runtimeScript; }
+        }
 
-        public ScriptManager(IScriptEngine engine, IScriptCompiler compiler, IScriptRepository scriptRepository, IDependencyResolver resolver, IScriptActivator scriptActivator, ILogger logger)
+        public ScriptManager(IScriptEngine engine, IScriptCompiler compiler, IScriptRepository scriptRepository,
+            IDependencyResolver resolver, IScriptActivator scriptActivator, ILogger logger)
         {
             _logger = logger;
             _engine = engine;
@@ -57,20 +62,23 @@ namespace ZeldaEngine.Base
 
             var scriptDesc = new ScriptInfo(scriptName, script.CompiledPath);
 
-            _currentCachedScriptInstance =  objValue;
+            _currentCachedScriptInstance = objValue;
 
             //Set the script fields to the current engine
             SetScriptFields("Engine", _engine);
             SetScriptFields("ScriptInfo", scriptDesc);
             SetScriptFields("Logger", _logger);
-            //SetScriptFields("RenderEngine", );
+            SetScriptFields("RenderEngine", _engine.GameEngine?.RenderEngine);
+            SetScriptFields("InputManager", _engine.GameEngine?.InputManager);
+            SetScriptFields("AudioEngine", _engine.GameEngine?.AudioEngine);
+            SetScriptFields("ResourceLoader", _engine.GameEngine?.ResourceLoader);
 
             return _currentCachedScriptInstance;
         }
 
         public bool CreateScript(RuntimeScript runtimeScript)
         {
-            _currentCompiledScript =  runtimeScript.CompiledScript;
+            _currentCompiledScript = runtimeScript.CompiledScript;
             _runtimeScript = runtimeScript;
 
             var scriptName = runtimeScript.Name;
@@ -98,7 +106,8 @@ namespace ZeldaEngine.Base
             var method = FindMethod(funcName, @params ?? new object[0]);
             if (method == null)
             {
-                _logger.LogError("Cannot found the method {0} in {1}", funcName, _currentCompiledScript.ScriptType.ToString());
+                _logger.LogError("Cannot found the method {0} in {1}", funcName,
+                    _currentCompiledScript.ScriptType.ToString());
                 return null;
             }
 
@@ -117,7 +126,8 @@ namespace ZeldaEngine.Base
                 var prop = _currentCompiledScript.Properties.FirstOrDefault(t => t.Name == propName);
                 if (prop == null)
                 {
-                    _logger.LogError("Cannot find a property with name {0} on type {1}", propName, _currentCompiledScript.ScriptType.ToString());
+                    _logger.LogError("Cannot find a property with name {0} on type {1}", propName,
+                        _currentCompiledScript.ScriptType.ToString());
                     return null;
                 }
 
@@ -137,7 +147,8 @@ namespace ZeldaEngine.Base
                 var prop = _currentCompiledScript.Properties.FirstOrDefault(t => t.Name == propName);
                 if (prop == null)
                 {
-                    _logger.LogError("Cannot find a property with name {0} on type {1}", propName, _currentCompiledScript.ScriptType.ToString());
+                    _logger.LogError("Cannot find a property with name {0} on type {1}", propName,
+                        _currentCompiledScript.ScriptType.ToString());
                     return;
                 }
                 prop.SetValue(_currentCachedScriptInstance, value);
@@ -164,14 +175,15 @@ namespace ZeldaEngine.Base
             }
             catch (Exception ex)
             {
-                _logger.LogError("Cannot create and instance of the script. Script cannot have a constructor that have paramaters");
+                _logger.LogError(
+                    "Cannot create and instance of the script. Script cannot have a constructor that have paramaters");
                 _logger.LogError("Debug Informotion {0}", ex.Message);
             }
         }
 
         public TReturn ExcuteFunction<TReturn>(string funcName, object[] @params)
         {
-            return (TReturn)ExcuteFunction(funcName, @params);
+            return (TReturn) ExcuteFunction(funcName, @params);
         }
 
         public TValue GetScriptValue<TValue>(string propName)
@@ -190,12 +202,24 @@ namespace ZeldaEngine.Base
                 objValue = _scriptActivator.CreateInstance(script.ScriptType) as GameScript;
             else if (scriptCtors.Count == 1)
             {
-                var values = scriptCtors.Select(controllerCtor => _resolver.GetService(controllerCtor.ParameterType) ?? (runtimeScript.CtorParams.ContainsKey(controllerCtor.ParameterType) ? runtimeScript.CtorParams[controllerCtor.ParameterType].FirstOrDefault() : null)).ToList();
+                var values =
+                    scriptCtors.Select(
+                        controllerCtor =>
+                            _resolver.GetService(controllerCtor.ParameterType) ??
+                            (runtimeScript.CtorParams.ContainsKey(controllerCtor.ParameterType)
+                                ? runtimeScript.CtorParams[controllerCtor.ParameterType].FirstOrDefault()
+                                : null)).ToList();
                 objValue = _scriptActivator.CreateInstance(script.ScriptType, values.ToArray()) as GameScript;
             }
             else
             {
-                var values = scriptCtors.Select(controllerCtor => _resolver.GetServices(controllerCtor.ParameterType) ?? (runtimeScript.CtorParams.ContainsKey(controllerCtor.ParameterType) ? runtimeScript.CtorParams[controllerCtor.ParameterType].ToArray() : null)).ToList();
+                var values =
+                    scriptCtors.Select(
+                        controllerCtor =>
+                            _resolver.GetServices(controllerCtor.ParameterType) ??
+                            (runtimeScript.CtorParams.ContainsKey(controllerCtor.ParameterType)
+                                ? runtimeScript.CtorParams[controllerCtor.ParameterType].ToArray()
+                                : null)).ToList();
                 var tempObj = new object[values.Count];
 
                 for (var i = 0; i < values.Count; i++)
@@ -211,15 +235,16 @@ namespace ZeldaEngine.Base
         {
             try
             {
-                var method = _currentCompiledScript.Methods.FirstOrDefault(t => t.Name == funcName && t.GetParameters().Length == @params.Length);
+                var method = _currentCompiledScript.Methods.FirstOrDefault(t => t.Name == funcName && t.GetParameters().Length == @params.Length && MatchTypes(t, @params));
                 if (method == null)
                 {
-                    _logger.LogError("Cannot find a method with the given Name {0} and the given paramaters {1}", funcName, string.Join(", ", @params));
+                    _logger.LogError("Cannot find a method with the given Name {0} and the given paramaters {1}",
+                        funcName, string.Join(", ", @params));
                     return null;
                 }
 
                 var methodParamsTypes = method.GetParameters().Select(t => t.ParameterType);
-                var valuesTypes = @params != null ? @params.Select(t => t.GetType()) : new Type[0];
+                var valuesTypes = @params?.Select(t => t.GetType()) ?? new Type[0];
                 var differences = methodParamsTypes.Except(valuesTypes).Count();
 
                 if (differences > 0)
@@ -235,6 +260,27 @@ namespace ZeldaEngine.Base
                 _logger.LogError("Debug Informotion {0}", ex.Message);
                 return null;
             }
+        }
+
+        private bool MatchTypes(MethodInfo methodInfo, object[] @params)
+        {
+            var paramsTypes = @params.Select(t => t.GetType()).ToArray();
+            var providedMethodTypes = methodInfo.GetParameters().Select(t => t.ParameterType).ToArray();
+
+            Debug.Assert(paramsTypes.Length == providedMethodTypes.Length);
+
+            var results = new List<bool>();
+            for (var i = 0; i < @params.Length; i++)
+            {
+                //Json.Net deserilize int value into int64 so we need to consider that a int32 instead.
+                //if (paramsTypes[i] == typeof(Int64) && providedMethodTypes[i] == typeof(int))
+                //    results.Add(true);
+
+                if (paramsTypes[i] == providedMethodTypes[i])
+                    results.Add(true);
+            }
+
+            return results.Count == paramsTypes.Length;
         }
     }
 }

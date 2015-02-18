@@ -10,5 +10,15 @@ namespace ZeldaEngine.Tests.Scripts
         {
             RenderEngine?.DrawBox(new Vector2(0,0), 100, Color.Red);
         }
+
+        public void Run(int color)
+        {
+            
+        }
+
+        public void Run(string name)
+        {
+            
+        }
     }
 }

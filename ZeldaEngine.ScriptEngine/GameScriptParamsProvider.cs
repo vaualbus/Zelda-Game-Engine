@@ -62,7 +62,7 @@ namespace ZeldaEngine.ScriptEngine
 
         public object[] GetParamatersForScript(GameScript gameScript)
         {
-            return  _paramaters[gameScript];
+            return  _paramaters.ContainsKey(gameScript) ? _paramaters[gameScript] : null;
         }
 
         public bool AddParamater(GameScript gameScript, object[] @params)

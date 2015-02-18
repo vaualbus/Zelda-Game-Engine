@@ -22,6 +22,8 @@ namespace ZeldaEngine.Base
 
         public Config Config { get; private set; }
 
+        public IGameEngine GameEngine { get; private set; }
+
         public string CurrentScriptName { get; set; }
 
         public virtual GameScript[] CurrentLoadedScripts { get; protected set; }
@@ -36,9 +38,10 @@ namespace ZeldaEngine.Base
        
         public ContainerBuilder ContainerBuilder { get; private set; }
 
-        protected BaseScriptEngine(Config config)
+        protected BaseScriptEngine(Config config, IGameEngine gameEngine = null)
         {
             Config = config;
+            GameEngine = gameEngine;
         }
 
         public void InitializeEngine()
@@ -238,9 +241,9 @@ namespace ZeldaEngine.Base
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError("Cannot load the assemblies: {0}, the assembly is not a valid .net assembly",
+                    Logger.LogInfo("Cannot load the assemblies: {0}, the assembly is not a valid .net assembly",
                         new FileInfo(dll).Name);
-                    Logger.LogError("Error detail {0}", ex.Message);
+                    Logger.LogInfo("Error detail {0}", ex.Message);
                     continue;
                 }
                 if (ScriptCompiler.AdditionalAssemblies.Contains(loadedAssembly))

@@ -17,6 +17,12 @@ namespace ZeldaEngine.Base
 
         protected IRenderEngine RenderEngine;
 
+        protected IAudioEngine AudioEngine;
+
+        protected IContentLoader ResourceLoader;
+
+        protected IInputManager InputManager;
+
         public IGameObject GameObject { get; set; }
 
         public Vector2 Position { get; set; }

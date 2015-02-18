@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>d3b36cd0</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,9 +53,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="SharpDX">
+      <HintPath>..\packages\SharpDX.2.6.3\Bin\DirectX11-Signed-net40\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit.Game">
+      <HintPath>..\packages\SharpDX.2.6.3\Bin\DirectX11-Signed-net40\SharpDX.Toolkit.Game.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,6 +74,7 @@
     <Compile Include="DataProvider.cs" />
     <Compile Include="GameTests\GameObjectTests\ScriptableGoTests.cs" />
     <Compile Include="GameTests\MapLoaderTests.cs" />
+    <Compile Include="GameTests\TestGame.cs" />
     <Compile Include="GameTests\TestGameEngine.cs" />
     <Compile Include="Script Engine Test\ScriptEngineTest.cs" />
     <Compile Include="Scripts\GameObjectScriptTest.cs">
@@ -103,8 +112,19 @@
       <Project>{40667d01-c27e-4711-9cf3-5975d715a9ff}</Project>
       <Name>ZeldaEngine.ScriptEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ZeldaEngine.SharpDX\ZeldaEngine.SharpDX.csproj">
+      <Project>{40ab6318-ae57-451c-91ff-4eb3d7e861c2}</Project>
+      <Name>ZeldaEngine.SharpDX</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\SharpDX.2.6.3\build\SharpDX.targets" Condition="Exists('..\packages\SharpDX.2.6.3\build\SharpDX.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\SharpDX.2.6.3\build\SharpDX.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SharpDX.2.6.3\build\SharpDX.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
