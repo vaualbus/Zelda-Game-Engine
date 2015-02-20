@@ -22,6 +22,8 @@ namespace ZeldaEngine.Base
 
         protected IInputManager InputManager;
 
+        protected Config Config => Engine?.Config;
+
         public IGameObject GameObject { get; set; }
 
         public Vector2 Position { get; set; }
@@ -52,7 +54,14 @@ namespace ZeldaEngine.Base
             OnDraw(gameView, renderEngine);
         }
 
+        public void Draw()
+        {
+            OnDraw();
+        }
+
         public virtual void OnDraw(IGameView gameView, IRenderEngine renderEngine) {  }
+
+        public virtual void OnDraw() { }
 
         public virtual INpc GetNpc(string npcName)
         {

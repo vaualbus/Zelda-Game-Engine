@@ -31,17 +31,17 @@ namespace ZeldaEngine.OpenGL.GameEngineClasses
         {
         }
 
-        public void DrawCircle(Vector2 position, float radious, Color fillColor)
+        public void DrawCircle(Vector2 position, int radius, object fillColor)
         {
             throw new System.NotImplementedException();
         }
 
-        public void DrawTriangle(Vector2 position, float radious, Color fillColor)
+        public void DrawTriangle(Vector2 position, float radious, object fillColor)
         {
             throw new System.NotImplementedException();
         }
 
-        public void DrawBox(Vector2 position, int width, Color color)
+        public void DrawBox(Vector2 position, int width, object color)
         {
             throw new System.NotImplementedException();
         }

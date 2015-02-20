@@ -14,11 +14,11 @@ namespace ZeldaEngine.Base.Abstracts.Game
         void UpdateRenderGameTime(int milliseconds);
 
 
-        void DrawCircle(Vector2 position, float radious, Color fillColor);
+        void DrawCircle(Vector2 position, int radious, object fillColor);
 
-        void DrawTriangle(Vector2 position, float radious, Color fillColor);
+        //void DrawTriangle(Vector2 position, int @base, Color fillColor);
 
-        void DrawBox(Vector2 position, int width, Color color);
+        void DrawBox(Vector2 position, int width, object color);
 
         //public void RenderUI(UIContext uiContext);
 

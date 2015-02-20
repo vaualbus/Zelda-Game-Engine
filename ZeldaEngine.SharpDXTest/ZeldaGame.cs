@@ -1,22 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Windows.Forms;
-using SharpDX;
-using SharpDX.Toolkit.Graphics;
 using ZeldaEngine.Base;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game;
-using ZeldaEngine.Base.Game.GameComponents;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.Game.MapLoaders;
 using ZeldaEngine.Base.Services;
 using ZeldaEngine.Base.ValueObjects.Game;
 using ZeldaEngine.ScriptEngine;
-using ZeldaEngine.SharpDx;
-using ZeldaEngine.SharpDx.GameEngineClasses;
-using Vector2 = SharpDX.Vector2;
 
 namespace ZeldaEngine.SharpDXTest
 {
@@ -116,6 +108,8 @@ namespace ZeldaEngine.SharpDXTest
             _testView.Draw(engine);
 
             _scriptGo.Draw(engine);
+
+            //engine.DrawCircle(new Base.ValueObjects.Vector2(100, 100), 100, Color.Blue);
 
             //_questManager.Draw(GameEngine.RenderEngine);
         }

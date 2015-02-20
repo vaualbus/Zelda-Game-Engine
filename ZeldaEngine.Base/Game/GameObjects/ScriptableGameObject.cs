@@ -20,7 +20,9 @@ namespace ZeldaEngine.Base.Game.GameObjects
 
         protected override void OnDraw(IRenderEngine renderEngine)
         {
-            base.OnDraw(renderEngine);
+            //Test
+            foreach (var script in Scripts)
+                script.CurrentMenagedScript.Draw();
         }
 
         protected override void OnUpdate(float dt)
