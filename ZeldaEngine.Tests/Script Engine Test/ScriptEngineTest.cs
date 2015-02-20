@@ -17,9 +17,7 @@ namespace ZeldaEngine.Tests
     [TestFixture]
     public class ScriptEngineTest
     {
-        private readonly Config _testConfig = new Config(new GameScriptConfig(@"C:\Users\alberto\Documents\Visual Studio 2015\Projects\ZeldaEngine\ZeldaEngine.Tests",
-                                                                              @"C:\Users\alberto\Documents\Visual Studio 2015\Projects\ZeldaEngine\ZeldaEngine.Tests",
-                                                                              "TestProject"), null);
+        private readonly Config _testConfig = new Config(new  GameConfig("Test", baseDirectory: AppDomain.CurrentDomain.BaseDirectory));
 
         public class TestScreen : BaseGameView
         {

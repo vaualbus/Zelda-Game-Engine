@@ -13,8 +13,8 @@ namespace ZeldaEngine.Base
         public static bool CreateProject(IScriptEngine engine)
         {
             _scriptEngine = engine;
-            if (!engine.Config.GameScriptConfig.GenerateProject)
-                return false;
+            //if (!engine.Config.GameScriptConfig.GenerateProject)
+            //    return false;
 
             return true;
         }

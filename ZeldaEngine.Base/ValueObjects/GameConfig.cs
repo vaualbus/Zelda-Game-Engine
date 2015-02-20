@@ -1,4 +1,6 @@
-﻿namespace ZeldaEngine.Base.ValueObjects
+﻿using System;
+
+namespace ZeldaEngine.Base.ValueObjects
 {
     public class GameConfig
     {
@@ -32,7 +34,7 @@
             ScreenWidth = width;
             ScreenHeight = height;
             Title = title;
-            BaseDirectory = baseDirectory;
+            BaseDirectory = baseDirectory ?? AppDomain.CurrentDomain.BaseDirectory;
             ResourceDirectory = resourceDirectory;
             QuestDirectory = questDirectory;
             Framerate = frameRate;

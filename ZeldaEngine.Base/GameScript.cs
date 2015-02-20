@@ -1,7 +1,6 @@
 ﻿using System;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
-using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 
@@ -63,6 +62,11 @@ namespace ZeldaEngine.Base
         public virtual IItem GetItem(string itemName)
         {
             throw new NotImplementedException();
+        }
+
+        public virtual void WaitFrame()
+        {
+            
         }
     }
 }

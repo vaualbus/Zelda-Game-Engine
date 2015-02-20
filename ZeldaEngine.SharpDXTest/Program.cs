@@ -37,8 +37,7 @@ namespace ZeldaEngine.SharpDXTest
                 ConfigurationManager.CreateConfiguration(gameConfig);
             }
 
-            var scriptConfig = new GameScriptConfig(gameConfig.BaseDirectory, ConfigurationManager.GetDefaultProjectDirectory());
-            var config = new Config(scriptConfig, gameConfig);
+            var config = new Config(gameConfig);
 
             using (var app = new SharpDxCoreEngine(new ZeldaGame(), config, new GameLogger(config)))
                 app.Run();

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using SharpDX;
 using SharpDX.Toolkit.Graphics;
@@ -9,6 +11,7 @@ using ZeldaEngine.Base.Game;
 using ZeldaEngine.Base.Game.GameComponents;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.Game.MapLoaders;
+using ZeldaEngine.Base.Services;
 using ZeldaEngine.Base.ValueObjects.Game;
 using ZeldaEngine.ScriptEngine;
 using ZeldaEngine.SharpDx;
@@ -25,7 +28,9 @@ namespace ZeldaEngine.SharpDXTest
         private List<GameObject> _gOs;
         private PlayerGameObject _playerGo;
         private GameView _testView;
+        private ScriptableGameObject _scriptGo;
         public IGameEngine GameEngine { get; set; }
+
 
         public void HandleInput(float delta)
         {
@@ -35,8 +40,9 @@ namespace ZeldaEngine.SharpDXTest
         {
             _gOs = new List<GameObject>();
 
-            _scriptEngine = new GameScriptEngine(GameEngine.Configuration);
+            _scriptEngine = new GameScriptEngine(GameEngine.Configuration, GameEngine);
             _scriptEngine.InitializeEngine();
+
             GameEngine.ScriptEngine = _scriptEngine;
 
             _questManager = new QuestManager(GameEngine, new JsonMapLoader(GameEngine));
@@ -52,17 +58,6 @@ namespace ZeldaEngine.SharpDXTest
                  g.Position = new Base.ValueObjects.Vector2(10, 10);
                  g.MoveVelocity = 50f;
              });
-
-            //_playerGo2 = GameObjectFactory.Create<DrawableGameObject>("Player2", g =>
-            //{
-            //    g.Tile = new Tile(GameEngine, 100, 100)
-            //    {
-            //        Texture = GameEngine.TextureData("Default")
-            //    };
-
-            //    g.Position = new Base.ValueObjects.Vector2(200, 200);
-            //    g.MoveVelocity = 50f;
-            //});
 
             const int sizeX = 1024;
             const int sizeY = 768;
@@ -95,6 +90,17 @@ namespace ZeldaEngine.SharpDXTest
             _testView.GameObjects.Add(_playerGo);
             _testView.GameObjects.AddRange(_gOs);
 
+            _scriptEngine.ScriptCompiler.AdditionalAssemblies.Add(Assembly.GetAssembly(typeof(System.Drawing.Color)));
+
+            var testScript = CreateScript("TestScript", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript.cs"));
+            _scriptGo = GameObjectFactory.Create<ScriptableGameObject>("ScriptGo1", go =>
+            {
+                go.ScriptParamProvider = _scriptEngine.ParamsProvider;
+                go.ObjectType = ObjectType.Enemy;
+
+                go.Scripts.Add(testScript);
+            });
+
             return true;
         }
         public void Render(IRenderEngine engine)
@@ -108,6 +114,8 @@ namespace ZeldaEngine.SharpDXTest
             //engine.Render(_playerGo);
 
             _testView.Draw(engine);
+
+            _scriptGo.Draw(engine);
 
             //_questManager.Draw(GameEngine.RenderEngine);
         }
@@ -126,7 +134,27 @@ namespace ZeldaEngine.SharpDXTest
 
             _testView.Update(delta);
 
+            _scriptGo.Update(delta);
+
             _questManager.Update(delta);
+        }
+
+        /// <summary>
+        /// TODO(albus95): Dummy function to test script working in game.
+        /// </summary>
+        /// <param name="scriptName"></param>
+        /// <param name="scriptFilename"></param>
+        /// <returns></returns>
+        private ScriptManager CreateScript(string scriptName, string scriptFilename)
+        {
+            var script = _scriptEngine.ScriptCompiler.Compile(scriptFilename);
+
+            var scriptManager = new ScriptManager(_scriptEngine, _scriptEngine.ScriptCompiler, _scriptEngine.ScriptRepository, null,
+                new InternalScriptActivator(), _scriptEngine.Logger);
+
+            scriptManager.AddScript(null, script, scriptName);
+
+            return scriptManager;
         }
 
         public void Dispose()

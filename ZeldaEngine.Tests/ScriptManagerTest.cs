@@ -14,7 +14,7 @@ namespace ZeldaEngine.Tests
     [TestFixture]
     public class ScriptManagerTest
     {
-        private static readonly Config TestConfig = new Config(new GameScriptConfig(AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.BaseDirectory), null);
+        private static readonly Config TestConfig = new Config(new GameConfig("Test", baseDirectory: AppDomain.CurrentDomain.BaseDirectory));
 
         private static readonly TestGameView TestView = new TestGameView("Test View"); 
 
@@ -77,9 +77,7 @@ namespace ZeldaEngine.Tests
         [Test]
         public void CanGenerateProjectFile()
         {
-            var config = new Config(new GameScriptConfig(@"C:\Users\alberto\Documents\Visual Studio 2015\Projects\ZeldaEngine\ZeldaEngine.Tests",
-                                                         @"C:\Users\alberto\Documents\Visual Studio 2015\Projects\ZeldaEngine\ZeldaEngine.Tests",
-                                                        "TestProj"), null);
+            var config = new Config(new GameConfig("Test", baseDirectory: @"C:\Users\alberto\Documents\Visual Studio 2015\Projects\ZeldaEngine\ZeldaEngine.Tests"));
 
             var engine = new ProjectGameScriptEngine(config);
 

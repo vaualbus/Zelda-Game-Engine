@@ -137,7 +137,6 @@
     <Compile Include="Abstracts\ScriptEngine\IScriptCompiler.cs" />
     <Compile Include="Abstracts\ScriptEngine\IScriptEngine.cs" />
     <Compile Include="Abstracts\ScriptEngine\IScriptParamaterProvider.cs" />
-    <Compile Include="ValueObjects\GameScriptConfig.cs" />
     <Compile Include="ValueObjects\ScriptEngine\RuntimeScript.cs" />
     <Compile Include="ValueObjects\ScriptEngine\ScriptInfo.cs" />
     <Compile Include="ValueObjects\Vector2.cs" />

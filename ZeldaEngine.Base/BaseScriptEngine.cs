@@ -147,7 +147,7 @@ namespace ZeldaEngine.Base
 
         public void DeleteProject()
         {
-            ProjectUtil.DeleteProject(Config.GameScriptConfig.ProjectName);
+            //ProjectUtil.DeleteProject(Config.GameScriptConfig.ProjectName);
         }
 
         public virtual void Update(IGameView view, float dt)
@@ -200,37 +200,22 @@ namespace ZeldaEngine.Base
 
         private void ScanAssemblies()
         {
-            if (Config.GameScriptConfig.ProjectFolder == string.Empty)
-                return;
+            //if (Config.GameScriptConfig.ProjectFolder == string.Empty)
+            //    return;
 
-            if (ProjectUtil.GetProject(Config.GameScriptConfig.ProjectName))
-            {
-                ScriptCompiler.AdditionalAssemblies.AddRange(ProjectUtil.GetProjectAssemblies(Config.GameScriptConfig.ProjectName));
+            //if (ProjectUtil.GetProject(Config.GameScriptConfig.ProjectName))
+            //{
+                //ScriptCompiler.AdditionalAssemblies.AddRange(ProjectUtil.GetProjectAssemblies(Config.GameScriptConfig.ProjectName));
                 //AddAssembliesFromDirectoryName("Assemblies");
-                return;
-            }
+                //return;
+            //}
 
             //AddAssembliesFromDirectoryName("Assemblies");
 
-            string dllDirectory;
-            try
-            {
-                var binDirectory = Directory.GetDirectories(Directory.GetDirectories(Config.GameScriptConfig.ProjectFolder).First(t => t.EndsWith("bin")));
-#if DEBUG
-                dllDirectory = binDirectory.First(t => t.EndsWith("Debug"));
-#else
-                dllDirectory = binDirectory.First(t => t.EndsWith("Release"));
-#endif
-            }
-            catch
-            { 
-                dllDirectory = Config.GameScriptConfig.ProjectFolder;
-            }
-
-            if(!Directory.Exists(dllDirectory))
+            if(!Directory.Exists(Config.GameConfig.BaseDirectory))
                 return;
 
-            foreach (var dll in Directory.GetFiles(dllDirectory).Where(t => (new FileInfo(t)).Extension == ".dll"))
+            foreach (var dll in Directory.GetFiles(Config.GameConfig.BaseDirectory).Where(t => (new FileInfo(t)).Extension == ".dll"))
             {
                 Assembly loadedAssembly = null;
                 try

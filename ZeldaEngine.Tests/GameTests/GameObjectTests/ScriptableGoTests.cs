@@ -27,12 +27,6 @@ namespace ZeldaEngine.Tests.GameTests.GameObjectTests
 
         public ScriptableGoTests()
         {
-            //ConfigurationManager.CreateConfiguration(new GameConfig("Zelda Engine", 300, 200, AppDomain.CurrentDomain.BaseDirectory));
-            //_testConfig = new Config(new GameScriptConfig(@"C:\Users\alberto\Documents\Visual Studio 2015\Projects\ZeldaEngine\ZeldaEngine.Tests",
-            //                                              @"C:\Users\alberto\Documents\Visual Studio 2015\Projects\ZeldaEngine\ZeldaEngine.Tests",
-            //                                              "TestProject"), 
-            //                                              ConfigurationManager.GetConfiguration());
-
             GameConfig gameConfig;
             if (File.Exists(ConfigurationManager.ConfigurationFileName))
             {
@@ -48,11 +42,7 @@ namespace ZeldaEngine.Tests.GameTests.GameObjectTests
                 ConfigurationManager.CreateConfiguration(gameConfig);
             }
 
-            var scriptConfig = new GameScriptConfig(@"C:\Users\alberto\Documents\Visual Studio 2015\Projects\ZeldaEngine\ZeldaEngine.Tests",
-                                                          @"C:\Users\alberto\Documents\Visual Studio 2015\Projects\ZeldaEngine\ZeldaEngine.Tests",
-                                                          "TestProject");
-
-            var config = new Config(scriptConfig, gameConfig);
+            var config = new Config(gameConfig);
 
 
             var gameEngine = new SharpDxCoreEngine(new TestGame(), config, new GameLogger(config));
