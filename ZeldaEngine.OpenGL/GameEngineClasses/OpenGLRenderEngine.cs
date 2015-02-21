@@ -5,6 +5,7 @@ using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.ValueObjects;
+using ZeldaEngine.Base.ValueObjects.Game;
 using ZeldaEngine.OpenGL.GameEngineClasses.ResourceLoader;
 
 namespace ZeldaEngine.OpenGL.GameEngineClasses
@@ -36,7 +37,37 @@ namespace ZeldaEngine.OpenGL.GameEngineClasses
             throw new System.NotImplementedException();
         }
 
-        public void DrawTriangle(Vector2 position, float radious, object fillColor)
+        public void DrawLine(Vector2 start, Vector2 end, object lineColor, int thickness)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawLine(int x0, int y0, int x1, int y1, object lineColor, int thickness)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawLine(Vector2 start, int lenght, float rotation, object lineColor, int thinckness)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawLine(int x0, int y0, int lenght, float rotation, object lineColor, int thickness)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawFillCircle(Vector2 position, int radious, object fillColor)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawTriangle(Vector2 position, Vertex[] verticies, object lineColor, int thickness)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawFillTriangle(Vector2 position, Vertex[] verticies)
         {
             throw new System.NotImplementedException();
         }

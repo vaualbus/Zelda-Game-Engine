@@ -29,7 +29,9 @@ namespace ZeldaEngine.Base.Game.GameObjects
         {
             foreach (var script in Scripts)
             {
+                var managedScript = script.CurrentMenagedScript;
                 var @params = ScriptParamProvider.GetParamatersForScript(script.CurrentMenagedScript);
+
                 script.ExcuteFunction("Run", @params);
             }
             base.OnUpdate(dt);

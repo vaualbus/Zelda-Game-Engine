@@ -28,6 +28,10 @@ namespace ZeldaEngine.Base
 
         public Vector2 Position { get; set; }
 
+        public Vector2 InitialPosition;
+
+        public object ScriptObjectColor { get; set; }
+
         protected GameScript()
         {
             Position = new Vector2();
@@ -75,7 +79,17 @@ namespace ZeldaEngine.Base
 
         public virtual void WaitFrame()
         {
-            
+        }
+
+        public virtual void SetInitalPosition(Vector2 position)
+        {
+            InitialPosition = position;
+            Position = position;
+        }
+
+        public virtual void SetInitalColor(object color)
+        {
+            ScriptObjectColor = color;
         }
     }
 }

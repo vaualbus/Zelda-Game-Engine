@@ -1,47 +1,45 @@
+
 using SharpDX;
 using ZeldaEngine.Base;
 using ZeldaEngine.ScriptEngine.Attributes;
-using Vector2 = ZeldaEngine.Base.ValueObjects.Vector2;
 
 namespace TestScript
 {
     [GlobalScript]
     public class TestScript : GameScript
     {
-        private Vector2 _position;
-
         private int _moveVelocity = 5;
-
-        public TestScript()
-        {
-            _position = new Vector2(10, 10);
-        }
+        private float _rotation;
 
         public void Run()
         {
             //WaitFrame();
-            if(InputManager.IsKeyDown("R"))
-                _position = new Vector2(0, 0);
 
-            if (_position.X <= Config.GameConfig.ScreenWidth)
-                _position.X += _moveVelocity;
+            if (Position.X <= Config.GameConfig.ScreenWidth)
+                Position.X += _moveVelocity;
             else
             {
-                _position.X = 0;
+                Position.X = 0;
 
-                if (_position.Y >= Config.GameConfig.ScreenHeight)
+                if (Position.Y >= Config.GameConfig.ScreenHeight)
                 {
-                    _position.Y = 0;
+                    Position.Y = 0;
                     _moveVelocity = 5;
                 }
 
-                _position.Y += _moveVelocity;
+                Position.Y += _moveVelocity;
             }
+
+            //if(InputManager.IsKeyDown("R"))
+            _rotation += 1.0f;
         }
 
         public override void OnDraw()
         {
-            RenderEngine.DrawCircle(_position, 50, Color.Yellow);
+            //RenderEngine.DrawFillCircle(Position, 100, ScriptObjectColor);
+
+            RenderEngine.DrawLine(100, 100, 300, _rotation, Color.Red, 50);
+            RenderEngine.DrawLine(500, 500, 100, _rotation, Color.Blue, 2);
         }
     }
 }

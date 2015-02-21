@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using SharpDX;
 using ZeldaEngine.Base;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game;
@@ -9,6 +10,7 @@ using ZeldaEngine.Base.Game.MapLoaders;
 using ZeldaEngine.Base.Services;
 using ZeldaEngine.Base.ValueObjects.Game;
 using ZeldaEngine.ScriptEngine;
+using Vector2 = ZeldaEngine.Base.ValueObjects.Vector2;
 
 namespace ZeldaEngine.SharpDXTest
 {
@@ -84,13 +86,27 @@ namespace ZeldaEngine.SharpDXTest
 
             _scriptEngine.ScriptCompiler.AdditionalAssemblies.Add(Assembly.GetAssembly(typeof(System.Drawing.Color)));
 
-            var testScript = CreateScript("TestScript", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript.cs"));
+            var testScript1 = CreateScript("TestScript1", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript.cs"));
+            var testScript2 = CreateScript("TestScript2", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript.cs"));
+            var testScript3 = CreateScript("TestScript3", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript.cs"));
+
+
             _scriptGo = GameObjectFactory.Create<ScriptableGameObject>("ScriptGo1", go =>
             {
                 go.ScriptParamProvider = _scriptEngine.ParamsProvider;
                 go.ObjectType = ObjectType.Enemy;
 
-                go.Scripts.Add(testScript);
+                testScript1.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 50));
+                testScript1.CurrentMenagedScript.SetInitalColor(new Color(1.0f, 0.0f, 0.0f, .75f));
+                go.Scripts.Add(testScript1);
+
+                testScript2.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 300));
+                testScript2.CurrentMenagedScript.SetInitalColor(new Color(1.0f, 0.0f, 1.0f, .25f));
+                go.Scripts.Add(testScript2);
+
+                testScript3.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 550));
+                testScript3.CurrentMenagedScript.SetInitalColor(Color.Tomato);
+                go.Scripts.Add(testScript3);
             });
 
             return true;
@@ -154,6 +170,7 @@ namespace ZeldaEngine.SharpDXTest
         public void Dispose()
         {
             _questManager.Dispose();
+            _scriptGo.Dispose();
             //_scriptEngine.Dispose();
             GameEngine.ScriptEngine.Dispose();
         }

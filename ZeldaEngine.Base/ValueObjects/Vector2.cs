@@ -64,6 +64,13 @@ namespace ZeldaEngine.Base.ValueObjects
             return X <= distance.X && Y <= distance.Y;
         }
 
+        public static float Distance(Vector2 v1, Vector2 v2)
+        {
+            float num1 = v1.X - v2.X;
+            float num2 = v1.Y - v2.Y;
+            return (float) Math.Sqrt(num1 * num1 + num2 * num2);
+        }
+
         public override string ToString()
         {
             return string.Format("X: {0}, Y: {1}", X, Y);
