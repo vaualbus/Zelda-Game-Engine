@@ -52,6 +52,7 @@
     <Compile Include="Abstracts\Game\IGameComponent.cs" />
     <Compile Include="Abstracts\Game\IGameEngine.cs" />
     <Compile Include="Abstracts\Game\IGameObject.cs" />
+    <Compile Include="Abstracts\Game\IGameObjectFactory.cs" />
     <Compile Include="Abstracts\Game\IGameResourceLoader.cs" />
     <Compile Include="Abstracts\Game\IInputManager.cs" />
     <Compile Include="Abstracts\Game\IRenderEngine.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Game\GameComponent.cs" />
     <Compile Include="Game\GameComponents\ColliderComponent.cs" />
     <Compile Include="Game\GameComponents\ColliderGameComponent.cs" />
+    <Compile Include="Game\GameComponents\MovableGameComponent.cs" />
     <Compile Include="Game\GameComponents\MovableTestGameComponent.cs" />
     <Compile Include="Game\GameComponents\TestComponent.cs" />
     <Compile Include="Game\GameComponents\TextureDrawerComponent.cs" />
@@ -88,7 +90,7 @@
     <Compile Include="Game\GameObjects\DefaultGameObject.cs" />
     <Compile Include="Game\GameObjects\DrawableGameObject.cs" />
     <Compile Include="Game\GameObjects\EnemyGameObject.cs" />
-    <Compile Include="Game\GameObjects\GameObjectFactory.cs" />
+    <Compile Include="Game\GameObjectFactory.cs" />
     <Compile Include="Game\GameObjects\ItemGameObject.cs" />
     <Compile Include="Game\GameObjects\MovableGameObject.cs" />
     <Compile Include="Game\GameObjects\PlayerGameObject.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="Services\InternalDependecyResolver.cs" />
     <Compile Include="Services\InternalScriptActivator.cs" />
     <Compile Include="ValueObjects\Extensions\TypeExtensions.cs" />
+    <Compile Include="ValueObjects\Game\MovableDirection.cs" />
     <Compile Include="ValueObjects\Game\ScreenType.cs" />
     <Compile Include="ValueObjects\Game\ObjectType.cs" />
     <Compile Include="ValueObjects\Game\ScriptState.cs" />

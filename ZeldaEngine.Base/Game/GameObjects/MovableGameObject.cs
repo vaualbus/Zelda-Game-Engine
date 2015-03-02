@@ -1,12 +1,19 @@
 ﻿using ZeldaEngine.Base.Abstracts.Game;
+using ZeldaEngine.Base.Game.GameComponents;
+using ZeldaEngine.Base.ValueObjects.Game;
 
 namespace ZeldaEngine.Base.Game.GameObjects
 {
     public class MovableGameObject : DrawableGameObject
     {
+        public MovableDirection MoveDirection { get; set; }
+
+        public float MoveVelocity { get; set; }
+
         public MovableGameObject(IGameEngine gameEngine) 
             : base(gameEngine)
         {
+            AddComponent<MovableGameComponent>("movableComponent");
         }
 
         protected override void OnUpdate(float dt)

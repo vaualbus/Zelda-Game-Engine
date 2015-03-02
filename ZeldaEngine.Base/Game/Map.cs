@@ -66,7 +66,7 @@ namespace ZeldaEngine.Base.Game
                 var screen = new MapTempGameView(screenDescription.ScreenName, screenPosition[screenDescription], new Vector2(screenDescription.PlayerStartPositionX, screenDescription.PlayerStartPositionY));
                 foreach (var enemyDescription in screenDescription.Enemies)
                 {
-                    var enemy = GameObjectFactory.Find(enemyDescription.Name) as EnemyGameObject;
+                    var enemy = _gameEngine.GameObjectFactory.Find(enemyDescription.Name) as EnemyGameObject;
                     if (enemy == null)
                     {
                         _gameEngine.Logger.LogError("Invalid Enemy name, enemy {0} not found", enemyDescription.Name);
@@ -75,7 +75,7 @@ namespace ZeldaEngine.Base.Game
 
                     enemy.UpdateEnemy(enemy, enemyDescription);
                     
-                    GameObjectFactory.UpdateGameObject(enemy);
+                    _gameEngine.GameObjectFactory.UpdateGameObject(enemy);
 
                     for (var i = 0; i < enemyDescription.Count; i++)
                         screen.GameObjects.Add(enemy);
@@ -86,7 +86,7 @@ namespace ZeldaEngine.Base.Game
                     if (tile.GameObject != null)
                     {
                         //Update the game object info
-                        var go = GameObjectFactory.GetFromDefinition(tile.GameObject);
+                        var go = _gameEngine.GameObjectFactory.GetFromDefinition(tile.GameObject);
                         go.UpdateTypes(tile.GameObject.Properties);
 
 #if ENABLE_SCRIPT
@@ -113,10 +113,10 @@ namespace ZeldaEngine.Base.Game
                         }
 #endif
                         var goName = string.Format("tile_{0}_{1}", tile.TilePositionX, tile.TilePositionY);
-                        if (GameObjectFactory.Find(goName) != null)
+                        if (_gameEngine.GameObjectFactory.Find(goName) != null)
                             continue;
 
-                        var tGo = GameObjectFactory.Create<DrawableGameObject>(
+                        var tGo = _gameEngine.GameObjectFactory.Create<DrawableGameObject>(
                             string.Format("tile_{0}_{1}", tile.TilePositionX, tile.TilePositionY),
                             t =>
                             {

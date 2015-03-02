@@ -8,6 +8,8 @@ namespace ZeldaEngine.Base
 {
     public class GameScript
     {
+        private bool _isInited;  
+
         protected IScriptEngine Engine;
 
         protected  ScriptInfo ScriptInfo;
@@ -21,6 +23,8 @@ namespace ZeldaEngine.Base
         protected IContentLoader ResourceLoader;
 
         protected IInputManager InputManager;
+
+        protected IGameObjectFactory GameObjectFactory;
 
         protected Config Config => Engine?.Config;
 
@@ -42,7 +46,11 @@ namespace ZeldaEngine.Base
         /// </summary>
         public virtual void Init()
         {
+            OnInit();
+            _isInited = true;
         }
+
+        public virtual void OnInit() { }
 
         /// <summary>
         /// This function is called when the game is initially loaded
@@ -87,7 +95,7 @@ namespace ZeldaEngine.Base
             Position = position;
         }
 
-        public virtual void SetInitalColor(object color)
+        public virtual void SetInitialColor(object color)
         {
             ScriptObjectColor = color;
         }

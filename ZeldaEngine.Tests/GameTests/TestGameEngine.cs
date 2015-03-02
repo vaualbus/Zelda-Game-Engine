@@ -46,6 +46,11 @@ namespace ZeldaEngine.Tests.GameTests
             get { throw new System.NotImplementedException(); }
         }
 
+        public IGameObjectFactory GameObjectFactory
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
         public IResourceData TextureData(string assetName)
         {
             throw new System.NotImplementedException();

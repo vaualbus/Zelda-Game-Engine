@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using ZeldaEngine.Base.Abstracts.Game;
@@ -58,8 +59,8 @@ namespace ZeldaEngine.ScriptEngine
 
             var compilationErrors = compilation.GetDiagnostics();
 
-            foreach (var error in compilationErrors)
-                _logger.LogError(string.Format("An error has occured during the script compilation. Info: {0}", error));
+            //foreach (var error in compilationErrors.Where(t => t.DefaultSeverity.ToString() != "Hidden"))
+            //    _logger.LogError(string.Format("An error has occured during the script compilation. Info: {0}", error));
 
             using (var ms = new MemoryStream())
             {

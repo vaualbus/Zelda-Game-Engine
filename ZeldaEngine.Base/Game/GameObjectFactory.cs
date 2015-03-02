@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using ZeldaEngine.Base.Abstracts.Game;
+using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.Game.ValueObjects;
 using ZeldaEngine.Base.ValueObjects;
 
-namespace ZeldaEngine.Base.Game.GameObjects
+namespace ZeldaEngine.Base.Game
 {
-    public class GameObjectFactory
+    public class GameObjectFactory : IGameObjectFactory
     {
-        private static IGameEngine _gameEngine;
+        private readonly IGameEngine _gameEngine;
         private static Dictionary<Tuple<Type, string>, IGameObject> _registeredGameObjects;
 
         public static IEnumerable<IGameObject> RegisteredGameObjects => _registeredGameObjects.Values;
@@ -20,8 +21,10 @@ namespace ZeldaEngine.Base.Game.GameObjects
             _registeredGameObjects = new Dictionary<Tuple<Type, string>, IGameObject>();
         }
 
-        public static TObject Create<TObject>(string name, params object[] ctorParams) where TObject : class, IGameObject
+        public TObject Create<TObject>(string name, params object[] ctorParams) where TObject : class, IGameObject
         {
+            _gameEngine.Logger.LogInfo("Creating the game Object: {0}", name);
+
             if (_registeredGameObjects.Select(t => t.Value).Any(t => t.Name == name))
             {
                 _gameEngine.Logger.LogError("Trying adding a game object with the same name");
@@ -40,8 +43,10 @@ namespace ZeldaEngine.Base.Game.GameObjects
             return temp;
         }
 
-        public static TObject Create<TObject>(string name, Action<TObject> func) where TObject : class, IGameObject
+        public TObject Create<TObject>(string name, Action<TObject> func) where TObject : class, IGameObject
         {
+            _gameEngine.Logger.LogInfo("Creating the game Object: {0}", name);
+
             if (_registeredGameObjects.Select(t => t.Value).Any(t => t.Name == name))
             {
                 _gameEngine.Logger.LogError("Trying adding a game object with the same name");
@@ -57,7 +62,7 @@ namespace ZeldaEngine.Base.Game.GameObjects
             return temp;
         }
 
-        public static void Delete(string name)
+        public void Delete(string name)
         {
             var go = _registeredGameObjects.Select(t => t.Value).FirstOrDefault(t => t.Name == name);
             if (go == null)
@@ -68,46 +73,39 @@ namespace ZeldaEngine.Base.Game.GameObjects
             _registeredGameObjects.Remove(Tuple.Create(go.GetType(), go.Name));
         }
 
-        public static IGameObject Find(string name)
+        public IGameObject Find(string name)
         {
             return _registeredGameObjects.Select(t => t.Value).FirstOrDefault(t => t.Name == name);
         }
 
-        public static IEnumerable<TObject> Find<TObject>() where TObject : class, IGameObject
+        public TObject Find<TObject>(string name) where TObject : class, IGameObject
+        {
+            return (TObject) Find(name);
+        }
+
+        public IEnumerable<TObject> Find<TObject>() where TObject : class, IGameObject
         {
             return _registeredGameObjects.Where(t => t.Key.Item1 == typeof (TObject)).Select(t => t.Value).Cast<TObject>();
         }
 
-        public static IEnumerable<TileGameObject> FindNearGameObject(Vector2 distance)
+        public IEnumerable<TileGameObject> FindNearGameObject(Vector2 distance)
         {
             return Find<TileGameObject>().Where(t => t.Position.IsInRange(distance));
         }
 
-        public static void Delete<TObject>()
+        public void Delete<TObject>()
         {
             var gos = _registeredGameObjects.Where(t => t.Key.Item1 == typeof(TObject)).Select(t => t.Value).ToList();
             foreach (var go in gos.Where(t => t != null))
                 _registeredGameObjects.Remove(Tuple.Create(go.GetType(), go.Name));
         }
 
-        public static void Draw(IRenderEngine renderEngine)
-        {
-            foreach (var registeredGameObject in _registeredGameObjects)
-                registeredGameObject.Value.Draw(renderEngine);
-        }
-
-        public static void Update(float dt)
-        {
-            foreach (var registeredGameObject in _registeredGameObjects)
-                registeredGameObject.Value.Update(dt);
-        }
-
-        public static IGameObject GetFromDefinition(GameObjectDefinition gameObject)
+        public IGameObject GetFromDefinition(GameObjectDefinition gameObject)
         {
             return Find(gameObject.Name);
         }
 
-        public static void UpdateGameObject(IGameObject enemy)
+        public void UpdateGameObject(IGameObject enemy)
         {
             var go = Find(enemy.Name);
             _registeredGameObjects[Tuple.Create(enemy.GetType(), go.Name)] = enemy;

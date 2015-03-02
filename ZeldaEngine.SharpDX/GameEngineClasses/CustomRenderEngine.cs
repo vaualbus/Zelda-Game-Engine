@@ -39,10 +39,9 @@ namespace ZeldaEngine.SharpDx.GameEngineClasses
                 var position = new Vector2(drawableGo.Position.X, drawableGo.Position.Y);
 
                 ///TODO(albus95): Implement the layer stuff here....
-
                 SpriteBatch.Begin();
                 SpriteBatch.Draw(texture, new RectangleF(position.X, position.Y, drawableGo.Tile.Width,
-                                 drawableGo.Tile.Height), SharpDX.Color.Wheat);
+                                 drawableGo.Tile.Height), (Color)(drawableGo.Color ?? Color.White));
                 SpriteBatch.End();
             }
         }
@@ -169,7 +168,7 @@ namespace ZeldaEngine.SharpDx.GameEngineClasses
             //First we sould want to calculate the angle of the rect.
             var lenght = (int) ZeldaEngine.Base.ValueObjects.Vector2.Distance(start, end);
             var rotation = CalculateRotation(start, end);
-            var rect = new Rectangle(start.X, start.Y, lenght, thickness);
+            var rect = new Rectangle((int)start.X, (int)start.Y, lenght, thickness);
 
             SpriteBatch.Begin();
             SpriteBatch.Draw(_emptyTexture, rect, null, (SharpDX.Color) lineColor, rotation, new Vector2(0, 0), SpriteEffects.None,  0.0f);
@@ -183,7 +182,7 @@ namespace ZeldaEngine.SharpDx.GameEngineClasses
 
         public void DrawLine(Base.ValueObjects.Vector2 start, int lenght, float rotation, object lineColor, int thickness)
         {
-            var rect = new Rectangle(start.X, start.Y, lenght, thickness);
+            var rect = new Rectangle((int)start.X, (int)start.Y, lenght, thickness);
 
             SpriteBatch.Begin();
             SpriteBatch.Draw(_emptyTexture, rect, null, (Color)lineColor, -MathUtil.DegreesToRadians(rotation), new Vector2(0, 0), SpriteEffects.None, 0.0f);
@@ -194,6 +193,16 @@ namespace ZeldaEngine.SharpDx.GameEngineClasses
         public void DrawLine(int x0, int y0, int lenght, float rotation, object lineColor, int thickness)
         {
             DrawLine(new Base.ValueObjects.Vector2(x0, y0), lenght, rotation, lineColor, thickness);
+        }
+
+        public void DrawTexture(Base.ValueObjects.Vector2 position, IResourceData texture, float rotation, object color, int layer = 0)
+        {
+            var texture2D = (Texture2D) texture.Value;
+            var rect = new Rectangle((int)position.X, (int)position.Y, texture2D.Width, texture.Height);
+
+            SpriteBatch.Begin();
+            SpriteBatch.Draw((Texture2D) texture.Value, rect, null, (Color) color, rotation, new Vector2(0,0), SpriteEffects.None, layer);
+            SpriteBatch.End();
         }
 
         public void DrawTriangle(Base.ValueObjects.Vector2 position, Vertex[] verticies, object lineColor, int thickness = 1)
@@ -232,6 +241,11 @@ namespace ZeldaEngine.SharpDx.GameEngineClasses
 
             res = MathUtil.DegreesToRadians(res);
             return res;
+        }
+
+        public void Dispose()
+        {
+            _emptyTexture.Dispose();
         }
     }
 }

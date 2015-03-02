@@ -6,15 +6,15 @@ namespace ZeldaEngine.Base.Game.ValueObjects
     {
         public string Name { get; private set; }
 
-        public int StartPositionX { get; private set; }
+        public float StartPositionX { get; private set; }
 
-        public int StartPositionY { get; private set; }
+        public float StartPositionY { get; private set; }
 
         public string SubScreenName { get; private set; }
 
         public IEnumerable<ScreenDefinition> Screens { get; private set; }
 
-        public MapDefinition(string name, int startPositionX, int startPositionY, string subScreenName,
+        public MapDefinition(string name, float startPositionX, float startPositionY, string subScreenName,
             IEnumerable<ScreenDefinition> screens)
         {
             Name = name;

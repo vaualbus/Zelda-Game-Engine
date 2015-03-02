@@ -2,6 +2,8 @@
 {
     public class UIContext
     {
-         
+        public UIContext()
+        {
+        }
     }
 }

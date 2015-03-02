@@ -4,48 +4,53 @@ namespace ZeldaEngine.Base.ValueObjects
 {
     public class Vector2 : IEquatable<Vector2>
     {
-        public int X { get; set; }
+        public float X { get; set; }
 
-        public int Y { get; set; }
+        public float Y { get; set; }
 
         public Vector2()
         {
             X = Y = 0;
         }
 
-        public Vector2(int x, int y)
+        public Vector2(float x, float y)
         {
             X = x;
             Y = y;
         }
 
+
         public bool Equals(Vector2 other)
         {
-            return X == other.X && Y == other.Y;
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Y.Equals(other.Y) && X.Equals(other.X);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            return obj is Vector2 && Equals((Vector2) obj);
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Vector2) obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return (X*397) ^ Y;
+                return (Y.GetHashCode()*397) ^ X.GetHashCode();
             }
         }
 
         public static bool operator ==(Vector2 left, Vector2 right)
         {
-            return left.Equals(right);
+            return Equals(left, right);
         }
 
         public static bool operator !=(Vector2 left, Vector2 right)
         {
-            return !left.Equals(right);
+            return !Equals(left, right);
         }
 
         public static Vector2 Parse(string s)

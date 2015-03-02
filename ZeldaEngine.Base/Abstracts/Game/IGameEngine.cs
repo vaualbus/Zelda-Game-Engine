@@ -19,6 +19,8 @@ namespace ZeldaEngine.Base.Abstracts.Game
 
         ILogger Logger { get; }
 
+        IGameObjectFactory GameObjectFactory { get; }
+
         IResourceData TextureData(string assetName);
     }
 }

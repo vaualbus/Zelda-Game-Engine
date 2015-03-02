@@ -73,6 +73,9 @@ namespace ZeldaEngine.Base
             SetScriptFields("InputManager", _engine.GameEngine?.InputManager);
             SetScriptFields("AudioEngine", _engine.GameEngine?.AudioEngine);
             SetScriptFields("ResourceLoader", _engine.GameEngine?.ResourceLoader);
+            SetScriptFields("GameObjectFactory", _engine.GameEngine?.GameObjectFactory);
+
+            _currentCachedScriptInstance.Init();
 
             return _currentCachedScriptInstance;
         }
@@ -97,7 +100,13 @@ namespace ZeldaEngine.Base
             SetScriptFields("Engine", _engine);
             SetScriptFields("ScriptInfo", scriptDesc);
             SetScriptFields("Logger", _logger);
-            SetScriptFields("RenderEngine", null);
+            SetScriptFields("RenderEngine", _engine.GameEngine?.RenderEngine);
+            SetScriptFields("InputManager", _engine.GameEngine?.InputManager);
+            SetScriptFields("AudioEngine", _engine.GameEngine?.AudioEngine);
+            SetScriptFields("ResourceLoader", _engine.GameEngine?.ResourceLoader);
+            SetScriptFields("GameObjectFactory", _engine.GameEngine?.GameObjectFactory);
+
+            _currentCachedScriptInstance.Init();
 
             return true;
         }

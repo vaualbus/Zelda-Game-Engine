@@ -4,6 +4,7 @@ using System.Reflection;
 using NUnit.Framework;
 using ZeldaEngine.Base;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
+using ZeldaEngine.Base.Game;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.Services;
 using ZeldaEngine.Base.ValueObjects;
@@ -58,7 +59,7 @@ namespace ZeldaEngine.Tests.GameTests.GameObjectTests
         [Test]
         public void AttachScriptToAGameObjectNotThrowException()
         {
-            var go = GameObjectFactory.Create<ScriptableGameObject>("Test", scriptGameObject =>
+            var go = _engine.GameEngine.GameObjectFactory.Create<ScriptableGameObject>("Test", scriptGameObject =>
             {
                 scriptGameObject.ScriptParamProvider = _engine.ParamsProvider;
                 scriptGameObject.ObjectType = ObjectType.Enemy;

@@ -16,11 +16,11 @@ namespace ZeldaEngine.Base.Game.GameObjects
 
         public Tile Tile { get; set; }
 
-        public float MoveVelocity { get; set; }
+        public object Color { get; set; }
 
-        public new Rectangle CollisionBounds => new Rectangle(Position.X, Position.Y, Tile.Width, Tile.Height);
+        public new Rectangle CollisionBounds => new Rectangle((int)Position.X, (int)Position.Y, Tile.Width, Tile.Height);
 
-        public Vector2 Center => new Vector2(Position.X + Tile.Width / 2, Position.Y + Tile.Height / 2);
+        public Vector2 Center => new Vector2(Position.X + Tile.Width / 2.0f, Position.Y + Tile.Height / 2.0f);
 
         public DrawableGameObject(IGameEngine gameEngine)
             : base(gameEngine)
@@ -56,7 +56,7 @@ namespace ZeldaEngine.Base.Game.GameObjects
 
         public DrawableGameObject Create(GameObjectDefinition gameObjectDefinition)
         {
-            var go = GameObjectFactory.Create<DrawableGameObject>(gameObjectDefinition.Name);
+            var go = GameEngine.GameObjectFactory.Create<DrawableGameObject>(gameObjectDefinition.Name);
             //go.Texture = GameEngine.TextureData(gameObjectDefinition.Name);
             go.UpdateTypes(gameObjectDefinition.Properties);
             return go;

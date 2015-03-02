@@ -6,9 +6,9 @@ namespace ZeldaEngine.Base.Game.ValueObjects
 {
     public class TileDefinition : IEquatable<TileDefinition>
     {
-        public int TilePositionX { get; private set; }
+        public float TilePositionX { get; private set; }
 
-        public int TilePositionY { get; private set; }
+        public float TilePositionY { get; private set; }
 
         public TileType TileType { get; private set; }
 
@@ -22,7 +22,7 @@ namespace ZeldaEngine.Base.Game.ValueObjects
  
         public GameScriptDefinition GameScript { get; private set; }
 
-        public TileDefinition(int tilePositionX, int tilePositionY, string textureAssetName, 
+        public TileDefinition(float tilePositionX, float tilePositionY, string textureAssetName, 
                                TileType tileType, string tileColor = "COLOR_DEFAULT", int layerNumber = 0,
                                GameObjectDefinition gameObject = null, GameScriptDefinition gameScript = null)
         {
@@ -40,7 +40,7 @@ namespace ZeldaEngine.Base.Game.ValueObjects
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return TilePositionX == other.TilePositionX && TilePositionY == other.TilePositionY &&
+            return TilePositionX.Equals(other.TilePositionX) && TilePositionY.Equals(other.TilePositionY) &&
                    TileType == other.TileType && string.Equals(TileColor, other.TileColor) &&
                    LayerNumber == other.LayerNumber && string.Equals(TextureAssetName, other.TextureAssetName) &&
                    Equals(GameObject, other.GameObject) && Equals(GameScript, other.GameScript);
@@ -58,8 +58,8 @@ namespace ZeldaEngine.Base.Game.ValueObjects
         {
             unchecked
             {
-                var hashCode = TilePositionX;
-                hashCode = (hashCode*397) ^ TilePositionY;
+                var hashCode = TilePositionX.GetHashCode();
+                hashCode = (hashCode*397) ^ TilePositionY.GetHashCode();
                 hashCode = (hashCode*397) ^ (int) TileType;
                 hashCode = (hashCode*397) ^ (TileColor != null ? TileColor.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ LayerNumber;

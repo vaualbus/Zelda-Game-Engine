@@ -69,9 +69,12 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scripts\TestScript.cs">
+    <Compile Include="Scripts\GameTestScript.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Scripts\TestScript1.cs" />
+    <Compile Include="Scripts\TestScript2.cs" />
+    <Compile Include="Scripts\TestScript3.cs" />
     <Compile Include="ZeldaGame.cs" />
   </ItemGroup>
   <ItemGroup>

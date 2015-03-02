@@ -1,4 +1,3 @@
-
 using SharpDX;
 using ZeldaEngine.Base;
 using ZeldaEngine.ScriptEngine.Attributes;

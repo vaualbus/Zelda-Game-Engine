@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.Game;
 
 namespace ZeldaEngine.Base.Abstracts.Game
 {
-    public interface IRenderEngine
+    public interface IRenderEngine : IDisposable
     {
         void Render(IGameObject gameObject);
 
@@ -25,6 +25,8 @@ namespace ZeldaEngine.Base.Abstracts.Game
         void DrawLine(Vector2 start, int lenght, float rotation, object lineColor, int thickness = 1);
 
         void DrawLine(int x0, int y0, int lenght, float rotation, object lineColor, int thickness = 1);
+
+        void DrawTexture(Vector2 position, IResourceData texture, float rotation, object color, int layer = 0);
 
         void DrawTriangle(Vector2 position, Vertex[] verticies, object lineColor, int thickness = 1);
 

@@ -19,6 +19,12 @@ namespace ZeldaEngine.Base.Game.GameEngineClasses
         public IContentLoader ResourceLoader { get; protected set; }
 
         public ILogger Logger { get; private set; }
+
+        public IGameObjectFactory GameObjectFactory
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
         public IResourceData TextureData(string assetName)
         {
             return null;

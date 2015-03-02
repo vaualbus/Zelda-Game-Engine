@@ -41,7 +41,7 @@ namespace ZeldaEngine.Base.Game.GameObjects
 
         public EnemyGameObject Create(EnemyDefinition enemyDefinition)
         {
-            var enemy = GameObjectFactory.Create<EnemyGameObject>(
+            var enemy = GameEngine.GameObjectFactory.Create<EnemyGameObject>(
                 enemyDefinition.Name,
                 t =>
                 {

@@ -39,74 +39,77 @@ namespace ZeldaEngine.SharpDXTest
 
             GameEngine.ScriptEngine = _scriptEngine;
 
-            _questManager = new QuestManager(GameEngine, new JsonMapLoader(GameEngine));
-            _questManager.LoadQuest("TestQuest");
+            //_questManager = new QuestManager(GameEngine, new JsonMapLoader(GameEngine));
+            //_questManager.LoadQuest("TestQuest");
 
-            _playerGo = GameObjectFactory.Create<PlayerGameObject>("Player", g =>
-             {
-                 g.Tile = new Tile(GameEngine, 50, 50)
-                 {
-                     Texture = GameEngine.TextureData("Default")
-                 };
+            //_playerGo = GameObjectFactory.Create<PlayerGameObject>("Player", g =>
+            // {
+            //     g.Tile = new Tile(GameEngine, 50, 50)
+            //     {
+            //         Texture = GameEngine.TextureData("Default")
+            //     };
 
-                 g.Position = new Base.ValueObjects.Vector2(10, 10);
-                 g.MoveVelocity = 50f;
-             });
+            //     g.Position = new Base.ValueObjects.Vector2(10, 10);
+            //     g.MoveVelocity = 50f;
+            // });
 
-            const int sizeX = 1024;
-            const int sizeY = 768;
-            const int tileWidth = 50;
-            const int tileHeight = 50;
-            const int spacing = 100;
-            const int spacingLeft = 200;
-            const int spacingTop = 200;
+            //const int sizeX = 1024;
+            //const int sizeY = 768;
+            //const int tileWidth = 50;
+            //const int tileHeight = 50;
+            //const int spacing = 100;
+            //const int spacingLeft = 200;
+            //const int spacingTop = 200;
 
-            for (var x = 0; x < sizeX; x += tileWidth + spacing)
-            {
-                for (var y = 0; y < sizeY; y += tileHeight + spacing)
-                {
-                    var _x = x;
-                    var _y = y;
+            //for (var x = 0; x < sizeX; x += tileWidth + spacing)
+            //{
+            //    for (var y = 0; y < sizeY; y += tileHeight + spacing)
+            //    {
+            //        var _x = x;
+            //        var _y = y;
 
-                    _gOs.Add(GameObjectFactory.Create<DrawableGameObject>(string.Format("Test_{0}_{1}", _x, _y), g =>
-                    {
-                        g.Tile = new Tile(GameEngine, tileWidth, tileHeight)
-                        {
-                            Texture = GameEngine.TextureData("Grass")
-                        };
+            //        _gOs.Add(GameObjectFactory.Create<DrawableGameObject>(string.Format("Test_{0}_{1}", _x, _y), g =>
+            //        {
+            //            g.Tile = new Tile(GameEngine, tileWidth, tileHeight)
+            //            {
+            //                Texture = GameEngine.TextureData("Grass")
+            //            };
 
-                        g.Position = new Base.ValueObjects.Vector2(_x == 0 ? _x + spacingLeft : _x, _y == 0 ? _y + spacingTop : _y);
-                    }));
-                }
-            }
+            //            g.Position = new Base.ValueObjects.Vector2(_x == 0 ? _x + spacingLeft : _x, _y == 0 ? _y + spacingTop : _y);
+            //        }));
+            //    }
+            //}
 
-            _testView = new GameView("Test", new Base.ValueObjects.Vector2(0, 0), new Base.ValueObjects.Vector2(0, 0));
-            _testView.GameObjects.Add(_playerGo);
-            _testView.GameObjects.AddRange(_gOs);
+            //_testView = new GameView("Test", new Base.ValueObjects.Vector2(0, 0), new Base.ValueObjects.Vector2(0, 0));
+            //_testView.GameObjects.Add(_playerGo);
+            //_testView.GameObjects.AddRange(_gOs);
 
             _scriptEngine.ScriptCompiler.AdditionalAssemblies.Add(Assembly.GetAssembly(typeof(System.Drawing.Color)));
 
-            var testScript1 = CreateScript("TestScript1", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript.cs"));
-            var testScript2 = CreateScript("TestScript2", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript.cs"));
-            var testScript3 = CreateScript("TestScript3", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript.cs"));
+            //var testScript1 = CreateScript("TestScript1", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript1.cs"));
+            //var testScript2 = CreateScript("TestScript2", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript2.cs"));
+            //var testScript3 = CreateScript("TestScript3", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript3.cs"));
+            var gameScript = CreateScript("GameScript", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "GameTestScript.cs"));
 
-
-            _scriptGo = GameObjectFactory.Create<ScriptableGameObject>("ScriptGo1", go =>
+            _scriptGo = GameEngine.GameObjectFactory.Create<ScriptableGameObject>("ScriptGo1", go =>
             {
                 go.ScriptParamProvider = _scriptEngine.ParamsProvider;
                 go.ObjectType = ObjectType.Enemy;
 
-                testScript1.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 50));
-                testScript1.CurrentMenagedScript.SetInitalColor(new Color(1.0f, 0.0f, 0.0f, .75f));
-                go.Scripts.Add(testScript1);
+                //testScript1.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 50));
+                //testScript1.CurrentMenagedScript.SetInitalColor(new Color(1.0f, 0.0f, 0.0f, .75f));
+                //go.Scripts.Add(testScript1);
 
-                testScript2.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 300));
-                testScript2.CurrentMenagedScript.SetInitalColor(new Color(1.0f, 0.0f, 1.0f, .25f));
-                go.Scripts.Add(testScript2);
+                //testScript2.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 300));
+                //testScript2.CurrentMenagedScript.SetInitalColor(new Color(1.0f, 0.0f, 1.0f, .25f));
+                //go.Scripts.Add(testScript2);
 
-                testScript3.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 550));
-                testScript3.CurrentMenagedScript.SetInitalColor(Color.Tomato);
-                go.Scripts.Add(testScript3);
+                //testScript3.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 550));
+                //testScript3.CurrentMenagedScript.SetInitalColor(Color.Tomato);
+                //go.Scripts.Add(testScript3);
+
+                //gameScript.CurrentMenagedScript.SetInitalPosition(new Vector2(0,0));
+                go.Scripts.Add(gameScript);
             });
 
             return true;
@@ -121,7 +124,7 @@ namespace ZeldaEngine.SharpDXTest
 
             //engine.Render(_playerGo);
 
-            _testView.Draw(engine);
+            //_testView.Draw(engine);
 
             _scriptGo.Draw(engine);
 
@@ -142,11 +145,11 @@ namespace ZeldaEngine.SharpDXTest
             //foreach (var go in _gOs)
             //    go.Update(delta);
 
-            _testView.Update(delta);
+            //_testView.Update(delta);
 
             _scriptGo.Update(delta);
 
-            _questManager.Update(delta);
+            //_questManager.Update(delta);
         }
 
         /// <summary>
@@ -162,6 +165,7 @@ namespace ZeldaEngine.SharpDXTest
             var scriptManager = new ScriptManager(_scriptEngine, _scriptEngine.ScriptCompiler, _scriptEngine.ScriptRepository, null,
                 new InternalScriptActivator(), _scriptEngine.Logger);
 
+            
             scriptManager.AddScript(null, script, scriptName);
 
             return scriptManager;

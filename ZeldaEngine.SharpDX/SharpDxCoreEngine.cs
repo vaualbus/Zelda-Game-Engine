@@ -3,6 +3,7 @@ using SharpDX.Toolkit.Graphics;
 using ZeldaEngine.Base;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
+using ZeldaEngine.Base.Game;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.SharpDx.DataFormat;
@@ -37,6 +38,8 @@ namespace ZeldaEngine.SharpDx
 
         public ILogger Logger { get; private set; }
 
+        public IGameObjectFactory GameObjectFactory { get; private set; }
+
         public IResourceData TextureData(string assetName)
         {
             return new Texture2DResourceData(ResourceLoader.Load<Texture2D>(assetName));
@@ -53,7 +56,7 @@ namespace ZeldaEngine.SharpDx
             Configuration = config;
 
             ResourceLoader = new CustomResourceLoader(this);
-            new GameObjectFactory(this);
+            GameObjectFactory = new GameObjectFactory(this);
 
             InputManager = new CustomInputManager(this, ConfigurationManager.GetInputConfiguration());
             
@@ -114,6 +117,14 @@ namespace ZeldaEngine.SharpDx
             _currentGame.Render(RenderEngine);
 
             base.Draw(gameTime);
+        }
+
+        protected override void Dispose(bool disposeManagedResources)
+        {
+            RenderEngine.Dispose();
+            AudioEngine.Dispose();
+
+            base.Dispose(disposeManagedResources);
         }
     }
 }

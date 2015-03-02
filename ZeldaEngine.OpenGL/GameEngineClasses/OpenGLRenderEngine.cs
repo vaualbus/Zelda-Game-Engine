@@ -57,6 +57,11 @@ namespace ZeldaEngine.OpenGL.GameEngineClasses
             throw new System.NotImplementedException();
         }
 
+        public void DrawTexture(Vector2 position, IResourceData texture, float rotation, object color, int layer = 0)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void DrawFillCircle(Vector2 position, int radious, object fillColor)
         {
             throw new System.NotImplementedException();

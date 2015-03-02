@@ -15,7 +15,7 @@ namespace ZeldaEngine.Base.Game.GameComponents
                 if (dGo is PlayerGameObject)
                 {
                     var player = (PlayerGameObject) dGo;
-                    var nearObjects = GameObjectFactory.FindNearGameObject(new Vector2(1, 1));
+                    var nearObjects = GameEngine.GameObjectFactory.FindNearGameObject(new Vector2(1, 1));
                     foreach (var nearGo in nearObjects)
                     {
                         GameEngine.Logger.LogInfo("Near object: ({0}-{1}", nearGo.Name, nearGo.Position);

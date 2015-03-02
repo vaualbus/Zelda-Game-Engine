@@ -1,6 +1,8 @@
-﻿namespace ZeldaEngine.Base.Abstracts.Game
+﻿using System;
+
+namespace ZeldaEngine.Base.Abstracts.Game
 {
-    public interface IAudioEngine
+    public interface IAudioEngine : IDisposable
     {
         void AddSong(string name);
 

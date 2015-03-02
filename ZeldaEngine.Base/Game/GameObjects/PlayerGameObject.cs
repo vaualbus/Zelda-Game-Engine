@@ -6,6 +6,8 @@ namespace ZeldaEngine.Base.Game.GameObjects
 {
     public class PlayerGameObject : DrawableGameObject
     {
+        public float MoveVelocity { get; set; }
+
         public PlayerGameObject(IGameEngine gameEngine)
             : base(gameEngine)
         {

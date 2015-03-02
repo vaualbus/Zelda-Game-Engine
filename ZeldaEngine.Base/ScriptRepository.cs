@@ -57,8 +57,7 @@ namespace ZeldaEngine.Base
 
             var scriptManager = new ScriptManager(_engine, _compiler, this, _resolver,  _scriptActivator, _logger);
             var result = scriptManager.AddScript(screen, scriptMetadata, scriptName);
-
-
+           
             if (screen != null)
             {
                 //if (screen.CurrentScriptStates.ContainsKey(result))
@@ -161,12 +160,6 @@ namespace ZeldaEngine.Base
 
             var screen = Scripts.Where(t => t.Key.GameView == gameScreen);
             return screen.ToDictionary(t => t.Value.CurrentMenagedScript, t => t.Value);
-        }
-
-        public void AddScript<TGameObject>(string scriptName, CompiledScript compiledScript) where TGameObject : ScriptableGameObject
-        {
-            var go = GameObjectFactory.Find<TGameObject>().FirstOrDefault();
-            throw new NotImplementedException();
         }
     }
 }

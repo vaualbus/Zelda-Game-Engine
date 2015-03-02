@@ -17,5 +17,9 @@ namespace ZeldaEngine.SharpDx.GameEngineClasses
         {
             throw new System.NotImplementedException();
         }
+
+        public void Dispose()
+        {
+        }
     }
 }
