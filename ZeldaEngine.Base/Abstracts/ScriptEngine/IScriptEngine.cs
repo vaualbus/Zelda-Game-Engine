@@ -10,7 +10,7 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine
     public interface IScriptEngine : IDisposable
     {
 #region Proxy Fields
-        Config Config { get; }
+        GameConfig GameConfig { get; }
 
         string CurrentScriptName { get; set; }
 

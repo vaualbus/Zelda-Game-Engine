@@ -15,7 +15,7 @@ namespace ZeldaEngine.OpenGL.GameEngineClasses
         public OpenGLRenderEngine(IGameEngine gameEngine)
             : base(gameEngine)
         {
-            GameEngine.Configuration.GameConfig.OpenGLVersion = GL.GetString(StringName.Version);
+            GameEngine.GameConfig.OpenGLVersion = GL.GetString(StringName.Version);
             GameEngine.Logger.LogInfo("Render Engine  Initialized");
         }
 
@@ -83,6 +83,16 @@ namespace ZeldaEngine.OpenGL.GameEngineClasses
         }
 
         public void DrawCollisionLines(GameObject go, IEnumerable<GameObject> nearestObjects)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawString(Vector2 position, string text, float size, object color)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DrawString(Vector2 position, string text, string fontName, float size, object color)
         {
             throw new System.NotImplementedException();
         }

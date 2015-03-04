@@ -27,7 +27,7 @@ namespace ZeldaEngine.Base.Game
         {
             _gameEngine.Logger.LogDebug("Loading quest: {0}", questName);
 
-            var questPath = Path.Combine(GameEngine.Configuration.GameConfig.BaseDirectory, GameEngine.Configuration.GameConfig.QuestDirectory);
+            var questPath = Path.Combine(GameEngine.GameConfig.BaseDirectory, GameEngine.GameConfig.QuestDirectory);
             var file = Directory.GetFiles(questPath).FirstOrDefault(t => t.EndsWith(string.Format("{0}.{1}", questName, ConfigurationManager.QuestFileExtension)));
             LoadedQuest = new Quest(_gameEngine).Create(_questLoader.Load(file));
             return LoadedQuest;

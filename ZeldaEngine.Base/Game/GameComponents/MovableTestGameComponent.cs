@@ -18,7 +18,7 @@ namespace ZeldaEngine.Base.Game.GameComponents
                 const float wallCollisionLeft = 1f;
                 if (GameEngine.InputManager.IsKeyDown("Right") && !GameEngine.InputManager.IsKeyUp("Right")) // -->
                 {
-                    var distanceToWindowEnd = GameEngine.Configuration.GameConfig.ScreenWidth -
+                    var distanceToWindowEnd = GameEngine.GameConfig.ScreenWidth -
                                               (float) (drawableGO.Center.X + drawableGO.Tile.Width);
                     if (distanceToWindowEnd > wallCollisionLeft)
                         drawableGO.Position = new Vector2(drawableGO.Position.X + (int) drawableGO.MoveVelocity,
@@ -44,8 +44,8 @@ namespace ZeldaEngine.Base.Game.GameComponents
                 if (GameEngine.InputManager.IsKeyDown("Down") && !GameEngine.InputManager.IsKeyUp("Down"))
                 {
                     drawableGO.Position.Y += (int) drawableGO.MoveVelocity;
-                    if (drawableGO.Position.Y > drawableGO.GameEngine.Configuration.GameConfig.ScreenHeight)
-                        drawableGO.Position.Y = drawableGO.GameEngine.Configuration.GameConfig.ScreenHeight;
+                    if (drawableGO.Position.Y > drawableGO.GameEngine.GameConfig.ScreenHeight)
+                        drawableGO.Position.Y = drawableGO.GameEngine.GameConfig.ScreenHeight;
                 }
             }
             return true;

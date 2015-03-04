@@ -63,6 +63,20 @@ namespace ZeldaEngine.SharpDx.GameEngineClasses
             throw new System.NotImplementedException();
         }
 
+        public void DrawString(Base.ValueObjects.Vector2 position, string text, float size, object color)
+        {
+            DrawString(position, text, _gameEngine.GameConfig.DefaultFont, size, color);
+        }
+
+        public void DrawString(Base.ValueObjects.Vector2 position, string text, string fontName, float size, object color)
+        {
+            var font = _gameEngine.ResourceLoader.Load<SpriteFont>(fontName);
+            
+            SpriteBatch.Begin();
+            SpriteBatch.DrawString(font, text, new Vector2(position.X, position.Y), (Color)color);
+            SpriteBatch.End();
+        }
+
         public void DrawCircle(Base.ValueObjects.Vector2 position, int radius, object lineColor)
         {
             int outerRadius = radius*2 + 2;

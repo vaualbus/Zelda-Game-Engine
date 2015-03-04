@@ -35,5 +35,9 @@ namespace ZeldaEngine.Base.Abstracts.Game
         void DrawBox(Vector2 position, int width, object color);
 
         void DrawCollisionLines(GameObject go, IEnumerable<GameObject> nearestObjects);
+
+        void DrawString(Vector2 position, string text, float size, object color);
+
+        void DrawString(Vector2 position, string text, string fontName, float size, object color);
     }
 }

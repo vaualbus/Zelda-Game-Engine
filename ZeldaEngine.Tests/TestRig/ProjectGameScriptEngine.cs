@@ -9,7 +9,7 @@ namespace ZeldaEngine.Tests.TestRig
 {
     public class ProjectGameScriptEngine : BaseScriptEngine
     {
-        public ProjectGameScriptEngine(Config config) 
+        public ProjectGameScriptEngine(GameConfig config) 
             : base(config)
         {
         }

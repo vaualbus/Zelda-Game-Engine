@@ -30,7 +30,7 @@ namespace ZeldaEngine.ScriptEngine
             if (!Directory.Exists("Logs"))
                 Directory.CreateDirectory("Logs");
 
-            _logFileWriter = new StreamWriter(string.Format("{0}\\Logs\\{1}_{2}.log", engine.Config.GameConfig.BaseDirectory, LoggerName, _loggerNumber));
+            _logFileWriter = new StreamWriter(string.Format("{0}\\Logs\\{1}_{2}.log", engine.GameConfig.BaseDirectory, LoggerName, _loggerNumber));
             _loggerNumber++;
         }
 

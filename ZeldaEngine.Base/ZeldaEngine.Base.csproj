@@ -133,7 +133,6 @@
     <Compile Include="ValueObjects\Game\Vertex.cs" />
     <Compile Include="ValueObjects\Game\WarpPoint.cs" />
     <Compile Include="ValueObjects\ScriptEngine\CompiledScript.cs" />
-    <Compile Include="ValueObjects\Config.cs" />
     <Compile Include="ValueObjects\GameConfig.cs" />
     <Compile Include="ValueObjects\GameEviromentCollection.cs" />
     <Compile Include="Abstracts\Game\IItem.cs" />

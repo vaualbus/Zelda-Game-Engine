@@ -23,12 +23,12 @@ namespace ZeldaEngine.Base
             ErrorLoggerCounter++;
         }
 
-        public GameLogger(Config config)
+        public GameLogger(GameConfig config)
         {
             if (!Directory.Exists("Logs"))
                 Directory.CreateDirectory("Logs");
 
-            _logFileWriter = new StreamWriter(string.Format("{0}\\Logs\\{1}_{2}.log", config.GameConfig.BaseDirectory, LoggerName, _loggerNumber));
+            _logFileWriter = new StreamWriter(string.Format("{0}\\Logs\\{1}_{2}.log", config.BaseDirectory, LoggerName, _loggerNumber));
             _loggerNumber++;
         }
 

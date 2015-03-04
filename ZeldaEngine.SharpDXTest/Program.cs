@@ -37,9 +37,7 @@ namespace ZeldaEngine.SharpDXTest
                 ConfigurationManager.CreateConfiguration(gameConfig);
             }
 
-            var config = new Config(gameConfig);
-
-            using (var app = new SharpDxCoreEngine(new ZeldaGame(), config, new GameLogger(config)))
+            using (var app = new SharpDxCoreEngine(new ZeldaGame(), gameConfig, new GameLogger(gameConfig)))
                 app.Run();
         }
     }

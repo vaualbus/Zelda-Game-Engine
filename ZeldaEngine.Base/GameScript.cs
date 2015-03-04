@@ -26,7 +26,10 @@ namespace ZeldaEngine.Base
 
         protected IGameObjectFactory GameObjectFactory;
 
-        protected Config Config => Engine?.Config;
+        /// <summary>
+        /// Later on we need to provide only the game base configuration so scripters cannot screw up the engine
+        /// </summary>
+        protected GameConfig Config => Engine?.GameConfig;
 
         public IGameObject GameObject { get; set; }
 

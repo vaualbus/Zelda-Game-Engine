@@ -5,7 +5,7 @@ namespace ZeldaEngine.Base.Abstracts.Game
 {
     public interface IGameEngine
     {
-        Config Configuration { get; set; }
+       GameConfig GameConfig { get; set; }
 
         IInputManager InputManager { get; set; }
 

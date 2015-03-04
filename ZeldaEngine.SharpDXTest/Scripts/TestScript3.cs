@@ -13,13 +13,13 @@ namespace ZeldaEngine.SharpDXTest.Scripts
         {
             //WaitFrame();
 
-            if (Position.X <= Config.GameConfig.ScreenWidth)
+            if (Position.X <= Config.ScreenWidth)
                 Position.X += _moveVelocity;
             else
             {
                 Position.X = 0;
 
-                if (Position.Y >= Config.GameConfig.ScreenHeight)
+                if (Position.Y >= Config.ScreenHeight)
                 {
                     Position.Y = 0;
                     _moveVelocity = 5;

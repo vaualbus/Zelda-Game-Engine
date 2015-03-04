@@ -16,6 +16,7 @@ namespace ZeldaEngine.SharpDXTest.Scripts
         private BallGameObject _ball;
         private MovableGameObject _playerBar;
         private AiBar _aiBar;
+        private Walls _walls;
 
         const float BallRadious = 10.0f;
         const int BarSize = 10;
@@ -45,15 +46,21 @@ namespace ZeldaEngine.SharpDXTest.Scripts
 
             _aiBar = GameObjectFactory.Create<AiBar>("aiBar", g =>
             {
-                g.Position = new Vector2(500, 250);
+                g.Position = new Vector2(400, 250);
                 g.Color = Color.Pink;
             });
 
             _ball = GameObjectFactory.Create<BallGameObject>("ball", g =>
             {
-                g.MoveVelocity = 6;
+                g.MoveVelocity = 10;
                 g.BallColor = Color.Yellow;
-                g.Position = new Vector2(300, 200);
+                g.Position = new Vector2(100, 230);
+            });
+
+            _walls = GameObjectFactory.Create<Walls>("walls", go =>
+            {
+                go.WallSize = 20;
+                go.WallColor = Color.RoyalBlue;
             });
         }
 
@@ -63,6 +70,7 @@ namespace ZeldaEngine.SharpDXTest.Scripts
             _playerBar.Update(0.0f);
             _aiBar.Update(0.0f);
             _ball.Update(0.0f);
+            _walls.Update(0.0f);
         }
 
         public override void OnDraw()
@@ -70,12 +78,14 @@ namespace ZeldaEngine.SharpDXTest.Scripts
             _playerBar.Draw(RenderEngine);
             _aiBar.Draw(RenderEngine);
             _ball.Draw(RenderEngine);
+            _walls.Draw(RenderEngine);
         }
 
         private class BallGameObject : DrawableGameObject
         {
             private int _direction;
             private float _incrementalVelocity;
+            private  DrawableGameObject _hitGo;
 
             public Color BallColor { get; set; }
             public int MoveVelocity { get; set; }
@@ -85,11 +95,9 @@ namespace ZeldaEngine.SharpDXTest.Scripts
             {
                 MoveVelocity = 1;
                 _direction = 1;
-            }
 
-            protected override void OnDraw(IRenderEngine renderEngine)
-            {
-                renderEngine.DrawFillCircle(Position, 10, BallColor);
+                Tile.Height = 20;
+                Tile.Width = 20;
             }
 
             protected override void OnUpdate(float dt)
@@ -98,29 +106,63 @@ namespace ZeldaEngine.SharpDXTest.Scripts
                 var barGo = GameEngine.GameObjectFactory.Find<AiBar>("aiBar");
                 var playerGo = GameEngine.GameObjectFactory.Find<PlayerBar>("playerBar");
 
-                var distanceFromBarGo = Vector2.Distance(Position, barGo.Position);
-                var distanceFromPlayerGo = Vector2.Distance(Position, playerGo.Position);
-                var distance = Math.Min(distanceFromBarGo, distanceFromPlayerGo);
+                //var distanceFromBarGo = Vector2.Distance(Position, barGo.Position);
+                //var distanceFromPlayerGo = Vector2.Distance(Position, playerGo.Position);
+                //var distance = Math.Min(distanceFromBarGo, distanceFromPlayerGo);
 
-                var xPos = 0.0f;
-                if (distance - distanceFromBarGo == 0.0f)
-                    xPos = playerGo.Position.X;
-                else if (distance - distanceFromPlayerGo == 0.0f)
-                    xPos = barGo.Position.X;
+                //var xPos = 0.0f;
+                //if (distance - distanceFromBarGo <= 0.0f)
+                //{
+                //    xPos = playerGo.Position.X;
+                //    _hitGo = barGo;
+                //}
+                //else if (distance - distanceFromPlayerGo <= 0.0f)
+                //{
+                //    xPos = barGo.Position.X;
+                //    _hitGo = playerGo;
+                //}
+                //else
+                //    _hitGo.Color = SharpDX.Color.White;
 
-                if (distance <= xPos + (BarSize - BallSize))
+                //if (distance < xPos + (BarSize - BallSize))
+                //{
+                //    _direction = -_direction;
+                //    _hitGo.Color = SharpDX.Color.Red;
+                //    //_incrementalVelocity += 0.8f;
+                //}
+
+                var realBallPosition = new Vector2(Position.X + 2*BallRadious, Position.Y /*+ BallSize*/);
+                var realBarPosition = new Vector2(barGo.Position.X - BarSize, barGo.Position.Y);
+                var realPlayerPostion = new Vector2(playerGo.Position.X + BarSize, playerGo.Position.Y);
+                if (_direction > 0)
                 {
-                    _direction = -_direction;
-                    //_incrementalVelocity += 0.8f;
+                    //We are traveling to the ai bar
+                    if (realBallPosition.X > realBarPosition.X)
+                        _direction = -1;
                 }
-            
+                else
+                {
+                    //We are traveling to the ai bar
+                    if (realBallPosition.X < realPlayerPostion.X + 2*BallRadious)
+                    {
+                        _direction = 1;
+                    }
+                }
+
                 //If the ball go outside the screen, reset the position to the middle
-                if (Position.X >= GameEngine.Configuration.GameConfig.ScreenWidth ||
-                    Position.X <= 0)
+                if (Position.X >= GameEngine.GameConfig.ScreenWidth || Position.X <= 0)
                     Position = new Vector2(300, 200);
 
+                Position.X += MoveVelocity *_direction + _incrementalVelocity;
+            }
 
-                Position.X += MoveVelocity * _direction + _incrementalVelocity;
+            protected override void OnDraw(IRenderEngine renderEngine)
+            {
+                GameEngine.RenderEngine.DrawString(new Vector2(100, 400), 
+                                                   string.Format("Colliding with: {0}", _direction > 0 ? "player bar" : "ai bar"),
+                                                   10,
+                                                   SharpDX.Color.Red);
+                renderEngine.DrawFillCircle(Position, 10, BallColor);
             }
         }
 
@@ -131,6 +173,8 @@ namespace ZeldaEngine.SharpDXTest.Scripts
             public AiBar(IGameEngine gameEngine)
                 : base(gameEngine)
             {
+                Tile.Height = 100;
+                Tile.Width = 10;
             }
 
             protected override void OnUpdate(float dt)
@@ -150,12 +194,11 @@ namespace ZeldaEngine.SharpDXTest.Scripts
 
         private class PlayerBar : MovableGameObject
         {
-            private int _direction;
-
             public PlayerBar(IGameEngine gameEngine)
                 : base(gameEngine)
             {
-                _direction = 1;
+                Tile.Height = 100;
+                Tile.Width = 10;
             }
 
             protected override void OnInit()
@@ -167,6 +210,35 @@ namespace ZeldaEngine.SharpDXTest.Scripts
             protected override void OnDraw(IRenderEngine renderEngine)
             {
                 renderEngine.DrawLine(Position, 100, 90.0f, Color, 10);
+            }
+        }
+
+        private class Walls : DrawableGameObject 
+        {
+            public int WallSize { get; set; }
+
+            public Color WallColor { get; set; }
+
+            public Walls(IGameEngine gameEngine)
+                : base(gameEngine)
+            {
+                WallSize = 20;
+                WallColor = SharpDX.Color.White;
+            }
+
+            protected override void OnUpdate(float dt)
+            {
+                //Menage the wall ball collision
+            }
+
+            protected override void OnDraw(IRenderEngine renderEngine)
+            {
+               //Draw the four wall
+               GameEngine.RenderEngine.DrawLine(0, 0, GameEngine.GameConfig.ScreenWidth, 0, WallColor, WallSize);
+               GameEngine.RenderEngine.DrawLine(0, GameEngine.GameConfig.ScreenHeight - WallSize, GameEngine.GameConfig.ScreenWidth, GameEngine.GameConfig.ScreenHeight - WallSize, WallColor, WallSize);
+
+               GameEngine.RenderEngine.DrawLine(WallSize, WallSize, WallSize, GameEngine.GameConfig.ScreenHeight - WallSize, WallColor, WallSize);
+               GameEngine.RenderEngine.DrawLine(GameEngine.GameConfig.ScreenWidth, WallSize, GameEngine.GameConfig.ScreenWidth, GameEngine.GameConfig.ScreenHeight - WallSize, WallColor, WallSize);
             }
         }
     }

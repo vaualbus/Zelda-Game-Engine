@@ -20,7 +20,7 @@ namespace ZeldaEngine.Base
 
         public IScriptRepository ScriptRepository { get; private set; }
 
-        public Config Config { get; private set; }
+        public GameConfig GameConfig { get; private set; }
 
         public IGameEngine GameEngine { get; private set; }
 
@@ -38,9 +38,9 @@ namespace ZeldaEngine.Base
        
         public ContainerBuilder ContainerBuilder { get; private set; }
 
-        protected BaseScriptEngine(Config config, IGameEngine gameEngine = null)
+        protected BaseScriptEngine(GameConfig config, IGameEngine gameEngine = null)
         {
-            Config = config;
+            GameConfig = config;
             GameEngine = gameEngine;
         }
 
@@ -132,7 +132,7 @@ namespace ZeldaEngine.Base
 
         public void UpdateEnviromentInfo(GameEviromentCollection gameEnviromentCollection)
         {
-            Config = gameEnviromentCollection.Config;
+            GameConfig = gameEnviromentCollection.GameConfig;
         }
 
         public bool GenerateProject()
@@ -212,10 +212,10 @@ namespace ZeldaEngine.Base
 
             //AddAssembliesFromDirectoryName("Assemblies");
 
-            if(!Directory.Exists(Config.GameConfig.BaseDirectory))
+            if(!Directory.Exists(GameConfig.BaseDirectory))
                 return;
 
-            foreach (var dll in Directory.GetFiles(Config.GameConfig.BaseDirectory).Where(t => (new FileInfo(t)).Extension == ".dll"))
+            foreach (var dll in Directory.GetFiles(GameConfig.BaseDirectory).Where(t => (new FileInfo(t)).Extension == ".dll"))
             {
                 Assembly loadedAssembly = null;
                 try

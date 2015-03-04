@@ -33,7 +33,9 @@ namespace ZeldaEngine.Base
         public const string DefaultSpaceKey = "Space";
         public const string DefaultQKey = "Q";
 
-#endregion
+        public const string DefaultFont = "DefaultFont";
+
+        #endregion
 
         public static GameConfig GetConfiguration()
         {

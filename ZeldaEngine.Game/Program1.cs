@@ -35,7 +35,7 @@ namespace ZeldaEngine.Game
 //#else
 //            var gameConfig = new GameConfig("My Zelda Classic", 1024, 768, AppDomain.CurrentDomain.BaseDirectory, @".\Resources", 30);
 //#endif
-            using (var game = new CoreEngine(new ZeldaGame(), new Config(gameConfig)))
+            using (var game = new CoreEngine(new ZeldaGame(), gameConfig))
             {
                 game.CreateWindow();
                 game.Start();

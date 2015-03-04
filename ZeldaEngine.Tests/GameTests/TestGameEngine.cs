@@ -6,7 +6,7 @@ namespace ZeldaEngine.Tests.GameTests
 {
     public class TestGameEngine : IGameEngine
     {
-        public Config Configuration
+        public GameConfig GameConfig
         {
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }

@@ -17,7 +17,7 @@ namespace ZeldaEngine.Tests
     [TestFixture]
     public class ScriptEngineTest
     {
-        private readonly Config _testConfig = new Config(new  GameConfig("Test", baseDirectory: AppDomain.CurrentDomain.BaseDirectory));
+        private readonly GameConfig _testConfig = new  GameConfig("Test", baseDirectory: AppDomain.CurrentDomain.BaseDirectory);
 
         public class TestScreen : BaseGameView
         {

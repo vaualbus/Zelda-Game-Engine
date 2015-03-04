@@ -21,7 +21,7 @@ namespace ZeldaEngine.ScriptEngine
     {
         #region Proxy Fields
 
-        public GameScriptEngine(Config config, IGameEngine gameEngine = null)
+        public GameScriptEngine(GameConfig config, IGameEngine gameEngine = null)
             : base(config, gameEngine)
         {
         }
@@ -42,7 +42,7 @@ namespace ZeldaEngine.ScriptEngine
                 .As<IScriptEngine>()
                 .InstancePerLifetimeScope();
 
-            builder.Register(context => new GameLogger(Config))
+            builder.Register(context => new GameLogger(GameConfig))
                .As<ILogger>()
                .InstancePerLifetimeScope();
 

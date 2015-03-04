@@ -6,7 +6,7 @@ namespace ZeldaEngine.Base.Game.GameEngineClasses
 {
     public abstract class GameEngine : IGameEngine
     {
-        public Config Configuration { get; set; }
+        public GameConfig GameConfig { get; set; }
 
         public IInputManager InputManager { get; set; }
 

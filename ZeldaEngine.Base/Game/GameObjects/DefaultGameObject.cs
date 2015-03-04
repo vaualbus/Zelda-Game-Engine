@@ -10,7 +10,7 @@ namespace ZeldaEngine.Base.Game.GameObjects
             : base(gameEngine)
         {
             Name = "Default Game Object";
-            Position = Rotation = Scaling = new Vector2(0, 0);
+            Position = Rotation = Scaling = new Vector2(0.0f, 0.0f);
         }
 
         public override ObjectType ObjectType

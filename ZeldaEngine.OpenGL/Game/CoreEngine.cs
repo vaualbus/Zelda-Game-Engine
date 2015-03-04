@@ -17,7 +17,7 @@ namespace ZeldaEngine.OpenGL.Game
             private readonly GameWindow _screen;
             private readonly IGame _currentGame;
 
-            public CoreEngine(IGame game, Config config)
+            public CoreEngine(IGame game, GameConfig config)
                 : base(new GameLogger(config))
             {
                 _screen = new GameWindow();
@@ -30,11 +30,11 @@ namespace ZeldaEngine.OpenGL.Game
                 _currentGame = game;
 
 
-                _screen.Title = config.GameConfig.Title;
-                _screen.Width = config.GameConfig.ScreenWidth;
-                _screen.Height = config.GameConfig.ScreenHeight;
+                _screen.Title = config.Title;
+                _screen.Width = config.ScreenWidth;
+                _screen.Height = config.ScreenHeight;
 
-                Configuration = config;
+                GameConfig = config;
 
                 this.ResourceLoader = new Resource(this);
                 new GameObjectFactory(this);
@@ -52,12 +52,12 @@ namespace ZeldaEngine.OpenGL.Game
 
             public void CreateWindow()
             {
-                _screen.Title = string.Format("OpenGL Version: {0}", Configuration.GameConfig.OpenGLVersion);
+                _screen.Title = string.Format("OpenGL Version: {0}", GameConfig.OpenGLVersion);
             }
 
             public void Start()
             {
-                _screen.Run(Configuration.GameConfig.Framerate);
+                _screen.Run(GameConfig.Framerate);
             }
 
             private void IntializeEvent(object sender, EventArgs e)

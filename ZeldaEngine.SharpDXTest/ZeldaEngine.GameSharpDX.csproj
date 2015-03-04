@@ -87,9 +87,14 @@
     <Content Include="MiniCube.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <ToolkitFont Include="Resources\Fonts\DefaultFont.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </ToolkitFont>
     <ToolkitTexture Include="Resources\Textures\Default.jpg" />
     <ToolkitTexture Include="Resources\Textures\Grass.jpg" />
-    <ToolkitFont Include="Resources\Arial16.xml" />
+    <ToolkitFont Include="Resources\Fonts\Arial16.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </ToolkitFont>
     <ToolkitTexture Include="Resources\Balls.dds" />
     <ToolkitTexture Include="Resources\Textures\test.jpg" />
   </ItemGroup>

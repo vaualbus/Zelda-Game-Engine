@@ -38,7 +38,7 @@ namespace ZeldaEngine.Game
 
         public bool Init()
         {
-            var scriptEngine = new GameScriptEngine(GameEngine.Configuration);
+            var scriptEngine = new GameScriptEngine(GameEngine.GameConfig);
             scriptEngine.InitializeEngine();
             GameEngine.ScriptEngine = scriptEngine;
 

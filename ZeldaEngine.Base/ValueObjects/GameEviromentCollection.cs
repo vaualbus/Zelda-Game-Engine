@@ -2,11 +2,11 @@
 {
     public class GameEviromentCollection
     {
-        public Config Config { get; private set; }
+        public GameConfig GameConfig { get; private set; }
         
-        public GameEviromentCollection(Config gameConfig)
+        public GameEviromentCollection(GameConfig gameConfig)
         {
-            Config = Config;
+            GameConfig = gameConfig;
         }
     }
 }

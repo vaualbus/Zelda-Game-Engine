@@ -32,7 +32,7 @@ namespace ZeldaEngine.Base.Game.GameEngineClasses
 
         public TData Load<TData>(string assetName)
         {
-            var resourcePath = _instance._engine.Configuration.GameConfig.ResourceDirectory;
+            var resourcePath = _instance._engine.GameConfig.ResourceDirectory;
             var resourceLoader = (IGameResourceLoader) typeof (TData).GetConstructors()[0].Invoke(null);
 
             if (CachedResources.ContainsValue(assetName) && CachedResources.ContainsKey(resourceLoader))
@@ -55,7 +55,7 @@ namespace ZeldaEngine.Base.Game.GameEngineClasses
 
                 CachedResources.Add(resourceLoader, assetName);
 
-                return (TData) resourceLoader.LoadObject(Path.Combine(_instance._engine.Configuration.GameConfig.BaseDirectory, assetPath));
+                return (TData) resourceLoader.LoadObject(Path.Combine(_instance._engine.GameConfig.BaseDirectory, assetPath));
             }
             catch (Exception ex)
             {

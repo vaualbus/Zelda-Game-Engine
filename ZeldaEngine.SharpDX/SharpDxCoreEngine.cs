@@ -24,7 +24,7 @@ namespace ZeldaEngine.SharpDx
 
         private SpriteBatch _spriteBatch;
 
-        public Config Configuration { get; set; }
+        public GameConfig GameConfig { get; set; }
 
         public IInputManager InputManager { get; set; }
 
@@ -45,15 +45,15 @@ namespace ZeldaEngine.SharpDx
             return new Texture2DResourceData(ResourceLoader.Load<Texture2D>(assetName));
         }
 
-        public SharpDxCoreEngine(IGame game, Config config, ILogger logger)
+        public SharpDxCoreEngine(IGame game, GameConfig config, ILogger logger)
         {
             Logger = logger;
 
             _graphicsDeviceManager = new GraphicsDeviceManager(this);
 
-            Content.RootDirectory = config.GameConfig.ResourceDirectory;
+            Content.RootDirectory = config.ResourceDirectory;
 
-            Configuration = config;
+            GameConfig = config;
 
             ResourceLoader = new CustomResourceLoader(this);
             GameObjectFactory = new GameObjectFactory(this);
@@ -65,8 +65,8 @@ namespace ZeldaEngine.SharpDx
             game.GameEngine = this;
             _currentGame = game;
 
-            _graphicsDeviceManager.PreferredBackBufferWidth = Configuration.GameConfig.ScreenWidth;
-            _graphicsDeviceManager.PreferredBackBufferHeight = Configuration.GameConfig.ScreenHeight;
+            _graphicsDeviceManager.PreferredBackBufferWidth = GameConfig.ScreenWidth;
+            _graphicsDeviceManager.PreferredBackBufferHeight = GameConfig.ScreenHeight;
 
 #if DEBUG
             IsMouseVisible = true;

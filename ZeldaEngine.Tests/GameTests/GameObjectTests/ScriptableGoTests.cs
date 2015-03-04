@@ -43,11 +43,9 @@ namespace ZeldaEngine.Tests.GameTests.GameObjectTests
                 ConfigurationManager.CreateConfiguration(gameConfig);
             }
 
-            var config = new Config(gameConfig);
 
-
-            var gameEngine = new SharpDxCoreEngine(new TestGame(), config, new GameLogger(config));
-            _engine = new ScriptEngine.GameScriptEngine(config, gameEngine);
+            var gameEngine = new SharpDxCoreEngine(new TestGame(), gameConfig, new GameLogger(gameConfig));
+            _engine = new GameScriptEngine(gameConfig, gameEngine);
                 
             _engine.InitializeEngine();
 
