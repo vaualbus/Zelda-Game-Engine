@@ -69,6 +69,11 @@ namespace ZeldaEngine.Base.ValueObjects
             return X <= distance.X && Y <= distance.Y;
         }
 
+        public static bool IsInRange(Vector2 pos, Vector2 other)
+        {
+            return !(pos.X <= other.X) /*&& (pos.Y >= other.Y || pos.Y <= -other.Y)*/;
+        }
+
         public static float Distance(Vector2 v1, Vector2 v2)
         {
             float num1 = v1.X - v2.X;
