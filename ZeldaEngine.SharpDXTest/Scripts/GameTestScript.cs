@@ -134,17 +134,20 @@ namespace ZeldaEngine.SharpDXTest.Scripts
                 //we find the distance between the ball and the ai bar/player bar
                 var barGo = GameEngine.GameObjectFactory.Find<AiBar>("aiBar");
                 var playerGo = GameEngine.GameObjectFactory.Find<PlayerBar>("playerBar");
-                var realPosition = new Vector2(Position.X + BallRadious, Position.Y + BallRadious);
 
-                var distanceFromBarGo = Vector2.Distance(realPosition, barGo.Position);
-                var distanceFromPlayerGo = Vector2.Distance(realPosition, playerGo.Position);
+                var realPosition = new Vector2(Position.X + BallRadious, Position.Y + BallRadious);
+                var realBarPosition = new Vector2(barGo.Position.X - BarSize, barGo.Position.Y);
+                var realPlayerPosition = new Vector2(playerGo.Position.X + BarSize, playerGo.Position.Y);
+
+                var distanceFromBarGo = Vector2.Distance(realPosition, realBarPosition);
+                var distanceFromPlayerGo = Vector2.Distance(realPosition, realPlayerPosition);
                 var distance = Math.Min(distanceFromBarGo, distanceFromPlayerGo);
 
                 var xPos = 0.0f;
                 if (distance - distanceFromBarGo < 0.0f && _directionX < 0)
-                    xPos = playerGo.Position.X;
+                    xPos = realPlayerPosition.X;
                 else if (distance - distanceFromPlayerGo < 0.0f && _directionX > 0)
-                    xPos = barGo.Position.X;
+                    xPos = realBarPosition.X;
 
                 if (distance - xPos < 0)
                     _directionX = -_directionX;
