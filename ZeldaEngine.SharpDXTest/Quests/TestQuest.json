@@ -22,14 +22,13 @@
         {
             "Name": "Grass",
             "Properties": {
-				"TestString": "Test",
+                "TestString": "Test",
             }
         }
     ],
 
-    "Scripts": 
-    {
-        "TestScript":  "TestScript.cs"
+    "Scripts": {
+        "TestScript": "TestScript.cs"
     },
 
     "Maps": [
@@ -58,11 +57,22 @@
                             "SpawnLocation": "ScreenTop",
                             "Count": 10,
 
-                            "Properties":
-                            {
+                            "Properties": {
                                 "Life": 100,
                                 "DemagedBy": "All",
                                 "WalkVelocity": 1.0
+                            }
+                        }
+                    ],
+
+                    "Scripts": [
+                        {
+                            "GameObjectName": "Grass",
+                            "Script": {
+                                "Name": "Test",
+                                "ScriptParams": [
+                                    { "Type":  "", "Value":  ""}
+                                ]
                             }
                         }
                     ],
@@ -84,14 +94,6 @@
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
                                 }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-                                    "test": 20,
-                                    "Pippo":  "Abba"
-                                }
                             }
                         },
 
@@ -110,12 +112,6 @@
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
                                 }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-                                }
                             }
                         },
 
@@ -133,13 +129,6 @@
                                 "Properties": {
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
-                                }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
                                 }
                             }
                         },
@@ -160,13 +149,6 @@
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
                                 }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
-                                }
                             }
                         },
 
@@ -184,13 +166,6 @@
                                 "Properties": {
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
-                                }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
                                 }
                             }
                         },
@@ -210,14 +185,8 @@
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
                                 }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
-                                }
                             }
+
                         },
 
                         //Second wall
@@ -236,14 +205,8 @@
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
                                 }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
-                                }
                             }
+
                         },
 
                         {
@@ -260,13 +223,6 @@
                                 "Properties": {
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
-                                }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
                                 }
                             }
                         },
@@ -286,13 +242,6 @@
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
                                 }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
-                                }
                             }
                         },
 
@@ -310,12 +259,6 @@
                                 "Properties": {
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
-                                }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
                                 }
                             }
                         },
@@ -335,12 +278,6 @@
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
                                 }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-                                }
                             }
                         },
 
@@ -358,13 +295,6 @@
                                 "Properties": {
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
-                                }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
                                 }
                             }
                         },
@@ -385,13 +315,6 @@
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
                                 }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
-                                }
                             }
                         },
 
@@ -409,13 +332,6 @@
                                 "Properties": {
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
-                                }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
                                 }
                             }
                         },
@@ -435,13 +351,6 @@
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
                                 }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
-                                }
                             }
                         },
 
@@ -459,13 +368,6 @@
                                 "Properties": {
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
-                                }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
                                 }
                             }
                         },
@@ -485,13 +387,6 @@
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
                                 }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
-                                }
                             }
                         },
 
@@ -509,13 +404,6 @@
                                 "Properties": {
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
-                                }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
                                 }
                             }
                         },
@@ -536,13 +424,6 @@
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
                                 }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
-                                }
                             }
                         },
 
@@ -560,13 +441,6 @@
                                 "Properties": {
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
-                                }
-                            },
-
-                            "GameScript": {
-                               "Name": "TestScript",
-                                "Properties": {
-
                                 }
                             }
                         },
@@ -586,13 +460,6 @@
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
                                 }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
-                                }
                             }
                         },
 
@@ -610,13 +477,6 @@
                                 "Properties": {
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
-                                }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
                                 }
                             }
                         },
@@ -636,13 +496,6 @@
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
                                 }
-                            },
-
-                            "GameScript": {
-                               "Name": "TestScript",
-                                "Properties": {
-
-                                }
                             }
                         },
 
@@ -660,13 +513,6 @@
                                 "Properties": {
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
-                                }
-                            },
-
-                            "GameScript": {
-                                "Name": "TestScript",
-                                "Properties": {
-
                                 }
                             }
                         }

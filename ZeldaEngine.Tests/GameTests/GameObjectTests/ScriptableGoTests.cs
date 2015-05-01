@@ -86,7 +86,7 @@ namespace ZeldaEngine.Tests.GameTests.GameObjectTests
             //runtimeScript.Compile();
             var script = _engine.ScriptCompiler.Compile(scriptFilename);
 
-            var scriptManager = new ScriptManager(_engine, _engine.ScriptCompiler, _engine.ScriptRepository, null,
+            var scriptManager = new ScriptManager(_engine, _engine.ScriptRepository, null,
                 new InternalScriptActivator(), _engine.Logger);
 
             scriptManager.AddScript(null, script, scriptName);

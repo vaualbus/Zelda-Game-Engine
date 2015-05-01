@@ -10,7 +10,6 @@ using ZeldaEngine.Base.Game.MapLoaders;
 using ZeldaEngine.Base.Services;
 using ZeldaEngine.Base.ValueObjects.Game;
 using ZeldaEngine.ScriptEngine;
-using Vector2 = ZeldaEngine.Base.ValueObjects.Vector2;
 
 namespace ZeldaEngine.SharpDXTest
 {
@@ -39,8 +38,8 @@ namespace ZeldaEngine.SharpDXTest
 
             GameEngine.ScriptEngine = _scriptEngine;
 
-            //_questManager = new QuestManager(GameEngine, new JsonMapLoader(GameEngine));
-            //_questManager.LoadQuest("TestQuest");
+            _questManager = new QuestManager(GameEngine, new JsonMapLoader(GameEngine));
+            _questManager.LoadQuest("TestQuest");
 
             //_playerGo = GameObjectFactory.Create<PlayerGameObject>("Player", g =>
             // {
@@ -149,21 +148,20 @@ namespace ZeldaEngine.SharpDXTest
 
             _scriptGo.Update(delta);
 
-            //_questManager.Update(delta);
+            _questManager.Update(delta);
         }
 
         /// <summary>
         /// TODO(albus95): Dummy function to test script working in game.
         /// </summary>
-        /// <param name="scriptName"></param>
-        /// <param name="scriptFilename"></param>
+        /// <param name="scriptName">The script runtime Name</param>
+        /// <param name="scriptFilename">The .cs Filename</param>
         /// <returns></returns>
         private ScriptManager CreateScript(string scriptName, string scriptFilename)
         {
             var script = _scriptEngine.ScriptCompiler.Compile(scriptFilename);
 
-            var scriptManager = new ScriptManager(_scriptEngine, _scriptEngine.ScriptCompiler, _scriptEngine.ScriptRepository, null,
-                new InternalScriptActivator(), _scriptEngine.Logger);
+            var scriptManager = new ScriptManager(_scriptEngine, _scriptEngine.ScriptRepository, null, new InternalScriptActivator(), _scriptEngine.Logger);
 
             
             scriptManager.AddScript(null, script, scriptName);
@@ -175,7 +173,6 @@ namespace ZeldaEngine.SharpDXTest
         {
             _questManager.Dispose();
             _scriptGo.Dispose();
-            //_scriptEngine.Dispose();
             GameEngine.ScriptEngine.Dispose();
         }
 

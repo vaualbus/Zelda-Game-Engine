@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using ZeldaEngine.Base.Abstracts.Game;
@@ -12,33 +10,25 @@ namespace ZeldaEngine.Base
 {
     public class ScriptManager : IScriptManager
     {
-        private ILogger _logger;
-        private IScriptEngine _engine;
-        private IDependencyResolver _resolver;
+        private readonly ILogger _logger;
+        private readonly IScriptEngine _engine;
+        private readonly IDependencyResolver _resolver;
         private readonly IScriptActivator _scriptActivator;
-        private IScriptCompiler _compiler;
         private readonly IScriptRepository _scriptRepository;
 
         private CompiledScript _currentCompiledScript;
         private volatile GameScript _currentCachedScriptInstance;
         private RuntimeScript _runtimeScript;
 
-        public GameScript CurrentMenagedScript
-        {
-            get { return _currentCachedScriptInstance; }
-        }
+        public GameScript CurrentMenagedScript => _currentCachedScriptInstance;
 
-        public RuntimeScript RuntimeScript
-        {
-            get { return _runtimeScript; }
-        }
+        public RuntimeScript RuntimeScript => RuntimeScript;
 
-        public ScriptManager(IScriptEngine engine, IScriptCompiler compiler, IScriptRepository scriptRepository,
+        public ScriptManager(IScriptEngine engine, IScriptRepository scriptRepository,
             IDependencyResolver resolver, IScriptActivator scriptActivator, ILogger logger)
         {
             _logger = logger;
             _engine = engine;
-            _compiler = compiler;
             _scriptRepository = scriptRepository;
             _resolver = resolver;
             _scriptActivator = scriptActivator;

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
-using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 
 namespace ZeldaEngine.Base
@@ -55,7 +53,7 @@ namespace ZeldaEngine.Base
                 return null;
             }
 
-            var scriptManager = new ScriptManager(_engine, _compiler, this, _resolver,  _scriptActivator, _logger);
+            var scriptManager = new ScriptManager(_engine, this, _resolver,  _scriptActivator, _logger);
             var result = scriptManager.AddScript(screen, scriptMetadata, scriptName);
            
             if (screen != null)
@@ -93,7 +91,7 @@ namespace ZeldaEngine.Base
                 return null;
             }
 
-            var scriptManager = new ScriptManager(_engine, _compiler, this, _resolver, _scriptActivator, _logger);
+            var scriptManager = new ScriptManager(_engine, this, _resolver, _scriptActivator, _logger);
             scriptManager.CreateScript(runtimeScript);
 
             var screen = runtimeScript.GameView;

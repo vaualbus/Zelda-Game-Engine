@@ -19,6 +19,7 @@ namespace ZeldaEngine.ScriptEngine
         public static Assembly[] GetProjectAssemblies(string projName)
         {
             return null;
+           
         }
     }
 }

@@ -20,11 +20,9 @@ namespace ZeldaEngine.Base.Game.ValueObjects
 
         public GameObjectDefinition GameObject { get; private set; }
  
-        public GameScriptDefinition GameScript { get; private set; }
-
         public TileDefinition(float tilePositionX, float tilePositionY, string textureAssetName, 
                                TileType tileType, string tileColor = "COLOR_DEFAULT", int layerNumber = 0,
-                               GameObjectDefinition gameObject = null, GameScriptDefinition gameScript = null)
+                               GameObjectDefinition gameObject = null)
         {
             TilePositionX = tilePositionX;
             TilePositionY = tilePositionY;
@@ -32,7 +30,6 @@ namespace ZeldaEngine.Base.Game.ValueObjects
             LayerNumber = layerNumber;
             TextureAssetName = textureAssetName;
             GameObject = gameObject;
-            GameScript = gameScript;
             TileColor = tileColor;
         }
 
@@ -42,8 +39,7 @@ namespace ZeldaEngine.Base.Game.ValueObjects
             if (ReferenceEquals(this, other)) return true;
             return TilePositionX.Equals(other.TilePositionX) && TilePositionY.Equals(other.TilePositionY) &&
                    TileType == other.TileType && string.Equals(TileColor, other.TileColor) &&
-                   LayerNumber == other.LayerNumber && string.Equals(TextureAssetName, other.TextureAssetName) &&
-                   Equals(GameObject, other.GameObject) && Equals(GameScript, other.GameScript);
+                   LayerNumber == other.LayerNumber && string.Equals(TextureAssetName, other.TextureAssetName);
         }
 
         public override bool Equals(object obj)
@@ -65,7 +61,6 @@ namespace ZeldaEngine.Base.Game.ValueObjects
                 hashCode = (hashCode*397) ^ LayerNumber;
                 hashCode = (hashCode*397) ^ (TextureAssetName != null ? TextureAssetName.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ (GameObject != null ? GameObject.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (GameScript != null ? GameScript.GetHashCode() : 0);
                 return hashCode;
             }
         }

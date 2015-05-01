@@ -138,10 +138,10 @@ namespace ZeldaEngine.Base.Game.MapLoaders
                             if (args.Length > 5)
                                 ParseScript(args[5], out scriptName, gameScriptParams);
                         }
-                        loadedTiles.Add(new TileDefinition(tilePos.X, tilePos.Y, textureAssetName, 
-                                                            tileType, tileColor, layerNumber, 
-                                                            new GameObjectDefinition(gameObjectName, gameObjectProp),
-                                                            new GameScriptDefinition(scriptName, gameScriptParams)));
+                        //loadedTiles.Add(new TileDefinition(tilePos.X, tilePos.Y, textureAssetName, 
+                        //                                    tileType, tileColor, layerNumber, 
+                        //                                    new GameObjectDefinition(gameObjectName, gameObjectProp),
+                        //                                    new GameScriptDefinition(scriptName, gameScriptParams)));
                     }
 
                     if (!isMapInfoLoaded)

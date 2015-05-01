@@ -85,5 +85,15 @@ namespace ZeldaEngine.Base.ValueObjects
         {
             return string.Format("X: {0}, Y: {1}", X, Y);
         }
+
+        public float DotProduct(Vector2 a, Vector2 b)
+        {
+            return (a.X * b.X + a.Y * b.Y);
+        }
+
+        public float Lenght(Vector2 vec)
+        {
+            return (float) Math.Sqrt(Math.Pow(vec.X, 2) + Math.Pow(vec.Y, 2));
+        }
     }
 }

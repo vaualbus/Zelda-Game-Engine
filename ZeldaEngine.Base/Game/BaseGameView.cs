@@ -37,6 +37,11 @@ namespace ZeldaEngine.Base.Game
             get { return GameObjects.OfType<DrawableGameObject>().ToList(); }
         }
 
+        public IEnumerable<ScriptableGameObject> Scripts
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         protected BaseGameView(string screenName, Vector2 screenPosition, Vector2 playerStartPosition = null)
         {
             Name = screenName;

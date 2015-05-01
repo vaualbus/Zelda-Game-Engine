@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing.Text;
 using SharpDX;
 using ZeldaEngine.Base;
 using ZeldaEngine.Base.Abstracts.Game;
@@ -36,21 +35,21 @@ namespace ZeldaEngine.SharpDXTest.Scripts
 
         private void SetUpGameObjects()
         {
-            _playerBar = GameObjectFactory.Create<PlayerBar>("playerBar", g =>
-            {
-                g.MoveDirection = MovableDirection.Up | MovableDirection.Down;
-                g.MoveVelocity = 50.0f;
-                g.Color = Color.White;
-                g.Position = new Vector2(100, 250);
-            });
+            //_playerBar = GameObjectFactory.Create<PlayerBar>("playerBar", g =>
+            //{
+            //    g.MoveDirection = MovableDirection.Up | MovableDirection.Down;
+            //    g.MoveVelocity = 50.0f;
+            //    g.Color = Color.White;
+            //    g.Position = new Vector2(100, 250);
+            //});
 
 
-            _aiBar = GameObjectFactory.Create<AiBar>("aiBar", g =>
-            {
-                g.Position = new Vector2(400, 250);
-                g.Color = Color.Pink;
-            });
-
+            //_aiBar = GameObjectFactory.Create<AiBar>("aiBar", g =>
+            //{
+            //    g.Position = new Vector2(400, 250);
+            //    g.Color = Color.Pink;
+            //});
+            
             _ball = GameObjectFactory.Create<BallGameObject>("ball", g =>
             {
                 g.MoveVelocity = 10;
@@ -68,16 +67,16 @@ namespace ZeldaEngine.SharpDXTest.Scripts
         private void PerformCollision()
         {
             //First we need to update the game objects
-            _playerBar.Update(0.0f);
-            _aiBar.Update(0.0f);
+            //_playerBar.Update(0.0f);
+            //_aiBar.Update(0.0f);
             _ball.Update(0.0f);
             _walls.Update(0.0f);
         }
 
         public override void OnDraw()
         {
-            _playerBar.Draw(RenderEngine);
-            _aiBar.Draw(RenderEngine);
+           // _playerBar.Draw(RenderEngine);
+           // _aiBar.Draw(RenderEngine);
             _ball.Draw(RenderEngine);
             _walls.Draw(RenderEngine);
         }
@@ -131,29 +130,29 @@ namespace ZeldaEngine.SharpDXTest.Scripts
 
             protected override void OnUpdate(float dt)
             {
-                //we find the distance between the ball and the ai bar/player bar
-                var barGo = GameEngine.GameObjectFactory.Find<AiBar>("aiBar");
-                var playerGo = GameEngine.GameObjectFactory.Find<PlayerBar>("playerBar");
+                ////we find the distance between the ball and the ai bar/player bar
+                //var barGo = GameEngine.GameObjectFactory.Find<AiBar>("aiBar");
+                //var playerGo = GameEngine.GameObjectFactory.Find<PlayerBar>("playerBar");
 
-                var realPosition = new Vector2(Position.X + BallRadious, Position.Y + BallRadious);
-                var realBarPosition = new Vector2(barGo.Position.X - BarSize, barGo.Position.Y);
-                var realPlayerPosition = new Vector2(playerGo.Position.X + BarSize, playerGo.Position.Y);
+                ////var realPosition = new Vector2(Position.X + BallRadious, Position.Y + BallRadious);
+                ////var realBarPosition = new Vector2(barGo.Position.X - BarSize, barGo.Position.Y);
+                ////var realPlayerPosition = new Vector2(playerGo.Position.X + BarSize, playerGo.Position.Y);
 
-                var distanceFromBarGo = Vector2.Distance(realPosition, realBarPosition);
-                var distanceFromPlayerGo = Vector2.Distance(realPosition, realPlayerPosition);
-                var distance = Math.Min(distanceFromBarGo, distanceFromPlayerGo);
+                ////var distanceFromBarGo = Vector2.Distance(realPosition, realBarPosition);
+                ////var distanceFromPlayerGo = Vector2.Distance(realPosition, realPlayerPosition);
+                ////var distance = _directionX > 0 ? distanceFromBarGo : distanceFromPlayerGo;
 
-                var xPos = 0.0f;
-                if (distance - distanceFromBarGo < 0.0f && _directionX < 0)
-                    xPos = realPlayerPosition.X;
-                else if (distance - distanceFromPlayerGo < 0.0f && _directionX > 0)
-                    xPos = realBarPosition.X;
+                ////var xPos = 0.0f;
+                ////if (distance - distanceFromBarGo < 0.0f && _directionX < 0)
+                ////    xPos = realPlayerPosition.X;
+                ////else if (distance - distanceFromPlayerGo < 0.0f && _directionX > 0)
+                ////    xPos = realBarPosition.X;
 
-                if (distance - xPos < 0)
-                    _directionX = -_directionX;
+                ////if (distance - xPos < 0)
+                ////    _directionX = -_directionX;
 
 
-                //var realBallPosition = new Vector2(Position.X + 2*BallRadious, Position.Y /*+ BallSize*/);
+                //var realBallPosition = new Vector2(Position.X + 2 * BallRadious, Position.Y /*+ BallSize*/);
                 //var realBarPosition = new Vector2(barGo.Position.X - BarSize, barGo.Position.Y);
                 //var realPlayerPosition = new Vector2(playerGo.Position.X + BarSize, playerGo.Position.Y);
                 //if (_directionX > 0)
@@ -161,22 +160,23 @@ namespace ZeldaEngine.SharpDXTest.Scripts
                 //    //We are traveling to the ai bar
                 //    if (realBallPosition.X > realBarPosition.X)
                 //    {
-                //        if(realBallPosition.Y > realPlayerPosition.Y)
+                //        if (realBallPosition.Y <= realPlayerPosition.Y + BarSize)
                 //            _directionX = -1;
                 //    }
                 //}
                 //else
                 //{
                 //    //We are traveling to the ai bar
-                //    if (realBallPosition.X < realPlayerPosition.X + 2*BallRadious)
-                //    {
-                //        _directionX = 1;
+                //    if (realBallPosition.X < realPlayerPosition.X + 2 * BallRadious)
+                //    {                                                    
+                //        if (realBallPosition.Y <= realBarPosition.Y + BarSize)
+                //            _directionX = 1;
                 //    }
                 //}
 
-                //If the ball go outside the screen, reset the position to the middle
-                if (Position.X >= GameEngine.GameConfig.ScreenWidth || Position.X <= 0)
-                    Position = new Vector2(300, 200);
+                ////If the ball go outside the screen, reset the position to the middle
+                //if (Position.X >= GameEngine.GameConfig.ScreenWidth || Position.X <= 0)
+                //    Position = new Vector2(300, 200);
 
                 Position.X += MoveVelocity *_directionX + _incrementalVelocity;
                 Position.Y += _directionY;
@@ -189,9 +189,24 @@ namespace ZeldaEngine.SharpDXTest.Scripts
                     string.Format("Colliding with: {0}", _directionX > 0 ? "player bar" : "ai bar"),
                     10,
                     SharpDX.Color.Red);
+
                 renderEngine.DrawFillCircle(Position, 10, BallColor);
             }
+
+
+            public void CollisionX()
+            {
+                _directionX = -_directionX;
+               // _incrementalVelocity++;
+            }
+
+            public void CollisionY()
+            {
+                _directionY = -_directionY;
+                // _incrementalVelocity++;
+            }
         }
+
 
         private class PlayerBar : MovableGameObject
         {
@@ -243,7 +258,26 @@ namespace ZeldaEngine.SharpDXTest.Scripts
 
             protected override void OnUpdate(float dt)
             {
+                var ball = GameEngine.GameObjectFactory.Find<BallGameObject>("ball");
+
+                var upWallRect = new Rectangle(0, 0, GameEngine.GameConfig.ScreenWidth, WallSize);
+                var downWallRect = new Rectangle(0, GameEngine.GameConfig.ScreenHeight - WallSize, GameEngine.GameConfig.ScreenWidth, WallSize);
+                var leftWallRect = new Rectangle(0, WallSize, WallSize, GameEngine.GameConfig.ScreenHeight - WallSize);
+                var rightWallRect = new Rectangle(GameEngine.GameConfig.ScreenWidth - WallSize, WallSize, GameEngine.GameConfig.ScreenWidth, WallSize);
+                
+
                 //Menage the wall ball collision
+                if (ball.Position.X  > GameEngine.GameConfig.ScreenWidth - (WallSize + 2 * BallRadious))
+                    ball.CollisionX();
+                //Menage the wall ball collision
+                if (ball.Position.X - 2 * BallSize < WallSize)
+                    ball.CollisionX();
+                //Menage the wall ball collision
+                if (ball.Position.Y - 2 * BallSize > GameEngine.GameConfig.ScreenHeight - WallSize)
+                    ball.CollisionY();
+                //Menage the wall ball collision
+                if (ball.Position.Y - 2 * BallSize < WallSize)
+                    ball.CollisionY();
             }
 
             protected override void OnDraw(IRenderEngine renderEngine)

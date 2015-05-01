@@ -8,7 +8,8 @@ namespace ZeldaEngine.Base.Game.GameObjects
     public class ScriptableGameObject : GameObject
     {
         public ObjectType ObjectType { get; set; }
-       public IScriptParamaterProvider ScriptParamProvider { get; set;  }
+
+        public IScriptParamaterProvider ScriptParamProvider { get; set;  }
 
         public List<IScriptManager> Scripts { get; private set; }
 

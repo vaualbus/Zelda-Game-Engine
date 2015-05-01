@@ -1,1 +1,1 @@
-nuget restore ZeldaEngine.sln
+nuget update ZeldaEngine.sln

@@ -3,9 +3,9 @@ using ZeldaEngine.Base.ValueObjects;
 
 namespace ZeldaEngine.Base.Abstracts.Game
 {
-    public interface IGameEngine
+    public interface  IGameEngine
     {
-       GameConfig GameConfig { get; set; }
+        GameConfig GameConfig { get; set; }
 
         IInputManager InputManager { get; set; }
 

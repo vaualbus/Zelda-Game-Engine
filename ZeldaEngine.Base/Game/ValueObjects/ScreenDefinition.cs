@@ -26,9 +26,15 @@ namespace ZeldaEngine.Base.Game.ValueObjects
 
         public int PlayerStartPositionX { get; private set; }
 
-        public IEnumerable<ScreenEnemyDefinition> Enemies { get; private set; } 
+        public IEnumerable<ScreenEnemyDefinition> Enemies { get; private set; }
 
-        public ScreenDefinition(int id, string screenName, MapType screenType, int playerStartPositionX, int playerStartPositionY, string songName, int colorPalette, string introText, IEnumerable<TileDefinition> tiles, IEnumerable<ScreenEnemyDefinition> enemies)
+        public IEnumerable<QuestLoaderScriptType> Scripts { get; private set; }
+
+        public ScreenDefinition(int id, string screenName, MapType screenType,
+                                int playerStartPositionX, int playerStartPositionY, string songName, 
+                                int colorPalette, string introText, IEnumerable<TileDefinition> tiles,
+                                IEnumerable<ScreenEnemyDefinition> enemies,
+                                IEnumerable<QuestLoaderScriptType> scripts = null)
         {
             Id = id;
             ScreenName = screenName;
@@ -41,6 +47,8 @@ namespace ZeldaEngine.Base.Game.ValueObjects
 
             PlayerStartPositionX = playerStartPositionX;
             PlayerStartPositionY = playerStartPositionY;
+
+            Scripts = scripts;
 
             Enemies = enemies ?? new List<ScreenEnemyDefinition>();
         }

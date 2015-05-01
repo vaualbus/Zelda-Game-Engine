@@ -26,6 +26,8 @@ namespace ZeldaEngine.Base.Abstracts.Game
 
         List<DrawableGameObject> DrawableGameObjects { get; }
 
+        IEnumerable<ScriptableGameObject> Scripts { get; }
+
         void Draw(IRenderEngine renderEngine);
 
         void Update(float dt);
