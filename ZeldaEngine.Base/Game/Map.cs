@@ -7,6 +7,7 @@ using ZeldaEngine.Base.Game.Extensions;
 using ZeldaEngine.Base.Game.GameEngineClasses;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.Game.ValueObjects;
+using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.Game;
 
@@ -20,9 +21,12 @@ namespace ZeldaEngine.Base.Game
 
         public IEnumerable<IGameView> GameViews { get; private set; }
 
-        public Map(IGameEngine gameEngine)
+        private readonly Dictionary<string, string> _scriptFiles;
+
+        public Map(IGameEngine gameEngine, Dictionary<string, string> scriptFiles)
         {
             _gameEngine = gameEngine;
+            _scriptFiles = scriptFiles;
         }
 
         public void Draw(IRenderEngine renderEngine)
@@ -81,6 +85,16 @@ namespace ZeldaEngine.Base.Game
                         screen.GameObjects.Add(enemy);
                 }
 
+                if (screen.Scripts != null)
+                {
+                    foreach (var scriptType in screenDescription.Scripts)
+                    {
+                        var go = (GameObject) _gameEngine.GameObjectFactory.Find(scriptType.GameObjectName);
+                        var createdScript = _gameEngine.ScriptEngine.AddScript(go, _scriptFiles, scriptType);
+
+                        screen.Scripts.Add(createdScript);
+                    }
+                }
                 foreach (var tile in screenDescription.Tiles)
                 {
                     if (tile.GameObject != null)
@@ -89,29 +103,6 @@ namespace ZeldaEngine.Base.Game
                         var go = _gameEngine.GameObjectFactory.GetFromDefinition(tile.GameObject);
                         go.UpdateTypes(tile.GameObject.Properties);
 
-#if ENABLE_SCRIPT
-                        if (tile.GameScript != null)
-                        {
-                            if (!scriptFileTable.ContainsKey(tile.GameScript.Name))
-                                continue;
-
-                            var scriptPath = Path.Combine(_gameEngine.Configuration.GameConfig.BaseDirectory,
-                                _gameEngine.Configuration.GameConfig.ScriptDirectory,
-                                scriptFileTable[tile.GameScript.Name]);
-
-                            var script = _gameEngine.ScriptEngine.AddScript(screen, tile.GameScript.Name,
-                                _gameEngine.ScriptEngine.ScriptCompiler.Compile(scriptPath));
-
-                            _gameEngine.ScriptEngine.ParamsProvider.AddParamater(screen, tile.GameScript.Name,
-                                tile.GameScript.Properties.Values);
-
-                            if (go.ScriptTuple != null)
-                            {
-                                go.ScriptTuple.Script = script;
-                                go.ScriptTuple.State = ScriptState.InActive;
-                            }
-                        }
-#endif
                         var goName = string.Format("tile_{0}_{1}", tile.TilePositionX, tile.TilePositionY);
                         if (_gameEngine.GameObjectFactory.Find(goName) != null)
                             continue;

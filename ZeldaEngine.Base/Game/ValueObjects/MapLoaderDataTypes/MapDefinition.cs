@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ZeldaEngine.Base.Game.ValueObjects
+namespace ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes
 {
     public class MapDefinition
     {

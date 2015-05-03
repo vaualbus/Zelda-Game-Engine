@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using ZeldaEngine.Base.ValueObjects.Game;
 
-namespace ZeldaEngine.Base.Game.ValueObjects
+namespace ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes
 {
     public class ScreenDefinition : IEquatable<ScreenDefinition>
     {
@@ -32,9 +32,10 @@ namespace ZeldaEngine.Base.Game.ValueObjects
 
         public ScreenDefinition(int id, string screenName, MapType screenType,
                                 int playerStartPositionX, int playerStartPositionY, string songName, 
-                                int colorPalette, string introText, IEnumerable<TileDefinition> tiles,
+                                int colorPalette, string introText,
+                                IEnumerable<TileDefinition> tiles,
                                 IEnumerable<ScreenEnemyDefinition> enemies,
-                                IEnumerable<QuestLoaderScriptType> scripts = null)
+                                IEnumerable<QuestLoaderScriptType> scripts)
         {
             Id = id;
             ScreenName = screenName;
@@ -48,7 +49,7 @@ namespace ZeldaEngine.Base.Game.ValueObjects
             PlayerStartPositionX = playerStartPositionX;
             PlayerStartPositionY = playerStartPositionY;
 
-            Scripts = scripts;
+            Scripts = scripts ?? new List<QuestLoaderScriptType>();
 
             Enemies = enemies ?? new List<ScreenEnemyDefinition>();
         }

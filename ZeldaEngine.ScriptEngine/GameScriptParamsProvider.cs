@@ -25,9 +25,9 @@ namespace ZeldaEngine.ScriptEngine
             _logger.LogInfo("Init script Paramater");
         }
 
-        public bool AddParamater(IGameView screen, string scriptName, IEnumerable<object> @params)
+        public bool AddParamater(string scriptName, IEnumerable<object> @params)
         {
-            var gameScript = _engine.ScriptRepository.GetScript(screen, scriptName);
+            var gameScript = _engine.ScriptRepository.GetScript(scriptName);
             if (_paramaters.ContainsKey(gameScript))
                 return false;
 
@@ -42,21 +42,21 @@ namespace ZeldaEngine.ScriptEngine
             return true;
         }
 
-        public void ChangeParamaters(IGameView screen, string scriptName, IEnumerable<object> newParams)
+        public void ChangeParamaters(string scriptName, IEnumerable<object> newParams)
         {
-            var gameScript = _engine.ScriptRepository.GetScript(screen, scriptName);
+            var gameScript = _engine.ScriptRepository.GetScript(scriptName);
             _paramaters[gameScript] = newParams.ToArray();           
         }
 
-        public void RemoveParamaters(IGameView screen, string scriptName)
+        public void RemoveParamaters(string scriptName)
         {
-           _paramaters.Remove(_engine.ScriptRepository.GetScript(screen, scriptName));
+           _paramaters.Remove(_engine.ScriptRepository.GetScript(scriptName));
         }
 
-        public object[] GetParamatersForScript(IGameView screen, string scriptName)
+        public object[] GetParamatersForScript(string scriptName)
         {
-            return _paramaters.ContainsKey(_engine.ScriptRepository.GetScript(screen, scriptName))
-                ? _paramaters[_engine.ScriptRepository.GetScript(screen, scriptName)]
+            return _paramaters.ContainsKey(_engine.ScriptRepository.GetScript(scriptName))
+                ? _paramaters[_engine.ScriptRepository.GetScript(scriptName)]
                 : new object[] {};
         }
 

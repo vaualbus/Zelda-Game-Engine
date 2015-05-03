@@ -3,6 +3,7 @@ using System.Linq;
 using SharpDX.Toolkit.Input;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game.ValueObjects;
+using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 
 namespace ZeldaEngine.SharpDx.GameEngineClasses
 {

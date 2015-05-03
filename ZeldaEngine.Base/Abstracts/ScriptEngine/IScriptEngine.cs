@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Autofac;
 using ZeldaEngine.Base.Abstracts.Game;
+using ZeldaEngine.Base.Game.GameObjects;
+using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 
@@ -9,8 +11,7 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine
 {
     public interface IScriptEngine : IDisposable
     {
-#region Proxy Fields
-        GameConfig GameConfig { get; }
+        #region Proxy Fields
 
         string CurrentScriptName { get; set; }
 
@@ -48,17 +49,17 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine
 
         IEnumerable<GameScript> GetScripts();
         
-        IScriptManager GetScript(IGameView gameScreen, string name);
+        IScriptManager GetScript(string name);
 
-        Type GetScriptType(IGameView gameScreen, string scriptName);
+        
 
-        object GetScriptValue(IGameView gameScreen, string scriptName, string scriptFieldName);
+        RuntimeScript AddScript(ScriptableGameObject go, string scriptName, string fileName);
 
-        void AddScriptParams(IGameView gameScreen, string name, object[] @params);
+        GameScript AddScript(ScriptableGameObject go, string scriptName, CompiledScript compiledScript);
 
-        RuntimeScript AddScript(IGameView screen, string scriptName, string fileName);
+        ScriptableGameObject AddScript(GameObject parentGo, Dictionary<string, string> scriptFiles, QuestLoaderScriptType scriptType);
 
-        GameScript AddScript(IGameView screen, string scriptName, CompiledScript compiledScript);
+        ScriptableGameObject AddScript(string goName, string fileName, object[] @params = null);
 
         void SetScriptInitialLocation(IGameView gameScreen, string scriptName, Vector2 pos);
 

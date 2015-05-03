@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms.VisualStyles;
-
-namespace ZeldaEngine.Base.Game.ValueObjects
+﻿namespace ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes
 {
     public enum EnemySpawnLocation
     {

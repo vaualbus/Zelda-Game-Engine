@@ -11,6 +11,8 @@ using ZeldaEngine.Base.Abstracts;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
 using ZeldaEngine.Base.Game;
+using ZeldaEngine.Base.Game.GameObjects;
+using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.Extensions;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
@@ -21,8 +23,8 @@ namespace ZeldaEngine.ScriptEngine
     {
         #region Proxy Fields
 
-        public GameScriptEngine(GameConfig config, IGameEngine gameEngine = null)
-            : base(config, gameEngine)
+        public GameScriptEngine(IGameEngine gameEngine)
+            : base(gameEngine)
         {
         }
 
@@ -42,7 +44,7 @@ namespace ZeldaEngine.ScriptEngine
                 .As<IScriptEngine>()
                 .InstancePerLifetimeScope();
 
-            builder.Register(context => new GameLogger(GameConfig))
+            builder.Register(context => new GameLogger(GameEngine.GameConfig))
                .As<ILogger>()
                .InstancePerLifetimeScope();
 
@@ -63,11 +65,9 @@ namespace ZeldaEngine.ScriptEngine
             if(screen == null)
                 return;
 
-            foreach (var valuePair in ScriptRepository.GetScripts(screen).Where(t => t.Key != null && t.Value != null))
+            foreach (var script in screen.Scripts.Select(t => t.ScriptManager))
             {
-                var script = valuePair.Value;
-
-                var paramsForScript = ParamsProvider.GetParamatersForScript(screen, script.RuntimeScript.Name);
+                var paramsForScript = ParamsProvider.GetParamatersForScript(script.RuntimeScript.Name);
                 var runMethod = script.CurrentMenagedScript.GetType().GetMethods()
                     .FirstOrDefault(t => (t.Name == "Run" || t.Name == "RunScript")  && t.GetParameters().Length == paramsForScript.Length && t.MatchTypes(paramsForScript));
 
@@ -91,5 +91,29 @@ namespace ZeldaEngine.ScriptEngine
         }
 
         #endregion
+
+        public override ScriptableGameObject AddScript(GameObject parentGo, Dictionary<string, string> scriptFiles, QuestLoaderScriptType scriptType)
+        {
+            ScriptableGameObject scriptableGo = null;
+
+            GameEngine.GameObjectFactory.TryGet(scriptType.Script.Name, out scriptableGo);
+
+            if (scriptableGo == null)
+            {
+                scriptableGo = GameEngine.GameObjectFactory.Create<ScriptableGameObject>(scriptType.Script.Name, t =>
+                {
+                    t.ObjectType = Base.ValueObjects.Game.ObjectType.Script;
+                    t.ScriptType = scriptType.ScriptType;
+                });
+            }
+
+            scriptableGo.ScriptType = scriptType.ScriptType;
+            scriptableGo.GameObject = parentGo;
+
+            var compiledScript = ScriptCompiler.Compile(scriptFiles[scriptType.Script.Name]);
+            ScriptRepository.AddScript(scriptableGo, scriptType.Script.Name, compiledScript);
+
+            return scriptableGo;
+        }
     }
 }

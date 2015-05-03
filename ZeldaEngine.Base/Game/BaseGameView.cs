@@ -21,8 +21,6 @@ namespace ZeldaEngine.Base.Game
 
         public ColorPalette ColorPalette { get; set; }
 
-        public virtual Dictionary<GameScript, ScriptState> CurrentScriptStates { get; private set; }
-
         public WarpPoint[] WarpPoints { get; set; }
 
         public List<IGameObject> GameObjects { get; private set; }
@@ -37,16 +35,13 @@ namespace ZeldaEngine.Base.Game
             get { return GameObjects.OfType<DrawableGameObject>().ToList(); }
         }
 
-        public IEnumerable<ScriptableGameObject> Scripts
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public List<ScriptableGameObject> Scripts { get; private set; }
 
         protected BaseGameView(string screenName, Vector2 screenPosition, Vector2 playerStartPosition = null)
         {
             Name = screenName;
             ScreenPosition = screenPosition;
-            CurrentScriptStates = new Dictionary<GameScript, ScriptState>();
+            Scripts = new List<ScriptableGameObject>();
             ScreenId = 0;
             PlayerStartPosition = playerStartPosition;
         
@@ -57,8 +52,11 @@ namespace ZeldaEngine.Base.Game
         {
             foreach (var gameObject in GameObjects)
             {
-                gameObject.ScriptTuple.Script.Draw(this, renderEngine);
-                gameObject.Draw(renderEngine);
+                if (gameObject is ScriptableGameObject)
+                    (gameObject as ScriptableGameObject)?.Draw(renderEngine);
+
+                else
+                    gameObject.Draw(renderEngine);
             }
             OnDraw(renderEngine);
         }
@@ -67,7 +65,10 @@ namespace ZeldaEngine.Base.Game
         {
             foreach (var gameObject in GameObjects)
             {
-                gameObject.Update(dt);
+                if (gameObject is ScriptableGameObject)
+                    (gameObject as ScriptableGameObject)?.Update(dt);
+                else
+                    gameObject.Update(dt);
             }
             OnUpdate(dt);
         }
@@ -78,14 +79,15 @@ namespace ZeldaEngine.Base.Game
 
         public void Dispose()
         {
-            CurrentScriptStates.Clear();
+            foreach (var script in Scripts)
+                script.Dispose();
         }
 
         public bool Equals(BaseGameView other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return ScreenId.Equals(other.ScreenId) && string.Equals(Name, other.Name) && Equals(CurrentScriptStates, other.CurrentScriptStates) && Equals(WarpPoints, other.WarpPoints);
+            return ScreenId.Equals(other.ScreenId) && string.Equals(Name, other.Name) && Equals(WarpPoints, other.WarpPoints);
         }
 
         public override bool Equals(object obj)
@@ -102,7 +104,6 @@ namespace ZeldaEngine.Base.Game
             {
                 var hashCode = ScreenId.GetHashCode();
                 hashCode = (hashCode*397) ^ (Name != null ? Name.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (CurrentScriptStates != null ? CurrentScriptStates.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ (WarpPoints != null ? WarpPoints.GetHashCode() : 0);
                 return hashCode;
             }

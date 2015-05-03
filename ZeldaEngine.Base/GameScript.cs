@@ -29,7 +29,7 @@ namespace ZeldaEngine.Base
         /// <summary>
         /// Later on we need to provide only the game base configuration so scripters cannot screw up the engine
         /// </summary>
-        protected GameConfig Config => Engine?.GameConfig;
+        protected GameConfig Config => Engine.GameEngine?.GameConfig;
 
         public IGameObject GameObject { get; set; }
 

@@ -3,6 +3,7 @@ using System.Linq;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.Game.ValueObjects;
+using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 
 namespace ZeldaEngine.Base.Game
 {
@@ -41,7 +42,7 @@ namespace ZeldaEngine.Base.Game
 
             Enemies = questDefinition.Enemies.Select(t => new EnemyGameObject(_gameEngine).Create(t)).ToList();
             Items = questDefinition.Items.Select(t => new ItemGameObject(_gameEngine).Create(t)).ToList();
-            Maps = questDefinition.Maps.Select(t => new Map(_gameEngine).CreateMap(t, questDefinition.Scripts)).ToList();
+            Maps = questDefinition.Maps.Select(t => new Map(_gameEngine, questDefinition.Scripts).CreateMap(t, questDefinition.Scripts)).ToList();
 
             return new Quest(_gameEngine)
             {

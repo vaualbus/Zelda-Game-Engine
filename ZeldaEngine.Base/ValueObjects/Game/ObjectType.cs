@@ -10,6 +10,7 @@
         PlayableObject,
         DrawableObject,
         Null,
-        Enemy
+        Enemy,
+        Script
     }
 }

@@ -23,6 +23,7 @@ namespace ZeldaEngine.Base.ValueObjects
         public Vector2 ScreenPosition { get; private set; }
         public string DefaultFont { get; private set; }
 
+        public bool IsInTest { get; private set; }
 
         public GameConfig(string title, int width = 1024, int height = 768,
                           string baseDirectory = "", 
@@ -30,7 +31,7 @@ namespace ZeldaEngine.Base.ValueObjects
                           string questDirectory = ConfigurationManager.DefaultQuestsPath,
                           string scriptDirectory = ConfigurationManager.DefaultScriptPath,
                           string defaultFont = ConfigurationManager.DefaultFont,
-                          int frameRate = 60)
+                          int frameRate = 60, bool isInTest = false)
         {
             ScreenWidth = width;
             ScreenHeight = height;
@@ -41,6 +42,7 @@ namespace ZeldaEngine.Base.ValueObjects
             Framerate = frameRate;
             ScriptDirectory = scriptDirectory;
             DefaultFont = defaultFont;
+            IsInTest = isInTest;
         }
     }
 }

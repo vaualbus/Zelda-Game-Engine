@@ -15,14 +15,14 @@ using ZeldaEngine.SharpDx;
 using ZeldaEngine.Tests.TestRig;
 using GameScriptEngine = ZeldaEngine.ScriptEngine.GameScriptEngine;
 
+
 namespace ZeldaEngine.Tests.GameTests.GameObjectTests
 {
+
+
     [TestFixture]
     public class ScriptableGoTests
     {
-        
-
-        private readonly IScriptParamaterProvider _scriptParamsProvider;
 
         private readonly GameScriptEngine _engine;
 
@@ -39,42 +39,27 @@ namespace ZeldaEngine.Tests.GameTests.GameObjectTests
             else
             {
                 //We need to create the config file than save the configuration.
-                gameConfig = new GameConfig("Zelda Engine", 300, 200, AppDomain.CurrentDomain.BaseDirectory);
+                gameConfig = new GameConfig("Zelda Engine", 300, 200, AppDomain.CurrentDomain.BaseDirectory, scriptDirectory: "Scripts", isInTest: true);
                 ConfigurationManager.CreateConfiguration(gameConfig);
             }
 
 
             var gameEngine = new SharpDxCoreEngine(new TestGame(), gameConfig, new GameLogger(gameConfig));
-            _engine = new GameScriptEngine(gameConfig, gameEngine);
+            _engine = new GameScriptEngine(gameEngine);
                 
             _engine.InitializeEngine();
 
             _engine.ScriptCompiler.AdditionalAssemblies.Add(Assembly.GetAssembly(typeof(System.Drawing.Color)));
 
-            new GameObjectFactory(new TestGameEngine());
+            _engine.GameEngine.GameObjectFactory = new GameObjectFactory(_engine.GameEngine);
+
+            gameEngine.ScriptEngine = _engine;
         }
 
         [Test]
         public void AttachScriptToAGameObjectNotThrowException()
         {
-            var go = _engine.GameEngine.GameObjectFactory.Create<ScriptableGameObject>("Test", scriptGameObject =>
-            {
-                scriptGameObject.ScriptParamProvider = _engine.ParamsProvider;
-                scriptGameObject.ObjectType = ObjectType.Enemy;
-
-                var script1 = CreateScript("Script1", @"Scripts\GameObjectScriptTest.cs");
-                var script2 = CreateScript("Script2", @"Scripts\GameObjectScriptTest.cs");
-                var script3 = CreateScript("Script3", @"Scripts\GameObjectScriptTest.cs");
-
-                scriptGameObject.Scripts.Add(script1);
-                scriptGameObject.Scripts.Add(script2);
-                scriptGameObject.Scripts.Add(script3);
-
-                ((GameScriptParmaterProvider) scriptGameObject.ScriptParamProvider).AddParamater(script1.CurrentMenagedScript, new object[] { 10 });
-                ((GameScriptParmaterProvider) scriptGameObject.ScriptParamProvider).AddParamater(script2.CurrentMenagedScript, new object[] { "Test" });
-                ((GameScriptParmaterProvider) scriptGameObject.ScriptParamProvider).AddParamater(script1.CurrentMenagedScript, null);
-            });
-
+            var go = _engine.AddScript("scriptGo", "GameObjectScriptTest.cs", new object[] {10});
             go.Update(0);
         }
 

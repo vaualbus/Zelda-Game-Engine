@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
+using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.ValueObjects.Extensions;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 
@@ -22,7 +23,7 @@ namespace ZeldaEngine.Base
 
         public GameScript CurrentMenagedScript => _currentCachedScriptInstance;
 
-        public RuntimeScript RuntimeScript => RuntimeScript;
+        public RuntimeScript RuntimeScript => _runtimeScript;
 
         public ScriptManager(IScriptEngine engine, IScriptRepository scriptRepository,
             IDependencyResolver resolver, IScriptActivator scriptActivator, ILogger logger)
@@ -39,10 +40,10 @@ namespace ZeldaEngine.Base
             _logger.LogInfo("Init script Manager");
         }
 
-        public GameScript AddScript(IGameView gameView, CompiledScript script, string scriptName)
+        public GameScript AddScript(ScriptableGameObject go, CompiledScript script, string scriptName)
         {
             _currentCompiledScript = script;
-            _runtimeScript = new RuntimeScript(_scriptRepository, gameView, script, scriptName);
+            _runtimeScript = new RuntimeScript(_scriptRepository, go, script, scriptName);
 
             var objValue = CreateRuntimeScript(_runtimeScript);
             if (objValue == null)

@@ -7,6 +7,7 @@ using System.Linq;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game.GameEngineClasses;
 using ZeldaEngine.Base.Game.ValueObjects;
+using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.Game;
 
@@ -108,7 +109,7 @@ namespace ZeldaEngine.Base.Game.MapLoaders
                         }
 
                         loadedScreens.Add(new ScreenDefinition(screenNumber, screenName, screenType, 0, 0, songName,
-                                                                colorPalette, introText, loadedTiles, null));
+                                                                colorPalette, introText, loadedTiles, null, null));
                         loadedTiles.Clear();
 
                         screenLoadedCount++;

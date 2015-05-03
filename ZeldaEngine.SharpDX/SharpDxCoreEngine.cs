@@ -38,7 +38,7 @@ namespace ZeldaEngine.SharpDx
 
         public ILogger Logger { get; private set; }
 
-        public IGameObjectFactory GameObjectFactory { get; private set; }
+        public IGameObjectFactory GameObjectFactory { get; set; }
 
         public IResourceData TextureData(string assetName)
         {

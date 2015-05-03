@@ -24,8 +24,6 @@ namespace ZeldaEngine.Base.Abstracts.Game
 
         ObjectType ObjectType { get; }
 
-        ScriptTuple ScriptTuple { get; }
-
         TComponent GetComponent<TComponent>(string name) where TComponent : class, IGameComponent;
 
         TComponent AddComponent<TComponent>(string name) where TComponent : class, IGameComponent;

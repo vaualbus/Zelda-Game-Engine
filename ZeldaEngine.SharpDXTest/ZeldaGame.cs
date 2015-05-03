@@ -33,7 +33,7 @@ namespace ZeldaEngine.SharpDXTest
         {
             _gOs = new List<GameObject>();
 
-            _scriptEngine = new GameScriptEngine(GameEngine.GameConfig, GameEngine);
+            _scriptEngine = new GameScriptEngine(GameEngine);
             _scriptEngine.InitializeEngine();
 
             GameEngine.ScriptEngine = _scriptEngine;
@@ -88,11 +88,10 @@ namespace ZeldaEngine.SharpDXTest
             //var testScript1 = CreateScript("TestScript1", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript1.cs"));
             //var testScript2 = CreateScript("TestScript2", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript2.cs"));
             //var testScript3 = CreateScript("TestScript3", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript3.cs"));
-            var gameScript = CreateScript("GameScript", Path.Combine(GameEngine.GameConfig.ScriptDirectory, "GameTestScript.cs"));
+            var gameScript = CreateScript("GameScript", "GameTestScript");
 
             _scriptGo = GameEngine.GameObjectFactory.Create<ScriptableGameObject>("ScriptGo1", go =>
             {
-                go.ScriptParamProvider = _scriptEngine.ParamsProvider;
                 go.ObjectType = ObjectType.Enemy;
 
                 //testScript1.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 50));
@@ -108,7 +107,8 @@ namespace ZeldaEngine.SharpDXTest
                 //go.Scripts.Add(testScript3);
 
                 //gameScript.CurrentMenagedScript.SetInitalPosition(new Vector2(0,0));
-                go.Scripts.Add(gameScript);
+
+                go.ScriptManager = gameScript;
             });
 
             return true;

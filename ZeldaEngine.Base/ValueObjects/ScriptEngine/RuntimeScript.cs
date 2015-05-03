@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
+using ZeldaEngine.Base.Game.GameObjects;
 
 namespace ZeldaEngine.Base.ValueObjects.ScriptEngine
 {
@@ -9,7 +10,7 @@ namespace ZeldaEngine.Base.ValueObjects.ScriptEngine
     {
         private readonly IScriptRepository _scriptRepository;
 
-        public IGameView GameView { get; private set; }
+        public ScriptableGameObject ScriptableGo { get; set; }
 
         public string Name { get; private set; }
 
@@ -17,21 +18,22 @@ namespace ZeldaEngine.Base.ValueObjects.ScriptEngine
 
         public CompiledScript CompiledScript { get; private set; }
 
-        public RuntimeScript(IGameView gameView, IScriptCompiler compiler, IScriptRepository scriptRepository, string name, string scriptFileName)
+        public RuntimeScript(ScriptableGameObject go, IScriptCompiler compiler, IScriptRepository scriptRepository, string name, string scriptFileName)
         {
             Name = name;
             CtorParams = new Dictionary<Type, List<object>>();
             CompiledScript = compiler.Compile(scriptFileName);
-            GameView = gameView;
+            ScriptableGo = go;
             _scriptRepository = scriptRepository;
         }
 
-        internal RuntimeScript(IScriptRepository scriptRepository, IGameView gameView, CompiledScript script, string name)
+        internal RuntimeScript(IScriptRepository scriptRepository, ScriptableGameObject go, CompiledScript script, string name)
         {
             Name = name;
             CompiledScript = script;
-            GameView = gameView;
+
             CtorParams = new Dictionary<Type, List<object>>();
+            ScriptableGo = go;
 
             _scriptRepository = scriptRepository;
         }

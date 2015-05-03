@@ -22,7 +22,7 @@ namespace ZeldaEngine.Base.Game.GameEngineClasses
 
         public IGameObjectFactory GameObjectFactory
         {
-            get { throw new System.NotImplementedException(); }
+            get; set;
         }
 
         public IResourceData TextureData(string assetName)

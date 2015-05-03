@@ -1,23 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Threading;
 using FluentAssertions;
 using NUnit.Framework;
-using ZeldaEngine.Base;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game;
+using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.ValueObjects;
-using ZeldaEngine.Base.ValueObjects.Game;
+using ZeldaEngine.Tests.TestRig;
 
-namespace ZeldaEngine.Tests
+namespace ZeldaEngine.Tests.Script_Engine_Test
 {
     [TestFixture]
     public class ScriptEngineTest
     {
-        private readonly GameConfig _testConfig = new  GameConfig("Test", baseDirectory: AppDomain.CurrentDomain.BaseDirectory);
+        private readonly GameConfig _testConfig = new  GameConfig("Test", baseDirectory: AppDomain.CurrentDomain.BaseDirectory, scriptDirectory: "Scripts", isInTest: true);
+
+        private readonly ScriptableGameObject _scripatbleGameObject;
 
         public class TestScreen : BaseGameView
         {
@@ -29,30 +27,36 @@ namespace ZeldaEngine.Tests
 
         private static IGameView _testScreen = new TestScreen("Test");
 
+        public ScriptEngineTest()
+        {
+            var engine = new ScriptEngine.GameScriptEngine(new TestGameEngine(_testConfig, new TestLogger()));
+            _scripatbleGameObject = engine.GameEngine.GameObjectFactory.CreateEmpty<ScriptableGameObject>("emptyGo");
+        }
+
         [Test]
         public void InstantiateEngineNotThrownAnException()
         {
-            var engine = new ScriptEngine.GameScriptEngine(_testConfig);
+            var engine = new ScriptEngine.GameScriptEngine(new TestGameEngine(_testConfig, new TestLogger()));
             engine.InitializeEngine();
 
-            engine.AddScript(_testScreen, "Test", engine.ScriptCompiler.Compile(@"Scripts\TestScript.cs"));
+            engine.AddScript(_scripatbleGameObject, "Test", engine.ScriptCompiler.Compile(@"TestScript.cs"));
 
             const int expectedValue = Int32.MaxValue;
-            engine.GetScript(_testScreen, "Test").ExcuteFunction("TestFunc1", new object[]{ expectedValue}).Should().Be(expectedValue);
+            engine.GetScript("Test").ExcuteFunction("TestFunc1", new object[]{ expectedValue}).Should().Be(expectedValue);
         }
 
         [Test]
         public void GivenMultipleScriptExcutedRunFunctionWithGivenParams()
         {
-            var engine = new ScriptEngine.GameScriptEngine(_testConfig);
+            var engine = new ScriptEngine.GameScriptEngine(new TestGameEngine(_testConfig, new TestLogger()));
             engine.InitializeEngine();
 
             var gameView = new TestScreen("Test");
-            engine.AddScript(gameView, "testScript", @"Scripts\TestScript.cs").Compile();
-            engine.AddScript(gameView, "engineScript", @"Scripts\TestEngineScript.cs").Compile();
+            engine.AddScript(_scripatbleGameObject, "testScript", @"TestScript.cs").Compile();
+            engine.AddScript(_scripatbleGameObject, "engineScript", @"TestEngineScript.cs").Compile();
 
-            engine.ParamsProvider.AddParamater(gameView, "testScript", new object[] {10,  20 });
-            engine.ParamsProvider.AddParamater(gameView, "engineScript", new object[] { "Abba" });
+            engine.ParamsProvider.AddParamater("testScript", new object[] {10,  20 });
+            engine.ParamsProvider.AddParamater("engineScript", new object[] { "Abba" });
 
             var watch = new Stopwatch();
             watch.Start();
@@ -65,14 +69,14 @@ namespace ZeldaEngine.Tests
         [Test]
         public void MultipleRunMethodPerformanceTest()
         {
-            var engine = new ScriptEngine.GameScriptEngine(_testConfig);
+            var engine = new ScriptEngine.GameScriptEngine(new TestGameEngine(_testConfig, new TestLogger()));
             engine.InitializeEngine();
 
             var gameView = new TestScreen("Test");
             for (var i = 0; i < 10; i++)
             {
-                engine.AddScript(gameView, string.Format("testScript_{0}", i), @"Scripts\TestScript.cs").Compile();
-                engine.ParamsProvider.AddParamater(gameView, string.Format("testScript_{0}", i), new object[] {10, 20});
+                engine.AddScript(_scripatbleGameObject, string.Format("testScript_{0}", i), @"TestScript.cs").Compile();
+                engine.ParamsProvider.AddParamater(string.Format("testScript_{0}", i), new object[] {10, 20});
             }
 
             var watch = new Stopwatch();

@@ -2,6 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 using ZeldaEngine.Base.Game.ValueObjects;
+using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.ValueObjects;
 
 namespace ZeldaEngine.Base

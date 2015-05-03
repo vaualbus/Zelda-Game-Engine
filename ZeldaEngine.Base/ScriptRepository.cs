@@ -2,24 +2,13 @@
 using System.Linq;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
+using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 
 namespace ZeldaEngine.Base
 {
     internal class ScriptRepository : IScriptRepository
     {
-        internal class GameViewInfo
-        {
-            public IGameView GameView { get; private set; }
-
-            public string ScriptName { get; private set; }
-
-            public GameViewInfo(IGameView gameView, string scriptName)
-            {
-                GameView = gameView;
-                ScriptName = scriptName;
-            }
-        }
 
         private readonly IScriptEngine _engine;
         private readonly IScriptCompiler _compiler;
@@ -27,7 +16,7 @@ namespace ZeldaEngine.Base
         private readonly IScriptActivator _scriptActivator;
         private readonly ILogger _logger;
 
-        public Dictionary<GameViewInfo, IScriptManager> Scripts { get; private set; }
+        public Dictionary<string, ScriptableGameObject> Scripts { get; private set; }
 
         public ScriptRepository(IScriptEngine engine,
                                 IScriptCompiler compiler,
@@ -35,7 +24,7 @@ namespace ZeldaEngine.Base
                                 IScriptActivator scriptActivator,
                                 ILogger logger)
         {
-            Scripts = new Dictionary<GameViewInfo, IScriptManager>();
+            Scripts = new Dictionary<string, ScriptableGameObject>();
 
             _engine = engine;
             _compiler = compiler;
@@ -44,48 +33,26 @@ namespace ZeldaEngine.Base
             _logger = logger;
         }
 
-        public GameScript AddScript(IGameView screen, string scriptName, CompiledScript scriptMetadata)
+        public GameScript AddScript(ScriptableGameObject scriptableGo, string name, CompiledScript scriptMetadata)
         {
-            IScriptManager outScriptManager;
-            if (Scripts.TryGetValue(new GameViewInfo(screen, scriptName), out outScriptManager))
+            var scriptManager = new ScriptManager(_engine, this, _resolver, _scriptActivator, _logger);
+            var compiledScript = scriptManager.AddScript(scriptableGo, scriptMetadata, name);
+            scriptableGo.ScriptManager = scriptManager;
+
+            if (Scripts.ContainsKey(name))
             {
-                _logger.LogError("A Script with the same name {0} has arleady addd in screen {1}");
-                return null;
+                
             }
+            else
+                Scripts.Add(name, scriptableGo);
 
-            var scriptManager = new ScriptManager(_engine, this, _resolver,  _scriptActivator, _logger);
-            var result = scriptManager.AddScript(screen, scriptMetadata, scriptName);
-           
-            if (screen != null)
-            {
-                //if (screen.CurrentScriptStates.ContainsKey(result))
-                //{
-                //    _logger.LogError("The script {0} is added more than once!");
-                //    return null;
-                //}
-
-               // screen.CurrentScriptStates.Add(scriptManager.CurrentMenagedScript, ScriptState.NotSet);
-
-                lock (Scripts)
-                {
-                    Scripts.Add(new GameViewInfo(screen, scriptName), scriptManager);
-                }
-
-                return result;
-            }
-
-            lock (Scripts)
-            {
-                Scripts.Add(new GameViewInfo(screen, scriptName), scriptManager);
-            }
-
-            return result;
+            return scriptableGo.ScriptManager.CurrentMenagedScript;
         }
 
         public GameScript Compile(RuntimeScript runtimeScript)
         {
-            IScriptManager outScriptManager;
-            if (Scripts.TryGetValue(new GameViewInfo(runtimeScript.GameView, runtimeScript.Name), out outScriptManager))
+            ScriptableGameObject outScriptManager;
+            if (Scripts.TryGetValue(runtimeScript.ScriptableGo.Name, out outScriptManager))
             {
                 _logger.LogError("A Script with the same name {0} has arleady addd in screen {1}");
                 return null;
@@ -94,8 +61,9 @@ namespace ZeldaEngine.Base
             var scriptManager = new ScriptManager(_engine, this, _resolver, _scriptActivator, _logger);
             scriptManager.CreateScript(runtimeScript);
 
-            var screen = runtimeScript.GameView;
-            if (screen != null)
+            var scriptableGo = runtimeScript.ScriptableGo;
+            scriptableGo.ScriptManager = scriptManager;
+            if (scriptableGo != null)
             {
                 //if (screen.CurrentScriptStates.ContainsKey(scriptManager.CurrentMenagedScript))
                 //{
@@ -107,7 +75,7 @@ namespace ZeldaEngine.Base
 
                 lock (Scripts)
                 {
-                    Scripts.Add(new GameViewInfo(screen, runtimeScript.Name), scriptManager);
+                    Scripts.Add(runtimeScript.Name, scriptableGo);
                 }
 
                 return scriptManager.CurrentMenagedScript;
@@ -115,49 +83,25 @@ namespace ZeldaEngine.Base
 
             lock (Scripts)
             {
-                Scripts.Add(new GameViewInfo(runtimeScript.GameView, runtimeScript.Name), scriptManager);
+                Scripts.Add(runtimeScript.Name, scriptableGo);
             }
 
             return scriptManager.CurrentMenagedScript;
         }
 
-        public void Remove(IGameView screen, string scriptName)
+        public void Remove(string scriptName)
         {
-            if (screen == null)
-            {
-                _logger.LogError("The give screen is invalid");
-                return;
-            }
-
-            Scripts.Remove(new GameViewInfo(screen, scriptName));
+            Scripts.Remove(scriptName);
         }
 
-        public GameScript GetScript(IGameView screen, string scriptName)
+        public GameScript GetScript(string scriptName)
         {
-            return Scripts.FirstOrDefault(t => t.Key.GameView.Equals(screen) && t.Key.ScriptName == scriptName).Value.CurrentMenagedScript;
+            return Scripts[scriptName].ScriptManager.CurrentMenagedScript;
         }
 
-        public IScriptManager GetScriptManager(IGameView screen, string scriptName)
+        public IScriptManager GetScriptManager(string scriptName)
         {
-            if (screen == null)
-            {
-                _logger.LogError("The give screen is invalid");
-                return null;
-            }
-
-            return Scripts.Where(t => t.Key.GameView.Equals(screen) && t.Key.ScriptName == scriptName).Select(t => t.Value).FirstOrDefault();
-        }
-
-        public Dictionary<GameScript, IScriptManager> GetScripts(IGameView gameScreen)
-        {
-            if (gameScreen == null)
-            {
-                _logger.LogError("The give screen is invalid");
-                return null;
-            }
-
-            var screen = Scripts.Where(t => t.Key.GameView == gameScreen);
-            return screen.ToDictionary(t => t.Value.CurrentMenagedScript, t => t.Value);
+            return Scripts[scriptName].ScriptManager;
         }
     }
 }

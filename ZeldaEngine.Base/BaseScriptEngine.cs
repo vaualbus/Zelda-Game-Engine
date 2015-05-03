@@ -8,6 +8,8 @@ using Autofac;
 using ZeldaEngine.Base.Abstracts;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
+using ZeldaEngine.Base.Game.GameObjects;
+using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.Services;
 using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
@@ -19,8 +21,6 @@ namespace ZeldaEngine.Base
         private IContainer _containerBuilder;
 
         public IScriptRepository ScriptRepository { get; private set; }
-
-        public GameConfig GameConfig { get; private set; }
 
         public IGameEngine GameEngine { get; private set; }
 
@@ -38,9 +38,8 @@ namespace ZeldaEngine.Base
        
         public ContainerBuilder ContainerBuilder { get; private set; }
 
-        protected BaseScriptEngine(GameConfig config, IGameEngine gameEngine = null)
+        protected BaseScriptEngine(IGameEngine gameEngine)
         {
-            GameConfig = config;
             GameEngine = gameEngine;
         }
 
@@ -132,7 +131,7 @@ namespace ZeldaEngine.Base
 
         public void UpdateEnviromentInfo(GameEviromentCollection gameEnviromentCollection)
         {
-            GameConfig = gameEnviromentCollection.GameConfig;
+            GameEngine.GameConfig = gameEnviromentCollection.GameConfig;
         }
 
         public bool GenerateProject()
@@ -159,33 +158,29 @@ namespace ZeldaEngine.Base
             return null;
         }
 
-        public virtual IScriptManager GetScript(IGameView gameScreen, string name)
+        public virtual IScriptManager GetScript(string name)
         {
-            return ScriptRepository.GetScriptManager(gameScreen, name);
+            return ScriptRepository.GetScriptManager(name);
         }
 
-        public virtual Type GetScriptType(IGameView gameScreen, string scriptName)
+        public virtual RuntimeScript AddScript(ScriptableGameObject go, string scriptName, string fileName)
         {
-            return null;
+            return new RuntimeScript(go, ScriptCompiler, ScriptRepository, scriptName, fileName);
         }
 
-        public virtual object GetScriptValue(IGameView gameScreen, string scriptName, string scriptFieldName)
+        public virtual GameScript AddScript(ScriptableGameObject go, string scriptName, CompiledScript compiledScript)
         {
-            return null;
+            return ScriptRepository.AddScript(go, scriptName, compiledScript);
         }
 
-        public virtual void AddScriptParams(IGameView gameScreen, string name, object[] @params)
+        public ScriptableGameObject AddScript(string goName, string fileName, object[] @params = null)
         {
-        }
+            var go = GameEngine.GameObjectFactory.CreateEmpty<ScriptableGameObject>(goName);
+            AddScript(go, goName, ScriptCompiler.Compile(fileName));
 
-        public virtual RuntimeScript AddScript(IGameView screen, string scriptName, string fileName)
-        {
-            return new RuntimeScript(screen, ScriptCompiler, ScriptRepository, scriptName, fileName);
-        }
+            ParamsProvider.AddParamater(goName, @params);
 
-        public virtual GameScript AddScript(IGameView screen, string scriptName, CompiledScript compiledScript)
-        {
-            return ScriptRepository.AddScript(screen, scriptName, compiledScript);
+            return go;
         }
 
         public virtual void SetScriptInitialLocation(IGameView gameScreen, string scriptName, Vector2 pos)
@@ -212,10 +207,10 @@ namespace ZeldaEngine.Base
 
             //AddAssembliesFromDirectoryName("Assemblies");
 
-            if(!Directory.Exists(GameConfig.BaseDirectory))
+            if(!Directory.Exists(GameEngine.GameConfig.BaseDirectory))
                 return;
 
-            foreach (var dll in Directory.GetFiles(GameConfig.BaseDirectory).Where(t => (new FileInfo(t)).Extension == ".dll"))
+            foreach (var dll in Directory.GetFiles(GameEngine.GameConfig.BaseDirectory).Where(t => (new FileInfo(t)).Extension == ".dll"))
             {
                 Assembly loadedAssembly = null;
                 try
@@ -257,6 +252,11 @@ namespace ZeldaEngine.Base
             OnDispose();
 
             ScriptSystemLifetimeScope.Dispose();
+        }
+
+        public virtual ScriptableGameObject AddScript(GameObject parentGo, Dictionary<string, string> scriptFiles, QuestLoaderScriptType scriptType)
+        {
+            return null;
         }
     }
 }

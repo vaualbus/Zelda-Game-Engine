@@ -22,7 +22,7 @@
         {
             "Name": "Grass",
             "Properties": {
-                "TestString": "Test",
+                "TestString": "Test"
             }
         }
     ],
@@ -61,18 +61,6 @@
                                 "Life": 100,
                                 "DemagedBy": "All",
                                 "WalkVelocity": 1.0
-                            }
-                        }
-                    ],
-
-                    "Scripts": [
-                        {
-                            "GameObjectName": "Grass",
-                            "Script": {
-                                "Name": "Test",
-                                "ScriptParams": [
-                                    { "Type":  "", "Value":  ""}
-                                ]
                             }
                         }
                     ],
@@ -514,6 +502,18 @@
                                     "WalkVelocity": 1.0,
                                     "IsVisible": false
                                 }
+                            }
+                        }
+                    ],
+
+                    "Scripts": [
+                        {
+                            "GameObjectName": "Grass",
+                            "Script": {
+                                "Name": "TestScript",
+                                "Type": "Default",
+                                "ScriptParams": [
+                                ]
                             }
                         }
                     ]

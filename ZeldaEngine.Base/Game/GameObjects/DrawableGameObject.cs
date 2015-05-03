@@ -5,6 +5,7 @@ using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game.Extensions;
 using ZeldaEngine.Base.Game.GameComponents;
 using ZeldaEngine.Base.Game.ValueObjects;
+using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.Game;
 

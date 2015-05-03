@@ -4,6 +4,7 @@ using System.Linq;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.Game.ValueObjects;
+using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.ValueObjects;
 
 namespace ZeldaEngine.Base.Game
@@ -62,6 +63,15 @@ namespace ZeldaEngine.Base.Game
             return temp;
         }
 
+        public TObject CreateEmpty<TObject>(string name) where TObject : class, IGameObject
+        {
+            return Create<TObject>(name, t =>
+            {
+                t.Position = new Vector2(0, 0);
+                t.Rotation = new Vector2(0,0);
+            });
+        }
+
         public void Delete(string name)
         {
             var go = _registeredGameObjects.Select(t => t.Value).FirstOrDefault(t => t.Name == name);
@@ -110,6 +120,11 @@ namespace ZeldaEngine.Base.Game
             var go = Find(enemy.Name);
             _registeredGameObjects[Tuple.Create(enemy.GetType(), go.Name)] = enemy;
 
+        }
+
+        public void TryGet<TGameObject>(string name, out TGameObject go) where TGameObject : class, IGameObject
+        {
+            go = Find<TGameObject>(name);
         }
     }
 }

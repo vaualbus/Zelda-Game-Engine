@@ -37,10 +37,15 @@ namespace ZeldaEngine.ScriptEngine
 
         public CompiledScript Compile(string fileName)
         {
-            //First wee need to find the file.
-            var filePath = Path.Combine(Environment.CurrentDirectory, fileName);
+            if ((new FileInfo(fileName).Extension != ".cs"))
+                fileName += ".cs";
+
+            //Now we need the file to be in t e ScriptFolder or (later, much later, in memory).
+
+            var filePath = "";
+            filePath = Path.Combine($"{_scriptEngine.GameEngine.GameConfig.ScriptDirectory}", fileName);
             if (!File.Exists(filePath))
-                throw new ArgumentException(string.Format("Cannot find the file: {0} in the path: {1}", fileName, Environment.CurrentDirectory));
+                throw new ArgumentException(string.Format("Cannot find the file: {0} in the path: {1}", fileName, $"{_scriptEngine.GameEngine.GameConfig.BaseDirectory}{_scriptEngine.GameEngine.GameConfig.ScriptDirectory}"));
 
             var fileText = File.ReadAllText(filePath);
             var codeTree = SyntaxFactory.ParseSyntaxTree(fileText);
@@ -49,7 +54,7 @@ namespace ZeldaEngine.ScriptEngine
 
             var referenceAssemblies = AdditionalAssemblies.Where(t => t != null)
                                                           .Select(MetadataReference.CreateFromAssembly);
-
+        
             AdditionalAssemblies.Add(typeof(object).Assembly);
 
             var compilation = CSharpCompilation.Create("ScriptCompiled")

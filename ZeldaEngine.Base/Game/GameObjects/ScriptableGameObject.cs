@@ -2,6 +2,7 @@
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
 using ZeldaEngine.Base.ValueObjects.Game;
+using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 
 namespace ZeldaEngine.Base.Game.GameObjects
 {
@@ -9,32 +10,32 @@ namespace ZeldaEngine.Base.Game.GameObjects
     {
         public ObjectType ObjectType { get; set; }
 
-        public IScriptParamaterProvider ScriptParamProvider { get; set;  }
+        public ScriptType ScriptType { get; set; } 
 
-        public List<IScriptManager> Scripts { get; private set; }
+        public IScriptManager ScriptManager { get; set; }
+
+        public GameObject GameObject { get; set; }
 
         public ScriptableGameObject(IGameEngine gameEngine) 
             : base(gameEngine)
         {
-            Scripts = new List<IScriptManager>();
         }
 
         protected override void OnDraw(IRenderEngine renderEngine)
         {
-            //Test
-            foreach (var script in Scripts)
-                script.CurrentMenagedScript.Draw();
+            ScriptManager.CurrentMenagedScript.Draw();
         }
 
         protected override void OnUpdate(float dt)
         {
-            foreach (var script in Scripts)
-            {
-                var managedScript = script.CurrentMenagedScript;
-                var @params = ScriptParamProvider.GetParamatersForScript(script.CurrentMenagedScript);
+            if (ScriptManager == null)
+                return;
 
-                script.ExcuteFunction("Run", @params);
-            }
+            var managedScript = ScriptManager.CurrentMenagedScript;
+            var @params = GameEngine.ScriptEngine.ParamsProvider.GetParamatersForScript(ScriptManager.CurrentMenagedScript);
+
+            ScriptManager.ExcuteFunction("Run", @params);
+
             base.OnUpdate(dt);
         }
 

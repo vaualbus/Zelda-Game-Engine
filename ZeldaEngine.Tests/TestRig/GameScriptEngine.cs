@@ -11,8 +11,8 @@ namespace ZeldaEngine.Tests.TestRig
 {
     public class  GameScriptEngine : BaseScriptEngine
     {
-        public GameScriptEngine(GameConfig config) 
-            : base(config, null)
+        public GameScriptEngine(IGameEngine gameEngine) 
+            : base(gameEngine)
         {
         }
 

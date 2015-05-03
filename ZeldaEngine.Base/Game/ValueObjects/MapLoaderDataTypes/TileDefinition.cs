@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using ZeldaEngine.Base.ValueObjects.Game;
 
-namespace ZeldaEngine.Base.Game.ValueObjects
+namespace ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes
 {
     public class TileDefinition : IEquatable<TileDefinition>
     {

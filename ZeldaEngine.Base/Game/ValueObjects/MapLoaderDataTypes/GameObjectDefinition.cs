@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using ZeldaEngine.Base.Game.MapLoaders;
 
-namespace ZeldaEngine.Base.Game.ValueObjects
+namespace ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes
 {
     public class GameObjectDefinition
     {

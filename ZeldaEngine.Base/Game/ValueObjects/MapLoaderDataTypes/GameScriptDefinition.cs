@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using ZeldaEngine.Base.Game.MapLoaders;
+using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 
-namespace ZeldaEngine.Base.Game.ValueObjects
+namespace ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes
 {
     public class QuestLoaderScriptType : IEquatable<QuestLoaderScriptType>
     {
         public string GameObjectName { get; private set; }
 
+        public ScriptType ScriptType { get; private set; }
+
         public GameScriptDefinition Script { get; private set; }
 
-        public QuestLoaderScriptType(string gameObjectName, GameScriptDefinition script)
+        public QuestLoaderScriptType(string gameObjectName, ScriptType scriptType, GameScriptDefinition script)
         {
             GameObjectName = gameObjectName;
             Script = script;
+            ScriptType = scriptType;
         }
 
         public bool Equals(QuestLoaderScriptType other)

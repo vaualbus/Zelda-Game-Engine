@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using ZeldaEngine.Base.Abstracts.Game;
+using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 
 namespace ZeldaEngine.Base.Abstracts.ScriptEngine
@@ -10,7 +11,7 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine
 
         RuntimeScript RuntimeScript { get; }
 
-        GameScript AddScript(IGameView gameView, CompiledScript script, string scriptName);
+        GameScript AddScript(ScriptableGameObject go, CompiledScript script, string scriptName);
 
         object ExcuteFunction(string funcName, object[] @params);
 
