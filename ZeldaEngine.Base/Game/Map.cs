@@ -114,7 +114,7 @@ namespace ZeldaEngine.Base.Game
                                 t.Position = new Vector2(tile.TilePositionX, tile.TilePositionY);
                                 t.Tile = new Tile(_gameEngine, 0, 0, tile.LayerNumber)
                                 {
-                                    Texture = _gameEngine.TextureData(tile.TextureAssetName)
+                                    Texture = _gameEngine.Texture2DData(tile.TextureAssetName)
                                 };
                                 // t.ParentGameObjects.Add(go);
                             });

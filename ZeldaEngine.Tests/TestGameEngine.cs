@@ -36,7 +36,7 @@ namespace ZeldaEngine.Tests
 
         }
 
-        public IResourceData TextureData(string assetName)
+        public IResourceData Texture2DData(string assetName)
         {
             throw new NotImplementedException();
         }

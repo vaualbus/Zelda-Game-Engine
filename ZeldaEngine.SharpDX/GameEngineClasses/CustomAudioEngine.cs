@@ -4,8 +4,11 @@ namespace ZeldaEngine.SharpDx.GameEngineClasses
 {
     public class CustomAudioEngine : IAudioEngine
     {
+        private readonly IGameEngine _gameEngine;
+
         public CustomAudioEngine(IGameEngine gameEngine)
         {
+            _gameEngine = gameEngine;
         }
 
         public void AddSong(string name)

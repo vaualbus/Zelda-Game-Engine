@@ -10,11 +10,13 @@ using ZeldaEngine.Base;
 using ZeldaEngine.Base.Abstracts;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
+using ZeldaEngine.Base.Abstracts.ScriptEngine.Project;
 using ZeldaEngine.Base.Game;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.Extensions;
+using ZeldaEngine.Base.ValueObjects.Game.Attributes;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 
 namespace ZeldaEngine.ScriptEngine
@@ -56,6 +58,9 @@ namespace ZeldaEngine.ScriptEngine
                    .As<IScriptCompiler>()
                    .SingleInstance();
 
+            builder.RegisterType<ProjectManager>()
+                   .As<IProjectManager>()
+                   .InstancePerLifetimeScope();
         }
 
         #region Proxy Methods
@@ -88,6 +93,101 @@ namespace ZeldaEngine.ScriptEngine
                 else
                     Logger.LogWarning("Try calling Method Run with mismatched arguments.");
             }
+        }
+
+        public override void Update(float dt)
+        {
+            foreach (var scriptGo in ScriptRepository.Scripts.Values)
+            {
+                var paramsForScript = ParamsProvider.GetParamatersForScript(scriptGo.ScriptManager.RuntimeScript.Name);
+                var runMethod = scriptGo.ScriptManager.CurrentMenagedScript.GetType()
+                                        .GetMethods()
+                                        .FirstOrDefault(t => (t.Name == "Run" || t.Name == "RunScript") && 
+                                                             t.GetParameters().Length == paramsForScript.Length && t.MatchTypes(paramsForScript));
+
+                //Look for the DataForm Attribute, if used on fields, set the value.
+                ///TODO: Rember to move this code at the initialization of the game.
+                var scriptDataFormAttributes = GetAttibutes<DataFromAttribute>(scriptGo.ScriptManager.CurrentMenagedScript.GetType());
+                foreach (var scriptDataFormAttribute in scriptDataFormAttributes)
+                {
+                    var script2 = ScriptRepository.TryGetScriptManager(scriptDataFormAttribute.ScriptName);
+                    if (script2 != null)
+                    {
+                        //Set the current script value to the correct script value
+                        //scriptGo.ScriptManager.SetScriptFields("", script2.GetScriptValue(scriptDataFormAttribute.FieldName));
+                    }
+                }
+
+                scriptGo.ScriptManager.CurrentMenagedScript.CurrentTime = dt;
+
+                if (runMethod != null)
+                {
+                    //#if DEBUG
+                    //                    Logger.LogWarning("------------------------------------");
+                    //                    Logger.LogWarning("Calling method {0} with @params: {1}", runMethod.Name, string.Join(", ", paramsForScript));
+
+                    try
+                    {
+                        //#endif
+                        runMethod.Invoke(scriptGo.ScriptManager.CurrentMenagedScript, paramsForScript);
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                    //#if DEBUG
+                    //                    Logger.LogWarning("------------------------------------");
+                    //#endif
+
+                }
+                else
+                    Logger.LogWarning("Try calling Method Run with mismatched arguments.");
+            }
+        }
+
+        private IEnumerable<TAttribute> GetAttibutes<TAttribute>(Type classType) where TAttribute : Attribute
+        {
+            var returnAttributes = new List<TAttribute>();
+
+            //First Do the attribute is on the class?
+            TAttribute[] attributes = null;
+            attributes = (TAttribute[]) Attribute.GetCustomAttributes(classType, typeof (TAttribute));
+            if (attributes.Length > 0)
+                returnAttributes.AddRange(attributes.Where(t => t != null));
+
+            //Search the attibute in the class fields
+            attributes = classType.GetFields().Select(t => (TAttribute) Attribute.GetCustomAttribute(t, typeof(TAttribute))).ToArray();
+            if (attributes.Length > 0)
+                returnAttributes.AddRange(attributes.Where(t => t != null));
+
+            //Search the attibute in the class properties
+            attributes = classType.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
+                                  .Where(t => Attribute.IsDefined(t, typeof(TAttribute)))
+                                  .Select(t => t.GetCustomAttribute<TAttribute>())
+                                  .ToArray();
+
+            if (attributes.Length > 0)
+                returnAttributes.AddRange(attributes.Where(t => t != null));
+
+            //Search the attibute in the class properties
+            attributes = classType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                                  .Where(t => Attribute.IsDefined(t, typeof(TAttribute)))
+                                  .Select(t => t.GetCustomAttribute<TAttribute>())
+                                  .ToArray();
+
+            if (attributes.Length > 0)
+                returnAttributes.AddRange(attributes.Where(t => t != null));
+
+            //Search the attibute in the class properties
+            attributes = classType.GetMembers()
+                                  .Where(t => Attribute.IsDefined(t, typeof(TAttribute)))
+                                  .Select(t => t.GetCustomAttribute<TAttribute>())
+                                  .ToArray();
+
+            if (attributes.Length > 0)
+                returnAttributes.AddRange(attributes.Where(t => t != null));
+
+            return returnAttributes;
         }
 
         #endregion

@@ -46,7 +46,7 @@ namespace ZeldaEngine.Base
             else
                 Scripts.Add(name, scriptableGo);
 
-            return scriptableGo.ScriptManager.CurrentMenagedScript;
+            return (GameScript) scriptableGo.ScriptManager.CurrentMenagedScript;
         }
 
         public GameScript Compile(RuntimeScript runtimeScript)
@@ -102,6 +102,15 @@ namespace ZeldaEngine.Base
         public IScriptManager GetScriptManager(string scriptName)
         {
             return Scripts[scriptName].ScriptManager;
+        }
+
+        public IScriptManager TryGetScriptManager(string scriptName)
+        {
+            ScriptableGameObject sGo = null;
+            if (!Scripts.TryGetValue(scriptName, out sGo))
+                return null;
+
+            return sGo.ScriptManager;
         }
     }
 }

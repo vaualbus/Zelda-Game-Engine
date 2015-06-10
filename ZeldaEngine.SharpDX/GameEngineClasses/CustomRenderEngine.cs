@@ -39,6 +39,8 @@ namespace ZeldaEngine.SharpDx.GameEngineClasses
                 var position = new Vector2(drawableGo.Position.X, drawableGo.Position.Y);
 
                 ///TODO(albus95): Implement the layer stuff here....
+                /// Layer = -1 mean transparent
+               
                 SpriteBatch.Begin();
                 SpriteBatch.Draw(texture, new RectangleF(position.X, position.Y, drawableGo.Tile.Width,
                                  drawableGo.Tile.Height), (Color)(drawableGo.Color ?? Color.White));
@@ -147,16 +149,10 @@ namespace ZeldaEngine.SharpDx.GameEngineClasses
 
                         //start is indicated by Color followed by Transparent
                         if (data[i + (j * outerRadius)] == Color.Black && data[i + ((j + 1) * outerRadius)] == Color.Transparent)
-                        {
                             yStart = j + 1;
-                            continue;
-                        }
                     }
                     else if (data[i + (j * outerRadius)] == Color.Black)
-                    {
                         yEnd = j;
-                        break;
-                    }
                 }
 
                 //if we found a valid start and end position

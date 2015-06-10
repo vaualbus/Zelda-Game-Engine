@@ -22,6 +22,7 @@ namespace ZeldaEngine.SharpDXTest
         private PlayerGameObject _playerGo;
         private GameView _testView;
         private ScriptableGameObject _scriptGo;
+
         public IGameEngine GameEngine { get; set; }
 
 
@@ -88,28 +89,29 @@ namespace ZeldaEngine.SharpDXTest
             //var testScript1 = CreateScript("TestScript1", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript1.cs"));
             //var testScript2 = CreateScript("TestScript2", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript2.cs"));
             //var testScript3 = CreateScript("TestScript3", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript3.cs"));
-            var gameScript = CreateScript("GameScript", "GameTestScript");
 
-            _scriptGo = GameEngine.GameObjectFactory.Create<ScriptableGameObject>("ScriptGo1", go =>
-            {
-                go.ObjectType = ObjectType.Enemy;
+            _scriptGo = GameEngine.ScriptEngine.AddScript("scriptGo1", "GameTestScript");
+            //GameEngine.ScriptEngine.AddScript(_scriptGo, "test2", "TestScript3");
+            //_scriptGo = GameEngine.GameObjectFactory.Create<ScriptableGameObject>("ScriptGo1", go =>
+            //{
+            //    go.ObjectType = ObjectType.Enemy;
 
-                //testScript1.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 50));
-                //testScript1.CurrentMenagedScript.SetInitalColor(new Color(1.0f, 0.0f, 0.0f, .75f));
-                //go.Scripts.Add(testScript1);
+            //    //testScript1.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 50));
+            //    //testScript1.CurrentMenagedScript.SetInitalColor(new Color(1.0f, 0.0f, 0.0f, .75f));
+            //    //go.Scripts.Add(testScript1);
 
-                //testScript2.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 300));
-                //testScript2.CurrentMenagedScript.SetInitalColor(new Color(1.0f, 0.0f, 1.0f, .25f));
-                //go.Scripts.Add(testScript2);
+            //    //testScript2.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 300));
+            //    //testScript2.CurrentMenagedScript.SetInitalColor(new Color(1.0f, 0.0f, 1.0f, .25f));
+            //    //go.Scripts.Add(testScript2);
 
-                //testScript3.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 550));
-                //testScript3.CurrentMenagedScript.SetInitalColor(Color.Tomato);
-                //go.Scripts.Add(testScript3);
+            //    //testScript3.CurrentMenagedScript.SetInitalPosition(new Vector2(0, 550));
+            //    //testScript3.CurrentMenagedScript.SetInitalColor(Color.Tomato);
+            //    //go.Scripts.Add(testScript3);
 
-                //gameScript.CurrentMenagedScript.SetInitalPosition(new Vector2(0,0));
+            //    //gameScript.CurrentMenagedScript.SetInitalPosition(new Vector2(0,0));
 
-                go.ScriptManager = gameScript;
-            });
+            //    go.ScriptManager = gameScript;
+            //});
 
             return true;
         }
@@ -126,6 +128,7 @@ namespace ZeldaEngine.SharpDXTest
             //_testView.Draw(engine);
 
             _scriptGo.Draw(engine);
+           // GameEngine.ScriptEngine.Update();
 
             //engine.DrawCircle(new Base.ValueObjects.Vector2(100, 100), 100, Color.Blue);
 
@@ -134,10 +137,6 @@ namespace ZeldaEngine.SharpDXTest
 
         public void Update(float delta)
         {
-#if ENABLE_SCRIPT
-            foreach (var view in _questManager.LoadedQuest.Maps.SelectMany(map => map.GameViews))
-                GameEngine.ScriptEngine.Update(view, delta);
-#endif
             //_playerGo.Update(delta);
             //_playerGo2.Update(delta);
 
@@ -146,27 +145,11 @@ namespace ZeldaEngine.SharpDXTest
 
             //_testView.Update(delta);
 
-            _scriptGo.Update(delta);
+           // _scriptGo.Update(delta);
 
-            _questManager.Update(delta);
-        }
+            GameEngine.ScriptEngine.Update(delta);
 
-        /// <summary>
-        /// TODO(albus95): Dummy function to test script working in game.
-        /// </summary>
-        /// <param name="scriptName">The script runtime Name</param>
-        /// <param name="scriptFilename">The .cs Filename</param>
-        /// <returns></returns>
-        private ScriptManager CreateScript(string scriptName, string scriptFilename)
-        {
-            var script = _scriptEngine.ScriptCompiler.Compile(scriptFilename);
-
-            var scriptManager = new ScriptManager(_scriptEngine, _scriptEngine.ScriptRepository, null, new InternalScriptActivator(), _scriptEngine.Logger);
-
-            
-            scriptManager.AddScript(null, script, scriptName);
-
-            return scriptManager;
+            //_questManager.Update(delta);
         }
 
         public void Dispose()

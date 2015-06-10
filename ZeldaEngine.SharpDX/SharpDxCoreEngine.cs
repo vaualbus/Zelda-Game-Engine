@@ -40,11 +40,6 @@ namespace ZeldaEngine.SharpDx
 
         public IGameObjectFactory GameObjectFactory { get; set; }
 
-        public IResourceData TextureData(string assetName)
-        {
-            return new Texture2DResourceData(ResourceLoader.Load<Texture2D>(assetName));
-        }
-
         public SharpDxCoreEngine(IGame game, GameConfig config, ILogger logger)
         {
             Logger = logger;
@@ -73,6 +68,11 @@ namespace ZeldaEngine.SharpDx
 #endif
         }
 
+        public IResourceData Texture2DData(string assetName)
+        {
+            return new Texture2DResourceData(ResourceLoader.Load<Texture2D>(assetName));
+        }
+
         protected override void Initialize()
         {
             Window.Title = "ZeldaEngineSharpDXTest";
@@ -96,7 +96,7 @@ namespace ZeldaEngine.SharpDx
 
         protected override void Update(GameTime gameTime)
         {
-            ((CustomInputManager) InputManager).Update();
+            //((CustomInputManager) InputManager).Update();
 
             //GameObjectFactory.Update(gameTime.ElapsedGameTime.Milliseconds);
 
@@ -111,8 +111,6 @@ namespace ZeldaEngine.SharpDx
             GraphicsDevice.Clear(SharpDX.Color.Black);
 
             RenderEngine.UpdateRenderGameTime(gameTime.ElapsedGameTime.Milliseconds);
-
-            //GameObjectFactory.Draw(RenderEngine);
 
             _currentGame.Render(RenderEngine);
 

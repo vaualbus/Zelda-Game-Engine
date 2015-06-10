@@ -23,12 +23,16 @@ namespace ZeldaEngine.SharpDx.GameEngineClasses
 
         public bool IsKeyDown(Keys key)
         {
-            return _keyBoardState.IsKeyPressed(key);
+            var state =_keyBoardState.IsKeyPressed(key);
+            Update();
+            return state;
         }
 
         public bool IsKeyUp(Keys key)
         {
-            return _keyBoardState.IsKeyReleased(key);
+            var temp = _keyBoardState.IsKeyReleased(key);
+            Update();
+            return temp;
         }
 
         public bool IsKeyUp<TData>(TData data) where TData : struct, IConvertible

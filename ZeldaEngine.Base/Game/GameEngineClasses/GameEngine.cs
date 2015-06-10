@@ -25,7 +25,7 @@ namespace ZeldaEngine.Base.Game.GameEngineClasses
             get; set;
         }
 
-        public IResourceData TextureData(string assetName)
+        public IResourceData Texture2DData(string assetName)
         {
             return null;
         }

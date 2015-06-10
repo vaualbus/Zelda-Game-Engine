@@ -30,7 +30,7 @@ namespace ZeldaEngine.Base.ValueObjects.Game
             Height = height;
             LayerNumber = layer;
 
-            Texture = GameEngine.TextureData("Default");
+            Texture = GameEngine.Texture2DData("Default");
         }
 
         public void Draw(IRenderEngine renderEngine)

@@ -17,8 +17,8 @@ namespace ZeldaEngine.ScriptEngine
 {
     public class RoslynCSharpScriptCompiler : IScriptCompiler
     {
-        private IScriptEngine _scriptEngine;
-        private ILogger _logger;
+        private readonly IScriptEngine _scriptEngine;
+        private readonly ILogger _logger;
 
         public StringBuilder AdditionalCodeToCompile { get; private set; }
 

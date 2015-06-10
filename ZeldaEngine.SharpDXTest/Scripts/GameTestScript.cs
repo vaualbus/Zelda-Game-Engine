@@ -5,6 +5,7 @@ using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game.GameComponents;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.ValueObjects.Game;
+using ZeldaEngine.Base.ValueObjects.Game.Attributes;
 using ZeldaEngine.ScriptEngine.Attributes;
 using Vector2 = ZeldaEngine.Base.ValueObjects.Vector2;
 
@@ -17,21 +18,54 @@ namespace ZeldaEngine.SharpDXTest.Scripts
         private MovableGameObject _playerBar;
         private AiBar _aiBar;
         private Walls _walls;
+        private DrawableGameObject _testGo;
 
         const float BallRadious = 10.0f;
         const int BarSize = 10;
         const float BallSize = BallRadious / 2;
 
+        private  IResourceData[] _testTextures;
+        private int _currentTextureIndex = 0;
+
+        [DataFrom("scriptGo1._testValue")]
+        private int _testField;
+
         public override void OnInit()
         {
+            _testTextures = new IResourceData[5];
+
             Logger.LogInfo("Initializing the game.....");
             SetUpGameObjects();
         }
 
         public void Run()
         {
+            if (InputManager.IsKeyDown("Right"))
+            {
+                _currentTextureIndex++;
+                if (_currentTextureIndex > _testTextures.Length - 1)
+                    _currentTextureIndex = 0;
+
+                
+            }
+            if (InputManager.IsKeyDown("Left"))
+            {
+                _currentTextureIndex--;
+                if (_currentTextureIndex < 0)
+                    _currentTextureIndex = _testTextures.Length - 1;
+            }
+
+            //_currentTextureIndex--;
+            //if (_currentTextureIndex < 0)
+            //    _currentTextureIndex = _testTextures.Length - 1;
+
+            _testGo.Tile.Texture = _testTextures[_currentTextureIndex];
+
             PerformCollision();
+
         }
+
+
 
         private void SetUpGameObjects()
         {
@@ -49,7 +83,16 @@ namespace ZeldaEngine.SharpDXTest.Scripts
             //    g.Position = new Vector2(400, 250);
             //    g.Color = Color.Pink;
             //});
-            
+            //_testTexture = LoadTexture2D("Default");
+            // Populate the textures array
+            _testTextures = new[]
+            {
+                LoadTexture2D("Default"),
+                LoadTexture2D("Grass"),
+                LoadTexture2D("1"),
+                LoadTexture2D("2"),
+            };
+
             _ball = GameObjectFactory.Create<BallGameObject>("ball", g =>
             {
                 g.MoveVelocity = 10;
@@ -60,8 +103,16 @@ namespace ZeldaEngine.SharpDXTest.Scripts
             _walls = GameObjectFactory.Create<Walls>("walls", go =>
             {
                 go.WallSize = 15;
-                go.WallColor = Color.Goldenrod;
+                go.WallColor = Color.Gray;
             });
+
+            _testGo = GameObjectFactory.Create<DrawableGameObject>("test", g =>
+            {
+                g.Position = new Vector2(150, 150);
+                g.Tile.Width = 500;
+                g.Tile.Height = 450;
+            });
+
         }
 
         private void PerformCollision()
@@ -71,6 +122,9 @@ namespace ZeldaEngine.SharpDXTest.Scripts
             //_aiBar.Update(0.0f);
             _ball.Update(0.0f);
             _walls.Update(0.0f);
+
+
+            _testGo.Update(0.0f);
         }
 
         public override void OnDraw()
@@ -79,6 +133,10 @@ namespace ZeldaEngine.SharpDXTest.Scripts
            // _aiBar.Draw(RenderEngine);
             _ball.Draw(RenderEngine);
             _walls.Draw(RenderEngine);
+
+            _testGo.Draw(RenderEngine);
+
+            // _testGo.Tile.Texture = LoadTexture2D("Default");
         }
 
         private class AiBar : DrawableGameObject

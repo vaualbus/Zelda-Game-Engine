@@ -37,8 +37,8 @@ namespace ZeldaEngine.SharpDXTest.Scripts
         {
             RenderEngine.DrawFillCircle(Position, 100, Color.Green);
 
-            ///RenderEngine.DrawLine(100, 100, 300, _rotation, Color.Red, 50);
-            //RenderEngine.DrawLine(500, 500, 100, _rotation, Color.Blue, 2);
+            RenderEngine.DrawLine(100, 100, 300, _rotation, Color.Red, 50);
+            RenderEngine.DrawLine(500, 500, 100, _rotation, Color.Blue, 2);
         }
     }
 }

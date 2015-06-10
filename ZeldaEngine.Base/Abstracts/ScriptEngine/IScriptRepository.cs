@@ -7,6 +7,8 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine
 {
     public interface IScriptRepository
     {
+        Dictionary<string, ScriptableGameObject> Scripts { get;}
+
         GameScript AddScript(ScriptableGameObject scriptableGo, string name, CompiledScript scriptMetadata);
 
         GameScript Compile(RuntimeScript runtimeScript);
@@ -16,5 +18,7 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine
         GameScript GetScript(string scriptName);
 
         IScriptManager GetScriptManager(string scriptName);
+
+        IScriptManager TryGetScriptManager(string scriptName);
     }
 }

@@ -3,6 +3,7 @@ using ZeldaEngine.Base;
 using ZeldaEngine.Base.Abstracts;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
+using ZeldaEngine.Base.Abstracts.ScriptEngine.Project;
 using ZeldaEngine.Base.ValueObjects;
 
 namespace ZeldaEngine.Tests.TestRig
@@ -30,6 +31,10 @@ namespace ZeldaEngine.Tests.TestRig
 
             builder.RegisterType<TestLogger>()
                    .As<ILogger>()
+                   .InstancePerLifetimeScope();
+
+            builder.RegisterType<NullableProjectManager>()
+                   .As<IProjectManager>()
                    .InstancePerLifetimeScope();
         }
     }

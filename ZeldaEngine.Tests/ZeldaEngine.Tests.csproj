@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ZeldaEngine.Tests</RootNamespace>
     <AssemblyName>ZeldaEngine.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>d3b36cd0</NuGetPackageImportStamp>
@@ -94,6 +94,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="ScriptManagerTest.cs" />
+    <Compile Include="TestRig\NullableProjectManager.cs" />
     <Compile Include="TestRig\ProjectGameScriptEngine.cs" />
     <Compile Include="TestRig\TestLogger.cs" />
     <Compile Include="TestRig\TestScriptParmaterProvider.cs" />

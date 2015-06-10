@@ -14,8 +14,9 @@
     <FileAlignment>512</FileAlignment>
     <!-- Platform Dependent Properties -->
     <OutputType>WinExe</OutputType>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <NuGetPackageImportStamp>282a5569</NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -78,6 +79,7 @@
     <Compile Include="ZeldaGame.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Quests\TestQuest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -87,11 +89,21 @@
     <Content Include="MiniCube.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <ToolkitTexture Include="Resources\Textures\1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ToolkitTexture>
+    <ToolkitTexture Include="Resources\Textures\2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ToolkitTexture>
     <ToolkitFont Include="Resources\Fonts\DefaultFont.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </ToolkitFont>
-    <ToolkitTexture Include="Resources\Textures\Default.jpg" />
-    <ToolkitTexture Include="Resources\Textures\Grass.jpg" />
+    <ToolkitTexture Include="Resources\Textures\Default.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ToolkitTexture>
+    <ToolkitTexture Include="Resources\Textures\Grass.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ToolkitTexture>
     <ToolkitFont Include="Resources\Fonts\Arial16.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </ToolkitFont>

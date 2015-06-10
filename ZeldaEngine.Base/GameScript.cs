@@ -38,6 +38,7 @@ namespace ZeldaEngine.Base
         public Vector2 InitialPosition;
 
         public object ScriptObjectColor { get; set; }
+        public float CurrentTime { get; set; }
 
         protected GameScript()
         {
@@ -101,6 +102,11 @@ namespace ZeldaEngine.Base
         public virtual void SetInitialColor(object color)
         {
             ScriptObjectColor = color;
+        }
+
+        public IResourceData LoadTexture2D(string name)
+        {
+           return Engine.GameEngine.Texture2DData(name);
         }
     }
 }

@@ -8,6 +8,7 @@ using Autofac;
 using ZeldaEngine.Base.Abstracts;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
+using ZeldaEngine.Base.Abstracts.ScriptEngine.Project;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.Services;
@@ -24,11 +25,11 @@ namespace ZeldaEngine.Base
 
         public IGameEngine GameEngine { get; private set; }
 
-        public string CurrentScriptName { get; set; }
-
         public virtual GameScript[] CurrentLoadedScripts { get; protected set; }
        
         public  ILogger Logger { get; private set; }
+
+        public IProjectManager ProjectManager { get; protected set; }
 
         public  IScriptParamaterProvider ParamsProvider { get; private set; }
 
@@ -79,9 +80,11 @@ namespace ZeldaEngine.Base
                 _containerBuilder.Resolve<IScriptActivator>(),
                 _containerBuilder.Resolve<ILogger>());
 
+            ProjectManager = _containerBuilder.Resolve<IProjectManager>();
+
             //If the project path is set, than copy the game engine dll in it
             ///TODO(alberto): Better do when we create the project?
-            //if (Config.GameScriptConfig.ProjectFolder != string.Empty && !File.Exists(".test"))
+            //if (GameEngine.GameConfig.ProjectFolder != string.Empty && !File.Exists(".test"))
             //{
             //    var applicationFiles = new List<string>()
             //    {
@@ -151,6 +154,11 @@ namespace ZeldaEngine.Base
 
         public virtual void Update(IGameView view, float dt)
         {
+        }
+
+        public virtual void Update(float dt)
+        {
+            
         }
 
         public virtual IEnumerable<GameScript> GetScripts()

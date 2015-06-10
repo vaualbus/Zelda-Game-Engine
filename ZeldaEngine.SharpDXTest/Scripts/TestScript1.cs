@@ -10,6 +10,8 @@ namespace ZeldaEngine.SharpDXTest.Scripts
         private int _moveVelocity = 5;
         private float _rotation;
 
+        private int _testValue = 10;
+
         public void Run()
         {
             //WaitFrame();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Autofac;
 using ZeldaEngine.Base.Abstracts.Game;
+using ZeldaEngine.Base.Abstracts.ScriptEngine.Project;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.ValueObjects;
@@ -12,8 +13,6 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine
     public interface IScriptEngine : IDisposable
     {
         #region Proxy Fields
-
-        string CurrentScriptName { get; set; }
 
         GameScript[] CurrentLoadedScripts { get;  }
 
@@ -35,6 +34,8 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine
 
         ILogger Logger { get; }
 
+        IProjectManager ProjectManager { get; }
+
         bool GenerateProject();
 
         void UpdateProject();
@@ -47,11 +48,11 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine
 
         void Update(IGameView view, float dt);
 
+        void Update(float dt);
+
         IEnumerable<GameScript> GetScripts();
         
         IScriptManager GetScript(string name);
-
-        
 
         RuntimeScript AddScript(ScriptableGameObject go, string scriptName, string fileName);
 
