@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CodeMap1.dgml = CodeMap1.dgml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeldaEngine.GameSharpDX", "ZeldaEngine.SharpDXTest\ZeldaEngine.GameSharpDX.csproj", "{041218EF-03D2-4A4C-989B-885368EDF610}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeldaEngine.SharpDXTest", "ZeldaEngine.SharpDXTest\ZeldaEngine.SharpDXTest.csproj", "{041218EF-03D2-4A4C-989B-885368EDF610}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeldaEngine.OpenGL", "ZeldaEngine.OpenGL\ZeldaEngine.OpenGL.csproj", "{DEC01693-A38A-4E18-BA1A-3E1C420B0F57}"
 EndProject
