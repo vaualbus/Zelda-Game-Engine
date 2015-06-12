@@ -105,40 +105,30 @@ namespace ZeldaEngine.ScriptEngine
                                         .FirstOrDefault(t => (t.Name == "Run" || t.Name == "RunScript") && 
                                                              t.GetParameters().Length == paramsForScript.Length && t.MatchTypes(paramsForScript));
 
-                //Look for the DataForm Attribute, if used on fields, set the value.
-                ///TODO: Rember to move this code at the initialization of the game.
                 var scriptDataFormAttributes = GetAttibutes<DataFromAttribute>(scriptGo.ScriptManager.CurrentMenagedScript.GetType());
                 foreach (var scriptDataFormAttribute in scriptDataFormAttributes)
                 {
-                    var script2 = ScriptRepository.TryGetScriptManager(scriptDataFormAttribute.ScriptName);
-                    if (script2 != null)
-                    {
-                        //Set the current script value to the correct script value
-                        //scriptGo.ScriptManager.SetScriptFields("", script2.GetScriptValue(scriptDataFormAttribute.FieldName));
-                    }
+                    var script2 = ScriptRepository.TryGetScriptGameObject(scriptDataFormAttribute.ScriptName);
+                    //if (script2 != null && scriptGo.Name != script2.Name)
+                    //{
+                    //    //Set the current script value to the correct script value
+                    //    //scriptGo.ScriptManager.SetScriptFields("", script2.GetScriptValue(scriptDataFormAttribute.FieldName));
+                    //}
+
                 }
 
                 scriptGo.ScriptManager.CurrentMenagedScript.CurrentTime = dt;
 
                 if (runMethod != null)
                 {
-                    //#if DEBUG
-                    //                    Logger.LogWarning("------------------------------------");
-                    //                    Logger.LogWarning("Calling method {0} with @params: {1}", runMethod.Name, string.Join(", ", paramsForScript));
-
                     try
                     {
-                        //#endif
                         runMethod.Invoke(scriptGo.ScriptManager.CurrentMenagedScript, paramsForScript);
                     }
                     catch
                     {
                         return;
                     }
-                    //#if DEBUG
-                    //                    Logger.LogWarning("------------------------------------");
-                    //#endif
-
                 }
                 else
                     Logger.LogWarning("Try calling Method Run with mismatched arguments.");

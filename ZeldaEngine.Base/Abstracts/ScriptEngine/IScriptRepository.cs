@@ -19,6 +19,6 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine
 
         IScriptManager GetScriptManager(string scriptName);
 
-        IScriptManager TryGetScriptManager(string scriptName);
+        ScriptableGameObject TryGetScriptGameObject(string scriptName);
     }
 }

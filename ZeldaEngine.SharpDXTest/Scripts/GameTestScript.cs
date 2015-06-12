@@ -27,8 +27,8 @@ namespace ZeldaEngine.SharpDXTest.Scripts
         private  IResourceData[] _testTextures;
         private int _currentTextureIndex = 0;
 
-        [DataFrom("scriptGo1._testValue")]
-        private int _testField;
+        [DataFrom("dataScript.Text")]
+        private string _testField;
 
         public override void OnInit()
         {
@@ -129,11 +129,13 @@ namespace ZeldaEngine.SharpDXTest.Scripts
 
         public override void OnDraw()
         {
+            
+            RenderEngine.DrawString(new Vector2(100, 100), _testField, 30, Color.Blue);
+
            // _playerBar.Draw(RenderEngine);
            // _aiBar.Draw(RenderEngine);
             _ball.Draw(RenderEngine);
             _walls.Draw(RenderEngine);
-
             _testGo.Draw(RenderEngine);
 
             // _testGo.Tile.Texture = LoadTexture2D("Default");

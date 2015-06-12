@@ -22,6 +22,7 @@ namespace ZeldaEngine.SharpDXTest
         private PlayerGameObject _playerGo;
         private GameView _testView;
         private ScriptableGameObject _scriptGo;
+        private ScriptableGameObject _scriptGo2;
 
         public IGameEngine GameEngine { get; set; }
 
@@ -91,6 +92,7 @@ namespace ZeldaEngine.SharpDXTest
             //var testScript3 = CreateScript("TestScript3", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript3.cs"));
 
             _scriptGo = GameEngine.ScriptEngine.AddScript("scriptGo1", "GameTestScript");
+            _scriptGo2 = GameEngine.ScriptEngine.AddScript("dataScript", "DataScript");
             //GameEngine.ScriptEngine.AddScript(_scriptGo, "test2", "TestScript3");
             //_scriptGo = GameEngine.GameObjectFactory.Create<ScriptableGameObject>("ScriptGo1", go =>
             //{
@@ -128,6 +130,7 @@ namespace ZeldaEngine.SharpDXTest
             //_testView.Draw(engine);
 
             _scriptGo.Draw(engine);
+            _scriptGo2.Draw(engine);
            // GameEngine.ScriptEngine.Update();
 
             //engine.DrawCircle(new Base.ValueObjects.Vector2(100, 100), 100, Color.Blue);

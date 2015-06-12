@@ -104,13 +104,13 @@ namespace ZeldaEngine.Base
             return Scripts[scriptName].ScriptManager;
         }
 
-        public IScriptManager TryGetScriptManager(string scriptName)
+        public ScriptableGameObject TryGetScriptGameObject(string scriptName)
         {
             ScriptableGameObject sGo = null;
             if (!Scripts.TryGetValue(scriptName, out sGo))
                 return null;
 
-            return sGo.ScriptManager;
+            return sGo;
         }
     }
 }
