@@ -92,9 +92,6 @@
     <Content Include="MiniCube.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <ToolkitTexture Include="Resources\Textures\1.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ToolkitTexture>
     <ToolkitTexture Include="Resources\Textures\2.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ToolkitTexture>

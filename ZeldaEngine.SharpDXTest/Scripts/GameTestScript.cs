@@ -89,7 +89,6 @@ namespace ZeldaEngine.SharpDXTest.Scripts
             {
                 LoadTexture2D("Default"),
                 LoadTexture2D("Grass"),
-                LoadTexture2D("1"),
                 LoadTexture2D("2"),
             };
 
