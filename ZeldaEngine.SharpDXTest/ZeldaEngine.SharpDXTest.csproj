@@ -70,9 +70,9 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Scripts\DataScript.cs">
+    <Compile Include="Scripts\DataScript.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Compile>
     <Compile Include="Scripts\GameTestScript.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

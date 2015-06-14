@@ -67,11 +67,22 @@ namespace ZeldaEngine.SharpDx.GameEngineClasses
 
         public void DrawString(Base.ValueObjects.Vector2 position, string text, float size, object color)
         {
+            if (text == null)
+            {
+                return;
+            }
+
+
             DrawString(position, text, _gameEngine.GameConfig.DefaultFont, size, color);
         }
 
         public void DrawString(Base.ValueObjects.Vector2 position, string text, string fontName, float size, object color)
         {
+            if (text == null)
+            {
+                return;
+            }
+
             var font = _gameEngine.ResourceLoader.Load<SpriteFont>(fontName);
             
             SpriteBatch.Begin();

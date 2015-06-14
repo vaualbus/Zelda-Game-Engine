@@ -108,12 +108,12 @@ namespace ZeldaEngine.ScriptEngine
                 var scriptDataFormAttributes = GetAttibutes<DataFromAttribute>(scriptGo.ScriptManager.CurrentMenagedScript.GetType());
                 foreach (var scriptDataFormAttribute in scriptDataFormAttributes)
                 {
-                    var script2 = ScriptRepository.TryGetScriptGameObject(scriptDataFormAttribute.ScriptName);
-                    //if (script2 != null && scriptGo.Name != script2.Name)
-                    //{
-                    //    //Set the current script value to the correct script value
-                    //    //scriptGo.ScriptManager.SetScriptFields("", script2.GetScriptValue(scriptDataFormAttribute.FieldName));
-                    //}
+                    var script2 = ScriptRepository.Scripts[scriptDataFormAttribute.ScriptName]; //TryGetScriptGameObject();
+                    if (script2 != null && scriptGo.Name != script2.Name)
+                    {
+                        //Set the current script value to the correct script value
+                        //scriptGo.ScriptManager.SetScriptFields("", script2.GetScriptValue(scriptDataFormAttribute.FieldName));
+                    }
 
                 }
 
