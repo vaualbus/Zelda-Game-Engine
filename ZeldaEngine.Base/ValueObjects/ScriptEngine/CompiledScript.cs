@@ -21,6 +21,8 @@ namespace ZeldaEngine.Base.ValueObjects.ScriptEngine
 
         public IEnumerable<Type> Classes { get; private set; }
 
+        public IEnumerable<MemberInfo> Members { get; private set; }
+
         public string CompiledPath { get; private set; }
 
         public CompiledScript(Assembly compiledAssembly, string compilePath)
@@ -35,11 +37,15 @@ namespace ZeldaEngine.Base.ValueObjects.ScriptEngine
                                                    .FirstOrDefault()
                                                    .ToList();
 
-            Properties = Classes.Select(t => t.GetProperties())
+            Properties = Classes.Select(t => t.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                                                   .FirstOrDefault()
                                                   .ToList();
 
-            Fields = Classes.Select(t => t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+            Fields = Classes.Select(t => t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                                                  .FirstOrDefault()
+                                                  .ToList();
+
+            Members = Classes.Select(t => t.GetMembers(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
                                                   .FirstOrDefault()
                                                   .ToList();
 

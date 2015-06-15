@@ -108,11 +108,11 @@ namespace ZeldaEngine.ScriptEngine
                 var scriptDataFormAttributes = GetAttibutes<DataFromAttribute>(scriptGo.ScriptManager.CurrentMenagedScript.GetType());
                 foreach (var scriptDataFormAttribute in scriptDataFormAttributes)
                 {
-                    var script2 = ScriptRepository.Scripts[scriptDataFormAttribute.ScriptName]; //TryGetScriptGameObject();
+                    var script2 = ScriptRepository.Scripts[scriptDataFormAttribute.Value.ScriptName]; //TryGetScriptGameObject(scriptDataFormAttribute.Value.ScriptName);
                     if (script2 != null && scriptGo.Name != script2.Name)
                     {
                         //Set the current script value to the correct script value
-                        //scriptGo.ScriptManager.SetScriptFields("", script2.GetScriptValue(scriptDataFormAttribute.FieldName));
+                        scriptGo.ScriptManager.SetScriptValue(scriptDataFormAttribute.Key, script2.ScriptManager.GetScriptValue(scriptDataFormAttribute.Value.FieldName));
                     }
 
                 }
@@ -135,47 +135,78 @@ namespace ZeldaEngine.ScriptEngine
             }
         }
 
-        private IEnumerable<TAttribute> GetAttibutes<TAttribute>(Type classType) where TAttribute : Attribute
+        private Dictionary<string, TAttribute> GetAttibutes<TAttribute>(Type classType) where TAttribute : Attribute
         {
-            var returnAttributes = new List<TAttribute>();
+            var returnAttributes = new Dictionary<string, TAttribute>();
 
-            //First Do the attribute is on the class?
-            TAttribute[] attributes = null;
-            attributes = (TAttribute[]) Attribute.GetCustomAttributes(classType, typeof (TAttribute));
-            if (attributes.Length > 0)
-                returnAttributes.AddRange(attributes.Where(t => t != null));
+            var resultPublicFields = from t in classType.GetFields()
+                let fName = t.Name
+                select new
+                {
+                    FielName = fName,
+                    Attribute = (TAttribute) Attribute.GetCustomAttribute(t, typeof (TAttribute))
+                };
 
-            //Search the attibute in the class fields
-            attributes = classType.GetFields().Select(t => (TAttribute) Attribute.GetCustomAttribute(t, typeof(TAttribute))).ToArray();
-            if (attributes.Length > 0)
-                returnAttributes.AddRange(attributes.Where(t => t != null));
+            var resultNonPublicFields = from t in classType.GetFields()
+                let fName = t.Name
+                select new
+                {
+                    FielName = fName,
+                    Attribute = (TAttribute) Attribute.GetCustomAttribute(t, typeof (TAttribute))
+                };
 
-            //Search the attibute in the class properties
-            attributes = classType.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
-                                  .Where(t => Attribute.IsDefined(t, typeof(TAttribute)))
-                                  .Select(t => t.GetCustomAttribute<TAttribute>())
-                                  .ToArray();
+            var resultPublicProps = from t in classType.GetProperties()
+                let fName = t.Name
+                select new
+                {
+                    FielName = fName,
+                    Attribute = (TAttribute) Attribute.GetCustomAttribute(t, typeof (TAttribute))
+                };
 
-            if (attributes.Length > 0)
-                returnAttributes.AddRange(attributes.Where(t => t != null));
+            var resultNonPublicProps = from t in classType.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
+                let fName = t.Name
+                select new
+                {
+                    FielName = fName,
+                    Attribute = (TAttribute) Attribute.GetCustomAttribute(t, typeof (TAttribute))
+                };
 
-            //Search the attibute in the class properties
-            attributes = classType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
-                                  .Where(t => Attribute.IsDefined(t, typeof(TAttribute)))
-                                  .Select(t => t.GetCustomAttribute<TAttribute>())
-                                  .ToArray();
+            var resultPublicMembers = from t in classType.GetMembers()
+                let fName = t.Name
+                select new
+                {
+                    FielName = fName,
+                    Attribute = (TAttribute) Attribute.GetCustomAttribute(t, typeof (TAttribute))
+                };
 
-            if (attributes.Length > 0)
-                returnAttributes.AddRange(attributes.Where(t => t != null));
+            var resultNonPublicMembers = from t in classType.GetMembers(BindingFlags.NonPublic | BindingFlags.Instance)
+                let fName = t.Name
+                select new
+                {
+                    FielName = fName,
+                    Attribute = (TAttribute) Attribute.GetCustomAttribute(t, typeof (TAttribute))
+                };
 
-            //Search the attibute in the class properties
-            attributes = classType.GetMembers()
-                                  .Where(t => Attribute.IsDefined(t, typeof(TAttribute)))
-                                  .Select(t => t.GetCustomAttribute<TAttribute>())
-                                  .ToArray();
+            foreach (var el in resultPublicFields.Where(t => t.Attribute != null))
+                returnAttributes.Add(el.FielName, el.Attribute);
 
-            if (attributes.Length > 0)
-                returnAttributes.AddRange(attributes.Where(t => t != null));
+            foreach (var el in resultNonPublicFields.Where(t => t.Attribute != null))
+                returnAttributes.Add(el.FielName, el.Attribute);
+
+
+            foreach (var el in resultPublicProps.Where(t => t.Attribute != null))
+                returnAttributes.Add(el.FielName, el.Attribute);
+
+
+            foreach (var el in resultNonPublicProps.Where(t => t.Attribute != null))
+                returnAttributes.Add(el.FielName, el.Attribute);
+
+
+            foreach (var el in resultPublicMembers.Where(t => t.Attribute != null))
+                returnAttributes.Add(el.FielName, el.Attribute);
+
+            foreach (var el in resultNonPublicMembers.Where(t => t.Attribute != null))
+                returnAttributes.Add(el.FielName, el.Attribute);
 
             return returnAttributes;
         }

@@ -42,6 +42,7 @@ Global
 		{CF09735E-6093-4F65-9BA1-62F1FEAAD7F3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{CF09735E-6093-4F65-9BA1-62F1FEAAD7F3}.Debug|Win32.ActiveCfg = Debug|Any CPU
 		{CF09735E-6093-4F65-9BA1-62F1FEAAD7F3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CF09735E-6093-4F65-9BA1-62F1FEAAD7F3}.Debug|x86.Build.0 = Debug|Any CPU
 		{CF09735E-6093-4F65-9BA1-62F1FEAAD7F3}.Debug-TestScript|Any CPU.ActiveCfg = Debug|Any CPU
 		{CF09735E-6093-4F65-9BA1-62F1FEAAD7F3}.Debug-TestScript|Any CPU.Build.0 = Debug|Any CPU
 		{CF09735E-6093-4F65-9BA1-62F1FEAAD7F3}.Debug-TestScript|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -60,6 +61,7 @@ Global
 		{041218EF-03D2-4A4C-989B-885368EDF610}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{041218EF-03D2-4A4C-989B-885368EDF610}.Debug|Win32.ActiveCfg = Debug|Any CPU
 		{041218EF-03D2-4A4C-989B-885368EDF610}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{041218EF-03D2-4A4C-989B-885368EDF610}.Debug|x86.Build.0 = Debug|Any CPU
 		{041218EF-03D2-4A4C-989B-885368EDF610}.Debug-TestScript|Any CPU.ActiveCfg = Debug|Any CPU
 		{041218EF-03D2-4A4C-989B-885368EDF610}.Debug-TestScript|Any CPU.Build.0 = Debug|Any CPU
 		{041218EF-03D2-4A4C-989B-885368EDF610}.Debug-TestScript|Mixed Platforms.ActiveCfg = Debug|Any CPU

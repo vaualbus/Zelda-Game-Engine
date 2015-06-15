@@ -120,43 +120,46 @@ namespace ZeldaEngine.Base
             return FindMethod(funcName, @params ?? new object[0]);
         }
 
-        public object GetScriptValue(string propName)
+        public object GetScriptValue(string name)
         {
-            try
-            {
-                var prop = _currentCompiledScript.Properties.FirstOrDefault(t => t.Name == propName);
-                if (prop == null)
-                {
-                    _logger.LogError("Cannot find a property with name {0} on type {1}", propName,
-                        _currentCompiledScript.ScriptType.ToString());
-                    return null;
-                }
+            object resultValue = null;
+            var prop = _currentCompiledScript.Properties.FirstOrDefault(t => t.Name == name);
+            var field = _currentCompiledScript.Fields.FirstOrDefault(t => t.Name == name);
 
-                return prop.GetValue(_currentCachedScriptInstance, null);
-            }
-            catch (Exception ex)
+            if (prop != null)
             {
-                _logger.LogError("Exception {0}", ex.Message);
+                resultValue = prop.GetValue(_currentCachedScriptInstance, null);
+            }
+            else if (field != null)
+            {
+                resultValue = field.GetValue(_currentCachedScriptInstance);
+            }
+
+            if (resultValue == null)
+            {
+                _logger.LogError("Cannot find the meber with name {0} on type {1}", name, _currentCompiledScript.ScriptType.ToString());
                 return null;
             }
+
+            return resultValue;
         }
 
-        public void SetScriptValue(string propName, object value)
+        public void SetScriptValue(string name, object value)
         {
-            try
+            var prop = _currentCompiledScript.Properties.FirstOrDefault(t => t.Name == name);
+            var field = _currentCompiledScript.Fields.FirstOrDefault(t => t.Name == name);
+
+            if (prop != null)
             {
-                var prop = _currentCompiledScript.Properties.FirstOrDefault(t => t.Name == propName);
-                if (prop == null)
-                {
-                    _logger.LogError("Cannot find a property with name {0} on type {1}", propName,
-                        _currentCompiledScript.ScriptType.ToString());
-                    return;
-                }
                 prop.SetValue(_currentCachedScriptInstance, value);
             }
-            catch (Exception ex)
+            else if (field != null)
             {
-                _logger.LogError("Exception {0}", ex.Message);
+                field.SetValue(_currentCachedScriptInstance, value);
+            }
+            else
+            {
+                _logger.LogError("Cannot find a member with name {0} on type {1}", name, _currentCompiledScript.ScriptType.ToString());
             }
         }
 
