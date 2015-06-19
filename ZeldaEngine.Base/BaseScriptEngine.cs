@@ -9,10 +9,12 @@ using ZeldaEngine.Base.Abstracts;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
 using ZeldaEngine.Base.Abstracts.ScriptEngine.Project;
+using ZeldaEngine.Base.Game.Extensions;
 using ZeldaEngine.Base.Game.GameObjects;
-using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.Services;
 using ZeldaEngine.Base.ValueObjects;
+using ZeldaEngine.Base.ValueObjects.Game.Attributes;
+using ZeldaEngine.Base.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 
 namespace ZeldaEngine.Base
@@ -82,88 +84,20 @@ namespace ZeldaEngine.Base
 
             ProjectManager = _containerBuilder.Resolve<IProjectManager>();
 
-            //If the project path is set, than copy the game engine dll in it
-            ///TODO(alberto): Better do when we create the project?
-            //if (GameEngine.GameConfig.ProjectFolder != string.Empty && !File.Exists(".test"))
-            //{
-            //    var applicationFiles = new List<string>()
-            //    {
-            //        "ZeldaEngine.Base.dll",
-            //        "ZeldaEngine.ScriptEngine.dll",
-            //        "ZeldaEngine.Base.pdb",
-            //        "ZeldaEngine.ScriptEngine.pdb"
-            //    };
-
-            //    var directoryFiles = Directory.GetFiles(Config.GameConfig.BaseDirectory).Select(t => new FileInfo(t).Name);
-            //    var engineFiles = directoryFiles.Intersect(applicationFiles);
-
-            //    foreach (var projectFile in engineFiles.Where(t => t != null))
-            //    {
-            //        if (File.Exists(Path.Combine(Config.GameScriptConfig.ProjectFolder, projectFile)) &&
-            //            new FileInfo(Path.Combine(Config.GameScriptConfig.ProjectFolder, projectFile)).Extension == ".dll")
-            //        {
-            //            //We have a dll file, so now we will load and check if the new file is newer.
-            //            //If so we will copy it.
-            //            var currentFile = projectFile;
-            //            var baseFile = directoryFiles.FirstOrDefault(t => t == currentFile);
-
-            //            var engineFileAssembly = Assembly.LoadFrom(Path.Combine(Config.GameConfig.BaseDirectory, baseFile));
-            //            var projectFileAssembly = Assembly.LoadFrom(Path.Combine(Config.GameScriptConfig.ProjectFolder, currentFile));
-
-            //            if (FileVersionInfo.GetVersionInfo(engineFileAssembly.Location).FileVersion ==
-            //                FileVersionInfo.GetVersionInfo(projectFileAssembly.Location).FileVersion)
-            //                continue;
-            //        }
-
-            //        if (File.Exists(Path.Combine(Config.GameScriptConfig.ProjectFolder, projectFile)))
-            //            continue;
-
-            //        if (!Directory.Exists(Config.GameScriptConfig.ProjectFolder))
-            //            Directory.CreateDirectory(Config.GameScriptConfig.ProjectFolder);
-
-            //        File.Copy(projectFile, Path.Combine(Config.GameScriptConfig.ProjectFolder, projectFile));
-            //    }
-            //}
+            //ProjectManager.CopyEngineFileIfNecessary();
 
             ScanAssemblies();
 
             OnInitializeEngine();
 
-            GenerateProject();
         }
 
-        public void UpdateEnviromentInfo(GameEviromentCollection gameEnviromentCollection)
-        {
-            GameEngine.GameConfig = gameEnviromentCollection.GameConfig;
-        }
 
-        public bool GenerateProject()
-        {
-            return ProjectUtil.CreateProject(this);
-        }
-
-        public void UpdateProject()
-        {
-            ProjectUtil.UpdateProject(this);
-        }
-
-        public void DeleteProject()
-        {
-            //ProjectUtil.DeleteProject(Config.GameScriptConfig.ProjectName);
-        }
-
-        public virtual void Update(IGameView view, float dt)
-        {
-        }
-
-        public virtual void Update(float dt)
-        {
-            
-        }
+        public abstract void Update(float dt);
 
         public virtual IEnumerable<GameScript> GetScripts()
         {
-            return null;
+            return ScriptRepository.Scripts.Select(t => t.Value.ScriptManager.CurrentMenagedScript);
         }
 
         public virtual IScriptManager GetScript(string name)
@@ -191,35 +125,41 @@ namespace ZeldaEngine.Base
             return go;
         }
 
-        public virtual void SetScriptInitialLocation(IGameView gameScreen, string scriptName, Vector2 pos)
+        public void PerformScriptBinding()
         {
+            foreach (var scriptGo in ScriptRepository.Scripts)
+            {
+                var scriptDataFormAttributes = scriptGo.Value.GetAttibutes<DataFromAttribute>();
+                foreach (var scriptDataFormAttribute in scriptDataFormAttributes)
+                {
+                    var script2 = ScriptRepository.Scripts.ContainsKey(scriptDataFormAttribute.Value.ScriptName) ? ScriptRepository.Scripts[scriptDataFormAttribute.Value.ScriptName] : null; //TryGetScriptGameObject(scriptDataFormAttribute.Value.ScriptName);
+                    if (script2 != null && scriptGo.Key != script2.Name)
+                    {
+                        //Set the current script value to the correct script value
+                        scriptGo.Value.ScriptManager.SetScriptValue(scriptDataFormAttribute.Key, script2.ScriptManager.GetScriptValue(scriptDataFormAttribute.Value.FieldName));
+                    }
+                }
+            }
         }
 
         protected virtual void OnInitializeEngine()
         {
         }
 
-        public abstract void RegisterComponents(ContainerBuilder builder);
-
         private void ScanAssemblies()
         {
-            //if (Config.GameScriptConfig.ProjectFolder == string.Empty)
-            //    return;
-
-            //if (ProjectUtil.GetProject(Config.GameScriptConfig.ProjectName))
-            //{
-                //ScriptCompiler.AdditionalAssemblies.AddRange(ProjectUtil.GetProjectAssemblies(Config.GameScriptConfig.ProjectName));
-                //AddAssembliesFromDirectoryName("Assemblies");
-                //return;
-            //}
-
-            //AddAssembliesFromDirectoryName("Assemblies");
 
             if(!Directory.Exists(GameEngine.GameConfig.BaseDirectory))
                 return;
 
-            foreach (var dll in Directory.GetFiles(GameEngine.GameConfig.BaseDirectory).Where(t => (new FileInfo(t)).Extension == ".dll"))
+            foreach (var dll in Directory.GetFiles(GameEngine.GameConfig.BaseDirectory)
+                                         .Where(t => (new FileInfo(t))
+                                                     .Extension == ".dll" &&
+                                                     IsDotNetAssembly32(t) && 
+                                                     IsDotNetAssembly64(t)))
             {
+                //Logger.LogInfo($"Loading file: {dll}");
+
                 Assembly loadedAssembly = null;
                 try
                 {
@@ -231,6 +171,7 @@ namespace ZeldaEngine.Base
                 {
                     Logger.LogInfo("Cannot load the assemblies: {0}, the assembly is not a valid .net assembly",
                         new FileInfo(dll).Name);
+
                     Logger.LogInfo("Error detail {0}", ex.Message);
                     continue;
                 }
@@ -245,14 +186,20 @@ namespace ZeldaEngine.Base
                     ScriptCompiler.AdditionalAssemblies.Add(assemblyDirAssemblyInfo);
                 }
 
-                //Add System.Drwaing
+                //Add System.Drawing
                 ScriptCompiler.AdditionalAssemblies.Add(loadedAssembly);
             }
         }
 
+        public virtual ScriptableGameObject AddScript(GameObject parentGo, Dictionary<string, string> scriptFiles, QuestLoaderScriptType scriptType)
+        {
+            return null;
+        }
+
+        public abstract void RegisterComponents(ContainerBuilder builder);
+
         public virtual void OnDispose()
         {
-            
         }
 
         public void Dispose()
@@ -262,9 +209,148 @@ namespace ZeldaEngine.Base
             ScriptSystemLifetimeScope.Dispose();
         }
 
-        public virtual ScriptableGameObject AddScript(GameObject parentGo, Dictionary<string, string> scriptFiles, QuestLoaderScriptType scriptType)
+        private static bool IsDotNetAssembly32(string peFile)
         {
-            return null;
+            var dataDictionaryRva = new uint[16];
+            var dataDictionarySize = new uint[16];
+
+            var fs = new FileStream(peFile, FileMode.Open, FileAccess.Read);
+            var reader = new BinaryReader(fs);
+
+            //PE Header starts @ 0x3C (60). Its a 4 byte header.
+            fs.Position = 0x3C;
+
+            var peHeader = reader.ReadUInt32();
+
+            //Moving to PE Header start location...
+            fs.Position = peHeader;
+
+            //Read the signature
+            reader.ReadUInt32();
+
+            //We can also show all these value, but we will be       
+            //limiting to the CLI header test.
+
+            //Read the machine
+            reader.ReadUInt16();
+
+            //read the section
+            reader.ReadUInt16();
+
+            //read the timestamp
+            reader.ReadUInt32();
+
+            //Read the pSymbolTable
+            reader.ReadUInt32();
+
+            //Read the noOfSybol Table
+            reader.ReadUInt32();
+
+            //Read  the optional Header Size
+            reader.ReadUInt16();
+
+            //Read the charateristics
+            reader.ReadUInt16();
+
+            /*
+                Now we are at the end of the PE Header and from here, the
+                            PE Optional Headers starts...
+                    To go directly to the datadictionary, we'll increase the      
+                    stream’s current position to with 96 (0x60). 96 because,
+                            28 for Standard fields
+                            68 for NT-specific fields
+                From here DataDictionary starts...and its of total 128 bytes. DataDictionay has 16 directories in total,
+                doing simple maths 128/16 = 8.
+                So each directory is of 8 bytes.
+                            In this 8 bytes, 4 bytes is of RVA and 4 bytes of Size.
+
+                btw, the 15th directory consist of CLR header! if its 0, its not a CLR file :)
+         */
+
+            var dataDictionaryStart = Convert.ToUInt16(Convert.ToUInt16(fs.Position) + 0x60);
+            fs.Position = dataDictionaryStart;
+            for (int i = 0; i < 15; i++)
+            {
+                dataDictionaryRva[i] = reader.ReadUInt32();
+                dataDictionarySize[i] = reader.ReadUInt32();
+            }
+            if (dataDictionaryRva[14] == 0)
+                return false;
+
+            fs.Close();
+            return true;
+        }
+
+        private static bool IsDotNetAssembly64(string peFile)
+        {
+            var dataDictionaryRva = new uint[16];
+            var dataDictionarySize = new uint[16];
+
+            var fs = new FileStream(peFile, FileMode.Open, FileAccess.Read);
+            var reader = new BinaryReader(fs);
+
+            //PE Header starts @ 0x3C (60). Its a 4 byte header.
+            fs.Position = 0x3C;
+
+            var peHeader = reader.ReadUInt32();
+
+            //Moving to PE Header start location...
+            fs.Position = peHeader;
+
+            //Read the signature
+            reader.ReadUInt32();
+
+            //We can also show all these value, but we will be       
+            //limiting to the CLI header test.
+
+            //Read the machine
+            reader.ReadUInt16();
+
+            //read the section
+            reader.ReadUInt16();
+
+            //read the timestamp
+            reader.ReadUInt32();
+
+            //Read the pSymbolTable
+            reader.ReadUInt32();
+
+            //Read the noOfSybol Table
+            reader.ReadUInt32();
+
+            //Read  the optional Header Size
+            reader.ReadUInt16();
+
+            //Read the charateristics
+            reader.ReadUInt16();
+
+            /*
+                Now we are at the end of the PE Header and from here, the
+                            PE Optional Headers starts...
+                    To go directly to the datadictionary, we'll increase the      
+                    stream’s current position to with 96 (0x60). 96 because,
+                            28 for Standard fields
+                            68 for NT-specific fields
+                From here DataDictionary starts...and its of total 128 bytes. DataDictionay has 16 directories in total,
+                doing simple maths 128/16 = 8.
+                So each directory is of 8 bytes.
+                            In this 8 bytes, 4 bytes is of RVA and 4 bytes of Size.
+
+                btw, the 15th directory consist of CLR header! if its 0, its not a CLR file :)
+         */
+
+            var dataDictionaryStart = Convert.ToUInt16(Convert.ToUInt16(fs.Position) + 0x70);
+            fs.Position = dataDictionaryStart;
+            for (int i = 0; i < 15; i++)
+            {
+                dataDictionaryRva[i] = reader.ReadUInt32();
+                dataDictionarySize[i] = reader.ReadUInt32();
+            }
+            if (dataDictionaryRva[14] == 0)
+                return false;
+
+            fs.Close();
+            return true;
         }
     }
 }

@@ -8,8 +8,6 @@ namespace ZeldaEngine.Base
 {
     public class GameScript
     {
-        private bool _isInited;  
-
         protected IScriptEngine Engine;
 
         protected  ScriptInfo ScriptInfo;
@@ -51,7 +49,6 @@ namespace ZeldaEngine.Base
         public virtual void Init()
         {
             OnInit();
-            _isInited = true;
         }
 
         public virtual void OnInit() { }
@@ -107,6 +104,11 @@ namespace ZeldaEngine.Base
         public IResourceData LoadTexture2D(string name)
         {
            return Engine.GameEngine.Texture2DData(name);
+        }
+
+        public virtual void ExitGame()
+        {
+            Engine.GameEngine.ExitGame();
         }
     }
 }

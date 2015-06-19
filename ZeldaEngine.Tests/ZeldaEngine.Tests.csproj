@@ -75,6 +75,9 @@
     <Compile Include="GameTests\TestGame.cs" />
     <Compile Include="GameTests\TestGameEngine.cs" />
     <Compile Include="Script Engine Test\ScriptEngineTest.cs" />
+    <Compile Include="Scripts\AttachPropScript.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Scripts\GameObjectScriptTest.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -94,7 +97,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="ScriptManagerTest.cs" />
+    <Compile Include="TestRig\InMemoryResourceData.cs" />
     <Compile Include="TestRig\NullableProjectManager.cs" />
+    <Compile Include="TestRig\InMemoryRenderEngine.cs" />
+    <Compile Include="TestRig\InMemoryResourceLoader.cs" />
     <Compile Include="TestRig\ProjectGameScriptEngine.cs" />
     <Compile Include="TestRig\TestLogger.cs" />
     <Compile Include="TestRig\TestScriptParmaterProvider.cs" />

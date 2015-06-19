@@ -3,8 +3,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using ZeldaEngine.Base.Abstracts.Game;
-using ZeldaEngine.Base.Game.ValueObjects;
-using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
+using ZeldaEngine.Base.ValueObjects.MapLoaderDataTypes;
 
 namespace ZeldaEngine.Tests.GameTests
 {

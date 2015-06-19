@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ZeldaEngine.Base.Abstracts.Game;
+﻿using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
 using ZeldaEngine.Base.ValueObjects.Game;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
@@ -31,17 +30,7 @@ namespace ZeldaEngine.Base.Game.GameObjects
             if (ScriptManager == null)
                 return;
 
-            var managedScript = ScriptManager.CurrentMenagedScript;
-            var @params = GameEngine.ScriptEngine.ParamsProvider.GetParamatersForScript(ScriptManager.CurrentMenagedScript);
-
-            ScriptManager.ExcuteFunction("Run", @params);
-
             base.OnUpdate(dt);
-        }
-
-        protected override void OnInit()
-        {
-            base.OnInit();
         }
     }
 }

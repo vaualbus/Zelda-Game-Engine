@@ -6,10 +6,9 @@ using System.IO;
 using System.Linq;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game.GameEngineClasses;
-using ZeldaEngine.Base.Game.ValueObjects;
-using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.Game;
+using ZeldaEngine.Base.ValueObjects.MapLoaderDataTypes;
 
 namespace ZeldaEngine.Base.Game.MapLoaders
 {

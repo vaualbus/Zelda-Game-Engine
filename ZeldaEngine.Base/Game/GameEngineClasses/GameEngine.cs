@@ -30,6 +30,10 @@ namespace ZeldaEngine.Base.Game.GameEngineClasses
             return null;
         }
 
+        public virtual void ExitGame()
+        {
+        }
+
         public GameEngine(ILogger logger)
         {
             Logger = logger;

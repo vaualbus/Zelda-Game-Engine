@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game.GameComponents;
 using ZeldaEngine.Base.Game.GameEngineClasses;
@@ -32,8 +33,12 @@ namespace ZeldaEngine.Base.Game.GameObjects
 
         public List<IGameObject> ParentGameObjects { get; protected set; }
 
+        public List<GameObjectAttachedValues>  AttachedValues { get; private set;  }
+
         public GameObject(IGameEngine gameEngine)
         {
+            AttachedValues = new List<GameObjectAttachedValues>();
+
             _gameComponents = new Dictionary<string, IGameComponent>();
             ScriptTuple = new ScriptTuple();
             Position = new Vector2(0,0);
@@ -104,6 +109,45 @@ namespace ZeldaEngine.Base.Game.GameObjects
                 parentGameComponent.Value.Action(this);
             }
 
+            foreach (var attachedProp in AttachedValues)
+            {
+                //attachedProp.AttachedProperty.
+                var gameObjectProperty = (PropertyInfo) attachedProp.GameObjectNameProperty;
+                var attachedProperty = (PropertyInfo) attachedProp.AttachedProperty;
+                if (attachedProperty != null)
+                {
+                    if (gameObjectProperty.PropertyType != attachedProperty.PropertyType)
+                    {
+                        GameEngine.Logger.LogError("Try to bind invalid types, Binding {0} is invalid, excpecting: {1}", attachedProperty.PropertyType.Name, gameObjectProperty.PropertyType.Name);
+                        continue;
+                    }
+
+                    var testDumpCode = ((DrawableGameObject) attachedProp.CallingGameObject).Tile;
+
+                    gameObjectProperty.SetValue(testDumpCode, attachedProperty.GetValue(attachedProp.CallingScript));
+                }
+                else
+                {
+                    //We have a filed not a property
+                    var attachedField = (FieldInfo) attachedProp.AttachedProperty;
+                    if (attachedField != null)
+                    {
+                        if (gameObjectProperty.PropertyType != attachedProperty.PropertyType)
+                        {
+                            GameEngine.Logger.LogError("Try to bind invalid types, Binding {0} is invalid, excpecting: {1}", attachedProperty.PropertyType.Name, gameObjectProperty.PropertyType.Name);
+                            continue;
+                        }
+
+                        gameObjectProperty.SetValue(attachedProp.CallingGameObject, attachedProperty.GetValue(attachedProp.CallingScript));
+                    }
+                    else
+                    {
+                        GameEngine.Logger.LogInfo("Invalid binding: {0} but {1} is invalid", attachedProp.GameObjectNameProperty.Name, attachedProp.AttachedProperty.Name);
+                        continue;
+                    }
+                }
+            }
+
             OnUpdate(dt);
         }
 
@@ -118,7 +162,7 @@ namespace ZeldaEngine.Base.Game.GameObjects
 
         protected virtual void OnDraw(IRenderEngine renderEngine) { }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             _gameComponents.Clear();
         }

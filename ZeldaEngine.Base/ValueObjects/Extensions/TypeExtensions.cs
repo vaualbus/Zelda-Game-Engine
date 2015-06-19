@@ -17,10 +17,6 @@ namespace ZeldaEngine.Base.ValueObjects.Extensions
             var results = new List<bool>();
             for (var i = 0; i < @params.Length; i++)
             {
-                //Json.Net deserilize int value into int64 so we need to consider that a int32 instead.
-                //if (paramsTypes[i] == typeof(Int64) && providedMethodTypes[i] == typeof(int))
-                //    results.Add(true);
-
                 if (paramsTypes[i] == providedMethodTypes[i])
                     results.Add(true);
             }

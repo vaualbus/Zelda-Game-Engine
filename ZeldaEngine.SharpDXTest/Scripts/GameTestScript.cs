@@ -1,5 +1,7 @@
 ﻿using System;
 using SharpDX;
+using SharpDX.Toolkit.Graphics;
+using SharpDX.Toolkit.Input;
 using ZeldaEngine.Base;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game.GameComponents;
@@ -24,11 +26,14 @@ namespace ZeldaEngine.SharpDXTest.Scripts
         const int BarSize = 10;
         const float BallSize = BallRadious / 2;
 
+        private int _tileWidth = 50, _tileHeigh = 50;
+        private DrawableGameObject _drawableGo;
+
         private  IResourceData[] _testTextures;
-        private int _currentTextureIndex = 0;
+        private int _currentTextureIndex;
 
         [DataFrom("dataScript.Text")]
-        private string _testField;
+        public string TestProp { get; private set; }
 
         public override void OnInit()
         {
@@ -46,45 +51,50 @@ namespace ZeldaEngine.SharpDXTest.Scripts
                 if (_currentTextureIndex > _testTextures.Length - 1)
                     _currentTextureIndex = 0;
 
-                
+                _drawableGo.Tile.Width += 10;
+                //_drawableGo.Tile.Width += 10;
             }
             if (InputManager.IsKeyDown("Left"))
             {
                 _currentTextureIndex--;
                 if (_currentTextureIndex < 0)
                     _currentTextureIndex = _testTextures.Length - 1;
+
+                if (_drawableGo.Tile.Width < _tileWidth)
+                    _drawableGo.Tile.Width = _tileWidth;
             }
 
-            //_currentTextureIndex--;
-            //if (_currentTextureIndex < 0)
-            //    _currentTextureIndex = _testTextures.Length - 1;
 
             _testGo.Tile.Texture = _testTextures[_currentTextureIndex];
 
             PerformCollision();
 
+            if (InputManager.IsKeyDown(Keys.Escape))
+                ExitGame();
+
+
+
         }
-
-
 
         private void SetUpGameObjects()
         {
-            //_playerBar = GameObjectFactory.Create<PlayerBar>("playerBar", g =>
-            //{
-            //    g.MoveDirection = MovableDirection.Up | MovableDirection.Down;
-            //    g.MoveVelocity = 50.0f;
-            //    g.Color = Color.White;
-            //    g.Position = new Vector2(100, 250);
-            //});
+            _playerBar = GameObjectFactory.Create<PlayerBar>("playerBar", g =>
+            {
+                g.MoveDirection = MovableDirection.Up | MovableDirection.Down;
+                g.MoveVelocity = 50.0f;
+                g.Color = Color.White;
+                g.Position = new Vector2(100, 250);
+            });
 
 
-            //_aiBar = GameObjectFactory.Create<AiBar>("aiBar", g =>
-            //{
-            //    g.Position = new Vector2(400, 250);
-            //    g.Color = Color.Pink;
-            //});
-            //_testTexture = LoadTexture2D("Default");
-            // Populate the textures array
+            _aiBar = GameObjectFactory.Create<AiBar>("aiBar", g =>
+            {
+                g.Position = new Vector2(400, 250);
+                g.Color = Color.Pink;
+            });
+
+           // _testTexture = LoadTexture2D("Default");
+            //Populate the textures array
             _testTextures = new[]
             {
                 LoadTexture2D("Default"),
@@ -107,35 +117,41 @@ namespace ZeldaEngine.SharpDXTest.Scripts
 
             _testGo = GameObjectFactory.Create<DrawableGameObject>("test", g =>
             {
-                g.Position = new Vector2(150, 150);
+                g.Position = new Vector2(550, 250);
                 g.Tile.Width = 500;
                 g.Tile.Height = 450;
             });
 
+            _drawableGo = GameObjectFactory.Create<DrawableGameObject>("pino", g =>
+            {
+                g.Position = new Vector2(100, 100);
+                g.Tile.Width = _tileWidth;
+                g.Tile.Height = _tileHeigh;
+                g.Color = Color.White;
+            });
         }
 
         private void PerformCollision()
         {
             //First we need to update the game objects
-            //_playerBar.Update(0.0f);
-            //_aiBar.Update(0.0f);
+            _playerBar.Update(0.0f);
+            _aiBar.Update(0.0f);
             _ball.Update(0.0f);
             _walls.Update(0.0f);
 
-
-            _testGo.Update(0.0f);
+            //_testGo.Update(0.0f);
         }
 
         public override void OnDraw()
         {
-            
-            RenderEngine.DrawString(new Vector2(100, 100), _testField, 30, Color.Blue);
+            RenderEngine.DrawString(new Vector2(100, 100), TestProp, 30, Color.Blue);
 
-           // _playerBar.Draw(RenderEngine);
-           // _aiBar.Draw(RenderEngine);
+             _playerBar.Draw(RenderEngine);
+             _aiBar.Draw(RenderEngine);
             _ball.Draw(RenderEngine);
             _walls.Draw(RenderEngine);
             _testGo.Draw(RenderEngine);
+            _drawableGo.Draw(RenderEngine);
 
             // _testGo.Tile.Texture = LoadTexture2D("Default");
         }

@@ -36,5 +36,9 @@ namespace ZeldaEngine.Tests.TestRig
                    .As<IProjectManager>()
                    .InstancePerLifetimeScope();
         }
+
+        public override void Update(float dt)
+        {
+        }
     }
 }

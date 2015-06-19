@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using ZeldaEngine.Base.Game.MapLoaders;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 
-namespace ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes
+namespace ZeldaEngine.Base.ValueObjects.MapLoaderDataTypes
 {
     public class QuestLoaderScriptType : IEquatable<QuestLoaderScriptType>
     {

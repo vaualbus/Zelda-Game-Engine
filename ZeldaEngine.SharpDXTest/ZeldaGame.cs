@@ -86,13 +86,14 @@ namespace ZeldaEngine.SharpDXTest
             //_testView.GameObjects.AddRange(_gOs);
 
             _scriptEngine.ScriptCompiler.AdditionalAssemblies.Add(Assembly.GetAssembly(typeof(System.Drawing.Color)));
-
+            
             //var testScript1 = CreateScript("TestScript1", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript1.cs"));
             //var testScript2 = CreateScript("TestScript2", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript2.cs"));
             //var testScript3 = CreateScript("TestScript3", Path.Combine(GameEngine.Configuration.GameConfig.ScriptDirectory, "TestScript3.cs"));
 
             _scriptGo = GameEngine.ScriptEngine.AddScript("scriptGo1", "GameTestScript");
             _scriptGo2 = GameEngine.ScriptEngine.AddScript("dataScript", "DataScript");
+
             //GameEngine.ScriptEngine.AddScript(_scriptGo, "test2", "TestScript3");
             //_scriptGo = GameEngine.GameObjectFactory.Create<ScriptableGameObject>("ScriptGo1", go =>
             //{

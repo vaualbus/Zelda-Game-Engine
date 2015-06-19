@@ -22,5 +22,7 @@ namespace ZeldaEngine.Base.Abstracts.Game
         IGameObjectFactory GameObjectFactory { get; set; }
 
         IResourceData Texture2DData(string assetName);
+
+        void ExitGame();
     }
 }

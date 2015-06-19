@@ -1,5 +1,4 @@
-﻿using ZeldaEngine.Base.Game.ValueObjects;
-using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
+﻿using ZeldaEngine.Base.ValueObjects.MapLoaderDataTypes;
 
 namespace ZeldaEngine.Base.Abstracts.Game
 {

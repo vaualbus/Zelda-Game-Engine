@@ -25,11 +25,14 @@ namespace ZeldaEngine.Base.ValueObjects
 
         public bool IsInTest { get; private set; }
 
+        public string ProjectFolder { get; private set; }
+
         public GameConfig(string title, int width = 1024, int height = 768,
                           string baseDirectory = "", 
                           string resourceDirectory = ConfigurationManager.DefaultResourcePath,
                           string questDirectory = ConfigurationManager.DefaultQuestsPath,
                           string scriptDirectory = ConfigurationManager.DefaultScriptPath,
+                          string projectDirectory = ConfigurationManager.DefaultProjectDir,
                           string defaultFont = ConfigurationManager.DefaultFont,
                           int frameRate = 60, bool isInTest = false)
         {
@@ -43,6 +46,7 @@ namespace ZeldaEngine.Base.ValueObjects
             ScriptDirectory = scriptDirectory;
             DefaultFont = defaultFont;
             IsInTest = isInTest;
+            ProjectFolder = projectDirectory;
         }
     }
 }

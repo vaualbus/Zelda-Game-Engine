@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+﻿using Autofac;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
-using Autofac;
 using ZeldaEngine.Base;
-using ZeldaEngine.Base.Abstracts;
+using System.Collections.Generic;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
 using ZeldaEngine.Base.Abstracts.ScriptEngine.Project;
-using ZeldaEngine.Base.Game;
 using ZeldaEngine.Base.Game.GameObjects;
-using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
-using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.Extensions;
 using ZeldaEngine.Base.ValueObjects.Game.Attributes;
-using ZeldaEngine.Base.ValueObjects.ScriptEngine;
+using ZeldaEngine.Base.ValueObjects.MapLoaderDataTypes;
 
 namespace ZeldaEngine.ScriptEngine
 {
@@ -65,63 +57,22 @@ namespace ZeldaEngine.ScriptEngine
 
         #region Proxy Methods
 
-        public override void Update(IGameView screen, float dt)
-        {
-            if(screen == null)
-                return;
-
-            foreach (var script in screen.Scripts.Select(t => t.ScriptManager))
-            {
-                var paramsForScript = ParamsProvider.GetParamatersForScript(script.RuntimeScript.Name);
-                var runMethod = script.CurrentMenagedScript.GetType().GetMethods()
-                    .FirstOrDefault(t => (t.Name == "Run" || t.Name == "RunScript")  && t.GetParameters().Length == paramsForScript.Length && t.MatchTypes(paramsForScript));
-
-                if (runMethod != null)
-                {
-//#if DEBUG
-//                    Logger.LogWarning("------------------------------------");
-//                    Logger.LogWarning("Calling method {0} with @params: {1}", runMethod.Name, string.Join(", ", paramsForScript));
-                    
-//#endif
-                    runMethod.Invoke(script.CurrentMenagedScript, paramsForScript);
-
-//#if DEBUG
-//                    Logger.LogWarning("------------------------------------");
-//#endif
-
-                }
-                else
-                    Logger.LogWarning("Try calling Method Run with mismatched arguments.");
-            }
-        }
-
         public override void Update(float dt)
         {
-            foreach (var scriptGo in ScriptRepository.Scripts.Values)
+            foreach (var scriptGo in ScriptRepository.Scripts.Values.Where(t => t.ScriptManager.CurrentMenagedScript.GetType().GetCustomAttribute<ScriptDataClassAttribute>() == null))
             {
                 var paramsForScript = ParamsProvider.GetParamatersForScript(scriptGo.ScriptManager.RuntimeScript.Name);
                 var runMethod = scriptGo.ScriptManager.CurrentMenagedScript.GetType()
-                                        .GetMethods()
-                                        .FirstOrDefault(t => (t.Name == "Run" || t.Name == "RunScript") && 
-                                                             t.GetParameters().Length == paramsForScript.Length && t.MatchTypes(paramsForScript));
-
-                var scriptDataFormAttributes = GetAttibutes<DataFromAttribute>(scriptGo.ScriptManager.CurrentMenagedScript.GetType());
-                foreach (var scriptDataFormAttribute in scriptDataFormAttributes)
-                {
-                    var script2 = ScriptRepository.Scripts[scriptDataFormAttribute.Value.ScriptName]; //TryGetScriptGameObject(scriptDataFormAttribute.Value.ScriptName);
-                    if (script2 != null && scriptGo.Name != script2.Name)
-                    {
-                        //Set the current script value to the correct script value
-                        scriptGo.ScriptManager.SetScriptValue(scriptDataFormAttribute.Key, script2.ScriptManager.GetScriptValue(scriptDataFormAttribute.Value.FieldName));
-                    }
-
-                }
+                    .GetMethods()
+                    .FirstOrDefault(t => (t.Name == "Run" || t.Name == "RunScript") &&
+                                         t.GetParameters().Length == paramsForScript.Length &&
+                                         t.MatchTypes(paramsForScript));
 
                 scriptGo.ScriptManager.CurrentMenagedScript.CurrentTime = dt;
 
                 if (runMethod != null)
                 {
-                    try
+                    try 
                     {
                         runMethod.Invoke(scriptGo.ScriptManager.CurrentMenagedScript, paramsForScript);
                     }
@@ -133,82 +84,6 @@ namespace ZeldaEngine.ScriptEngine
                 else
                     Logger.LogWarning("Try calling Method Run with mismatched arguments.");
             }
-        }
-
-        private Dictionary<string, TAttribute> GetAttibutes<TAttribute>(Type classType) where TAttribute : Attribute
-        {
-            var returnAttributes = new Dictionary<string, TAttribute>();
-
-            var resultPublicFields = from t in classType.GetFields()
-                let fName = t.Name
-                select new
-                {
-                    FielName = fName,
-                    Attribute = (TAttribute) Attribute.GetCustomAttribute(t, typeof (TAttribute))
-                };
-
-            var resultNonPublicFields = from t in classType.GetFields()
-                let fName = t.Name
-                select new
-                {
-                    FielName = fName,
-                    Attribute = (TAttribute) Attribute.GetCustomAttribute(t, typeof (TAttribute))
-                };
-
-            var resultPublicProps = from t in classType.GetProperties()
-                let fName = t.Name
-                select new
-                {
-                    FielName = fName,
-                    Attribute = (TAttribute) Attribute.GetCustomAttribute(t, typeof (TAttribute))
-                };
-
-            var resultNonPublicProps = from t in classType.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
-                let fName = t.Name
-                select new
-                {
-                    FielName = fName,
-                    Attribute = (TAttribute) Attribute.GetCustomAttribute(t, typeof (TAttribute))
-                };
-
-            var resultPublicMembers = from t in classType.GetMembers()
-                let fName = t.Name
-                select new
-                {
-                    FielName = fName,
-                    Attribute = (TAttribute) Attribute.GetCustomAttribute(t, typeof (TAttribute))
-                };
-
-            var resultNonPublicMembers = from t in classType.GetMembers(BindingFlags.NonPublic | BindingFlags.Instance)
-                let fName = t.Name
-                select new
-                {
-                    FielName = fName,
-                    Attribute = (TAttribute) Attribute.GetCustomAttribute(t, typeof (TAttribute))
-                };
-
-            foreach (var el in resultPublicFields.Where(t => t.Attribute != null))
-                returnAttributes.Add(el.FielName, el.Attribute);
-
-            foreach (var el in resultNonPublicFields.Where(t => t.Attribute != null))
-                returnAttributes.Add(el.FielName, el.Attribute);
-
-
-            foreach (var el in resultPublicProps.Where(t => t.Attribute != null))
-                returnAttributes.Add(el.FielName, el.Attribute);
-
-
-            foreach (var el in resultNonPublicProps.Where(t => t.Attribute != null))
-                returnAttributes.Add(el.FielName, el.Attribute);
-
-
-            foreach (var el in resultPublicMembers.Where(t => t.Attribute != null))
-                returnAttributes.Add(el.FielName, el.Attribute);
-
-            foreach (var el in resultNonPublicMembers.Where(t => t.Attribute != null))
-                returnAttributes.Add(el.FielName, el.Attribute);
-
-            return returnAttributes;
         }
 
         #endregion

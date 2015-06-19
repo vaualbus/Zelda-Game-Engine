@@ -44,47 +44,5 @@ namespace ZeldaEngine.Tests.Script_Engine_Test
             const int expectedValue = Int32.MaxValue;
             engine.GetScript("Test").ExcuteFunction("TestFunc1", new object[]{ expectedValue}).Should().Be(expectedValue);
         }
-
-        [Test]
-        public void GivenMultipleScriptExcutedRunFunctionWithGivenParams()
-        {
-            var engine = new ScriptEngine.GameScriptEngine(new TestGameEngine(_testConfig, new TestLogger()));
-            engine.InitializeEngine();
-
-            var gameView = new TestScreen("Test");
-            engine.AddScript(_scripatbleGameObject, "testScript", @"TestScript.cs").Compile();
-            engine.AddScript(_scripatbleGameObject, "engineScript", @"TestEngineScript.cs").Compile();
-
-            engine.ParamsProvider.AddParamater("testScript", new object[] {10,  20 });
-            engine.ParamsProvider.AddParamater("engineScript", new object[] { "Abba" });
-
-            var watch = new Stopwatch();
-            watch.Start();
-            engine.Update(gameView, 0.0f);
-            watch.Stop();
-
-            Console.WriteLine(watch.Elapsed);
-        }
-
-        [Test]
-        public void MultipleRunMethodPerformanceTest()
-        {
-            var engine = new ScriptEngine.GameScriptEngine(new TestGameEngine(_testConfig, new TestLogger()));
-            engine.InitializeEngine();
-
-            var gameView = new TestScreen("Test");
-            for (var i = 0; i < 10; i++)
-            {
-                engine.AddScript(_scripatbleGameObject, string.Format("testScript_{0}", i), @"TestScript.cs").Compile();
-                engine.ParamsProvider.AddParamater(string.Format("testScript_{0}", i), new object[] {10, 20});
-            }
-
-            var watch = new Stopwatch();
-            watch.Start();
-            engine.Update(gameView, 0.0f);
-            watch.Stop();
-
-            Console.WriteLine(watch.Elapsed);
-        }
     }
 }

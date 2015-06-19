@@ -10,5 +10,6 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine.Project
 
 
         Assembly[] GetProjectAssemblies(string projName);
+        void CopyEngineFileIfNecessary();
     }
 }

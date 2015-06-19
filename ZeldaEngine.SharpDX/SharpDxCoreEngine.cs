@@ -73,6 +73,11 @@ namespace ZeldaEngine.SharpDx
             return new Texture2DResourceData(ResourceLoader.Load<Texture2D>(assetName));
         }
 
+        public void ExitGame()
+        {
+            Exit();
+        }
+
         protected override void Initialize()
         {
             Window.Title = "ZeldaEngineSharpDXTest";
@@ -91,13 +96,13 @@ namespace ZeldaEngine.SharpDx
 
             _currentGame.Init();
 
+            ScriptEngine.PerformScriptBinding();
+
             base.LoadContent();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            //((CustomInputManager) InputManager).Update();
-
             //GameObjectFactory.Update(gameTime.ElapsedGameTime.Milliseconds);
 
             _currentGame.HandleInput(gameTime.ElapsedGameTime.Milliseconds);

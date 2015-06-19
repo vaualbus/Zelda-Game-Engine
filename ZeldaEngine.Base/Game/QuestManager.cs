@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game.GameEngineClasses;
-using ZeldaEngine.Base.Game.ValueObjects;
 
 
 namespace ZeldaEngine.Base.Game

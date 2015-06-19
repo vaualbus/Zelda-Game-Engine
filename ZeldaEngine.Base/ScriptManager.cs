@@ -217,9 +217,7 @@ namespace ZeldaEngine.Base
             }
             else
             {
-                var values =
-                    scriptCtors.Select(
-                        controllerCtor =>
+                var values = scriptCtors.Select(controllerCtor =>
                             _resolver.GetServices(controllerCtor.ParameterType) ??
                             (runtimeScript.CtorParams.ContainsKey(controllerCtor.ParameterType)
                                 ? runtimeScript.CtorParams[controllerCtor.ParameterType].ToArray()
@@ -261,7 +259,7 @@ namespace ZeldaEngine.Base
             }
             catch (Exception ex)
             {
-                _logger.LogError("Debug Informotion {0}", ex.Message);
+                _logger.LogError("Debug Information {0}", ex.Message);
                 return null;
             }
         }

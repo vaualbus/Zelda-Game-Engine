@@ -2,8 +2,7 @@
 using System.Linq;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game.GameObjects;
-using ZeldaEngine.Base.Game.ValueObjects;
-using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
+using ZeldaEngine.Base.ValueObjects.MapLoaderDataTypes;
 
 namespace ZeldaEngine.Base.Game
 {

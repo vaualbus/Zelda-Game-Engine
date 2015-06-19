@@ -4,8 +4,8 @@ using Autofac;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine.Project;
 using ZeldaEngine.Base.Game.GameObjects;
-using ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.ValueObjects;
+using ZeldaEngine.Base.ValueObjects.MapLoaderDataTypes;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 
 namespace ZeldaEngine.Base.Abstracts.ScriptEngine
@@ -36,17 +36,9 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine
 
         IProjectManager ProjectManager { get; }
 
-        bool GenerateProject();
-
-        void UpdateProject();
-
-        void DeleteProject();
-
         void RegisterComponents(ContainerBuilder builder);
 
 #region Proxy Methods
-
-        void Update(IGameView view, float dt);
 
         void Update(float dt);
 
@@ -62,8 +54,8 @@ namespace ZeldaEngine.Base.Abstracts.ScriptEngine
 
         ScriptableGameObject AddScript(string goName, string fileName, object[] @params = null);
 
-        void SetScriptInitialLocation(IGameView gameScreen, string scriptName, Vector2 pos);
-
         #endregion
+
+        void PerformScriptBinding();
     }
 }

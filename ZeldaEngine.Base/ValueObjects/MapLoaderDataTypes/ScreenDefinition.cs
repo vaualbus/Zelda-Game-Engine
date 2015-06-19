@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using ZeldaEngine.Base.ValueObjects.Game;
 
-namespace ZeldaEngine.Base.Game.ValueObjects.MapLoaderDataTypes
+namespace ZeldaEngine.Base.ValueObjects.MapLoaderDataTypes
 {
     public class ScreenDefinition : IEquatable<ScreenDefinition>
     {

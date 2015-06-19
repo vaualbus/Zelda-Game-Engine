@@ -34,7 +34,6 @@ namespace ZeldaEngine.ScriptEngine
             if (@params == null)
             {
                 _paramaters.Add(gameScript, new object[] {});
-                _logger.LogInfo("Adding null value to {0}", scriptName);
                 return false;
             }
 

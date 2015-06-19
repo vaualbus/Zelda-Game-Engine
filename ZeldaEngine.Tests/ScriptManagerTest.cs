@@ -104,5 +104,28 @@ namespace ZeldaEngine.Tests
                    .AddCtorParam("Abba")
                    .Compile();
         }
+
+        [Test]
+        public void AttachPropertyToGameObject()
+        {
+            var engine = new  ScriptEngine.GameScriptEngine(new TestGameEngine(TestConfig, new TestLogger()));
+            engine.InitializeEngine();
+
+            engine.ScriptCompiler.AdditionalAssemblies.Add(typeof(System.Linq.Expressions.MemberExpression).Assembly);
+
+            var testScriptGo = engine.AddScript("TestGo", "AttachPropScript");
+
+            const int testPosX = 25;
+            const int testPosY = 25;
+
+            testScriptGo.ScriptManager.SetScriptValue("XPos", testPosX);
+            testScriptGo.ScriptManager.SetScriptValue("YPos", testPosY);
+
+            engine.Update(0.0f);
+
+            var go = testScriptGo.ScriptManager.GetScriptValue<DrawableGameObject>("TestGo");
+            go.Tile.Width.Should().Be(testPosX);
+            go.Tile.Height.Should().Be(testPosY);
+        }
     }
 }

@@ -7,6 +7,7 @@ using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Abstracts.ScriptEngine;
 using ZeldaEngine.Base.Game;
 using ZeldaEngine.Base.ValueObjects;
+using ZeldaEngine.Tests.TestRig;
 
 namespace ZeldaEngine.Tests
 {
@@ -34,9 +35,16 @@ namespace ZeldaEngine.Tests
             Logger = logger;
             GameObjectFactory = new GameObjectFactory(this);
 
+            RenderEngine = new InMemoryRenderEngine(this);
+            ResourceLoader = new InMemoryResourceLoader(this);
         }
 
         public IResourceData Texture2DData(string assetName)
+        {
+            return new InMemoryResourceData(this, assetName);
+        }
+
+        public void ExitGame()
         {
             throw new NotImplementedException();
         }

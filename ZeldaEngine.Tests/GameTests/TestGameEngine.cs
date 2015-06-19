@@ -55,5 +55,10 @@ namespace ZeldaEngine.Tests.GameTests
         {
             throw new System.NotImplementedException();
         }
+
+        public void ExitGame()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

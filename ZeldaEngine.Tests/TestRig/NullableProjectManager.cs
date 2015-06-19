@@ -24,5 +24,10 @@ namespace ZeldaEngine.Tests.TestRig
         {
             throw new System.NotImplementedException();
         }
+
+        public void CopyEngineFileIfNecessary()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
