@@ -21,8 +21,8 @@ namespace ZeldaEngine.Tests.Scripts
             TestGo = GameObjectFactory.Create<DrawableGameObject>("test", g =>
             {
                 g.Position = new Vector2(20, 20);
-                g.Tile.Width = 10;
-                g.Tile.Height = 10;
+                g.Tile.Width = -1;
+                g.Tile.Height = -50;
             })
             .AttachProperty(g => g.Tile.Width, () => XPos, this)
             .AttachProperty(g => g.Tile.Height, () => YPos, this);

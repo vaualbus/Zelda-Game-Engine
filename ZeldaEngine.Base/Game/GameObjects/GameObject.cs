@@ -122,8 +122,8 @@ namespace ZeldaEngine.Base.Game.GameObjects
                         continue;
                     }
 
+                    //JUst test code to see if the test pass, to the set value we should pass the value of the class in the expression pass to Attach method.
                     var testDumpCode = ((DrawableGameObject) attachedProp.CallingGameObject).Tile;
-
                     gameObjectProperty.SetValue(testDumpCode, attachedProperty.GetValue(attachedProp.CallingScript));
                 }
                 else
