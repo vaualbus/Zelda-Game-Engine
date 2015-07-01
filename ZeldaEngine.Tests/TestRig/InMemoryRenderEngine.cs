@@ -15,6 +15,9 @@ namespace ZeldaEngine.Tests.TestRig
             _gameEngine = gameEngine;
         }
 
+        public string CurrentFontName { get { return "Return Font"; } }
+        public object GraphicsDevice => null;
+
         public void Render(IGameObject gameObject)
         {
             _gameEngine.Logger.LogInfo("Rendering {0} game object", gameObject.Name);
@@ -75,7 +78,12 @@ namespace ZeldaEngine.Tests.TestRig
 
         public void DrawBox(Vector2 position, int width, object color)
         {
-            _gameEngine.Logger.LogInfo("Drawing box {0} - {1} - {2}", position, width);
+            _gameEngine.Logger.LogInfo("Drawing box {0}, Width: {1}", position, width);
+        }
+
+        public void DrawRect(Vector2 position, int width, int height, object color)
+        {
+            _gameEngine.Logger.LogInfo("Drawing rect {0},  Width: {1} Height: {2}", position, width, height);
         }
 
         public void DrawCollisionLines(GameObject go, IEnumerable<GameObject> nearestObjects)

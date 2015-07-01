@@ -4,6 +4,6 @@ namespace ZeldaEngine.Game.Abstracts
 {
     public interface IUIAction
     {
-        void Action(Action<IUIContext> action);
+        void Action(Action action);
     }
 }

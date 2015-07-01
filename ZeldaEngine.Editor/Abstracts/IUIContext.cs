@@ -4,8 +4,10 @@ namespace ZeldaEngine.Game.Abstracts
 {
     public interface IUIContext
     {
+        string ControlName { get; }
+
         UIState State { get; } 
 
-        IUIElement Sender { get; }
+        IUIElement Element { get; }
     }
 }

@@ -1,33 +1,44 @@
-﻿using SharpDX;
+﻿using System;
+using SharpDX;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.SharpDxImp.DataFormat;
+using Vector2 = ZeldaEngine.Base.ValueObjects.Vector2;
 
 namespace ZeldaEngine.Game.Abstracts
 {
     public interface IUIElement
     {
-        string Name { get; }
+        IGameEngine GameEngine { get; set; }
 
-        string Content { get; }
+        string Name { get; set; }
 
-        Vector3 Position { get; }
+        string Content { get; set; }
 
-        Vector3 Rotation { get; }
+        int Width { get; set; }
 
-        Vector3 Scale { get; }
+        int Height { get; set; }
 
-        bool IsActive { get; }
+        Vector2 Position { get; set; }
 
-        Color Color { get;  }
+        Vector2 Rotation { get; set; }
 
-        IResourceData Background { get; }
+        Vector2 Scale { get; set; }
 
-        void AddParentElement(IUIElement element);
+        bool IsActive { get; set; }
 
-        void AddChildrenElement(IUIElement element);
+        Color Color { get; set; }
+
+        IResourceData Background { get; set; }
+
+        IUIElement AddParentElement(IUIElement element);
+
+        IUIElement AddChildrenElement(IUIElement element);
+
+        void AddListener(Action action);
 
         void Draw(IRenderEngine renderEngine);
 
         void Update(float dt);
+        void ReAdjustUiElements(Vector2 newPosition);
     }
 }

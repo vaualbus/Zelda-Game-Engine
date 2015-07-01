@@ -65,7 +65,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataFormat\Texture2DResourceData.cs" />
-    <Compile Include="GameCode\ValueObjects\UIContext.cs" />
     <Compile Include="GameEngineClasses\CustomAudioEngine.cs" />
     <Compile Include="GameEngineClasses\CustomInputManager.cs" />
     <Compile Include="GameEngineClasses\CustomRenderEngine.cs" />

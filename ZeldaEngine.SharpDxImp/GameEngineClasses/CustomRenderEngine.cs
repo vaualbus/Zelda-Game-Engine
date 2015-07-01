@@ -5,7 +5,6 @@ using SharpDX.Toolkit.Graphics;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.ValueObjects.Game;
-using ZeldaEngine.SharpDxImp.GameCode.ValueObjects;
 using RectangleF = SharpDX.RectangleF;
 using Texture2D = SharpDX.Toolkit.Graphics.Texture2D;
 
@@ -17,17 +16,19 @@ namespace ZeldaEngine.SharpDxImp.GameEngineClasses
 
         private readonly Texture2D _emptyTexture;
 
-        public GraphicsDevice GraphicsDevice { get; private set; }
+        private readonly GraphicsDevice _graphicsDevice;
 
         public SpriteBatch SpriteBatch { get; }
+        public string CurrentFontName => _gameEngine.GameConfig.DefaultFont;
+        public object GraphicsDevice => _graphicsDevice;
 
         public CustomRenderEngine(IGameEngine gameEngine, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             _gameEngine = gameEngine;
-            GraphicsDevice = graphicsDevice;
+            _graphicsDevice = graphicsDevice;
             SpriteBatch = spriteBatch;
 
-            _emptyTexture = Texture2D.New(GraphicsDevice, 1, 1, 0, PixelFormat.R8G8B8A8.UNormSRgb);
+            _emptyTexture = Texture2D.New(_graphicsDevice, 1, 1, 0, PixelFormat.R8G8B8A8.UNormSRgb);
             var pixels = new[] {0xFFFFFF};
             _emptyTexture.SetData(pixels);
         }
@@ -62,7 +63,16 @@ namespace ZeldaEngine.SharpDxImp.GameEngineClasses
 
         public void DrawBox(Base.ValueObjects.Vector2 position, int width, object color)
         {
-            throw new System.NotImplementedException();
+            SpriteBatch.Begin();
+            SpriteBatch.Draw(_emptyTexture, new Rectangle((int)position.X, (int)position.Y, width, width), (Color)color);
+            SpriteBatch.End();
+        }
+
+        public void DrawRect(Base.ValueObjects.Vector2 position, int width, int height, object color)
+        {
+            SpriteBatch.Begin();
+            SpriteBatch.Draw(_emptyTexture, new Rectangle((int)position.X, (int)position.Y, width, height), (Color) color);
+            SpriteBatch.End();
         }
 
         public void DrawCollisionLines(GameObject go, IEnumerable<GameObject> nearestObjects)
@@ -93,7 +103,7 @@ namespace ZeldaEngine.SharpDxImp.GameEngineClasses
         public void DrawCircle(Base.ValueObjects.Vector2 position, int radius, object lineColor)
         {
             int outerRadius = radius*2 + 2;
-            var texture = Texture2D.New(GraphicsDevice, outerRadius, outerRadius, 0, PixelFormat.B8G8R8A8.UNorm);
+            var texture = Texture2D.New(_graphicsDevice, outerRadius, outerRadius, 0, PixelFormat.B8G8R8A8.UNorm);
 
             var data = new Color[outerRadius * outerRadius];
             for (var i = 0; i < data.Length; i++)
@@ -122,7 +132,7 @@ namespace ZeldaEngine.SharpDxImp.GameEngineClasses
         public void DrawFillCircle(Base.ValueObjects.Vector2 position, int radius, object fillColor)
         {
             int outerRadius = radius * 2 + 2;
-            var texture = Texture2D.New(GraphicsDevice, outerRadius, outerRadius, true, PixelFormat.R8G8B8A8.UNormSRgb);
+            var texture = Texture2D.New(_graphicsDevice, outerRadius, outerRadius, true, PixelFormat.R8G8B8A8.UNormSRgb);
 
             var data = new Color[outerRadius * outerRadius];
             for (var i = 0; i < data.Length; i++)
@@ -242,11 +252,6 @@ namespace ZeldaEngine.SharpDxImp.GameEngineClasses
         public void ApplyTexture(DrawableGameObject gameObject, IResourceData texture)
         {
             // gameObject.Texture = texture;
-        }
-
-        public void RenderUI(UIContext uiContext)
-        {
-            throw new System.NotImplementedException();
         }
 
         public void Dispose()

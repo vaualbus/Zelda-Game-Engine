@@ -2,8 +2,9 @@
 {
     public enum UIState
     {
-         Active,
-         InProgress,
-         Done
+        Active,
+        InProgress,
+        Done,
+        Disabled
     }
 }

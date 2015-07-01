@@ -8,6 +8,10 @@ namespace ZeldaEngine.Base.Abstracts.Game
 {
     public interface IRenderEngine : IDisposable
     {
+        string CurrentFontName { get; }
+
+        object GraphicsDevice { get; }
+
         void Render(IGameObject gameObject);
 
         void ApplyTexture(DrawableGameObject gameObject, IResourceData texture);
@@ -33,6 +37,8 @@ namespace ZeldaEngine.Base.Abstracts.Game
         void DrawFillTriangle(Vector2 position, Vertex[] verticies);
 
         void DrawBox(Vector2 position, int width, object color);
+
+        void DrawRect(Vector2 position, int width, int height, object color);
 
         void DrawCollisionLines(GameObject go, IEnumerable<GameObject> nearestObjects);
 
