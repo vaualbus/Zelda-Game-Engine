@@ -15,7 +15,9 @@ namespace ZeldaEngine.Base.ValueObjects
         public string BaseDirectory { get; private set; }
 
         public string ResourceDirectory { get; private set; }
+
         public string QuestDirectory { get; set; }
+
         public double Framerate { get; private set; }
 
         public string ScriptDirectory { get; private set; }

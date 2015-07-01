@@ -118,9 +118,9 @@
       <Project>{40667d01-c27e-4711-9cf3-5975d715a9ff}</Project>
       <Name>ZeldaEngine.ScriptEngine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZeldaEngine.SharpDX\ZeldaEngine.SharpDX.csproj">
-      <Project>{40ab6318-ae57-451c-91ff-4eb3d7e861c2}</Project>
-      <Name>ZeldaEngine.SharpDX</Name>
+    <ProjectReference Include="..\ZeldaEngine.SharpDxImp\ZeldaEngine.SharpDxImp.csproj">
+      <Project>{40AB6318-AE57-451C-91FF-4EB3D7E861C2}</Project>
+      <Name>ZeldaEngine.SharpDxImp</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

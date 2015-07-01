@@ -10,6 +10,7 @@ namespace ZeldaEngine.Base.Game.GameComponents
         {
             if (gameObject is MovableGameObject)
             {
+                ///TODO(albus95): Not completed need to add diagonal moves
                 var mGo = gameObject as MovableGameObject;
                 if (mGo.MoveDirection == (MovableDirection.Up | MovableDirection.Down))
                 {
@@ -18,6 +19,34 @@ namespace ZeldaEngine.Base.Game.GameComponents
 
                     if (InputManager.IsKeyDown("Up"))
                         mGo.Position.Y -= (int)mGo.MoveVelocity;
+                }
+                if (mGo.MoveDirection == MovableDirection.Up)
+                {
+                    if (InputManager.IsKeyDown("Up"))
+                        mGo.Position.Y -= (int)mGo.MoveVelocity;
+                }
+                if (mGo.MoveDirection == MovableDirection.Down)
+                {
+                    if (InputManager.IsKeyDown("Down"))
+                        mGo.Position.Y += (int)mGo.MoveVelocity;
+                }
+                if (mGo.MoveDirection == MovableDirection.Left)
+                {
+                    if (InputManager.IsKeyDown("Left"))
+                        mGo.Position.X -= (int)mGo.MoveVelocity;
+                }
+                if (mGo.MoveDirection == MovableDirection.Right)
+                {
+                    if (InputManager.IsKeyDown("Right"))
+                        mGo.Position.X += (int)mGo.MoveVelocity;
+                }
+                if (mGo.MoveDirection == (MovableDirection.Left | MovableDirection.Right))
+                {
+                    if (InputManager.IsKeyDown("Left"))
+                        mGo.Position.X -= (int)mGo.MoveVelocity;
+
+                    if (InputManager.IsKeyDown("Right"))
+                        mGo.Position.X += (int)mGo.MoveVelocity;
                 }
             }
 

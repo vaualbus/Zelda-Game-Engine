@@ -33,11 +33,11 @@ namespace ZeldaEngine.Base.Game.GameObjects
 
         public List<IGameObject> ParentGameObjects { get; protected set; }
 
-        public List<GameObjectAttachedValues>  AttachedValues { get; private set;  }
+        public List<GameObjectAttachedValue>  AttachedValues { get; private set;  }
 
         public GameObject(IGameEngine gameEngine)
         {
-            AttachedValues = new List<GameObjectAttachedValues>();
+            AttachedValues = new List<GameObjectAttachedValue>();
 
             _gameComponents = new Dictionary<string, IGameComponent>();
             ScriptTuple = new ScriptTuple();
@@ -70,7 +70,7 @@ namespace ZeldaEngine.Base.Game.GameObjects
             }
             catch
             {
-                GameEngine.Logger.LogError("The given component has not a default constructur. Components must not have constructures. (For now)");
+                GameEngine.Logger.LogError("The given component has not a default constructur. Components must not have constructurs. (For now)");
             }
 
             return null;
@@ -101,6 +101,8 @@ namespace ZeldaEngine.Base.Game.GameObjects
 
         public void Update(float dt)
         {
+            //ApplyAttachPropertyBinding();
+
             foreach (var parentGameComponent in _gameComponents)
             {
                 if (parentGameComponent.Value.GetType() == typeof (DrawableGameObject))
@@ -109,44 +111,6 @@ namespace ZeldaEngine.Base.Game.GameObjects
                 parentGameComponent.Value.Action(this);
             }
 
-            foreach (var attachedProp in AttachedValues)
-            {
-                //attachedProp.AttachedProperty.
-                var gameObjectProperty = (PropertyInfo) attachedProp.GameObjectNameProperty;
-                var attachedProperty = (PropertyInfo) attachedProp.AttachedProperty;
-                if (attachedProperty != null)
-                {
-                    if (gameObjectProperty.PropertyType != attachedProperty.PropertyType)
-                    {
-                        GameEngine.Logger.LogError("Try to bind invalid types, Binding {0} is invalid, excpecting: {1}", attachedProperty.PropertyType.Name, gameObjectProperty.PropertyType.Name);
-                        continue;
-                    }
-
-                    //JUst test code to see if the test pass, to the set value we should pass the value of the class in the expression pass to Attach method.
-                    var testDumpCode = ((DrawableGameObject) attachedProp.CallingGameObject).Tile;
-                    gameObjectProperty.SetValue(testDumpCode, attachedProperty.GetValue(attachedProp.CallingScript));
-                }
-                else
-                {
-                    //We have a filed not a property
-                    var attachedField = (FieldInfo) attachedProp.AttachedProperty;
-                    if (attachedField != null)
-                    {
-                        if (gameObjectProperty.PropertyType != attachedProperty.PropertyType)
-                        {
-                            GameEngine.Logger.LogError("Try to bind invalid types, Binding {0} is invalid, excpecting: {1}", attachedProperty.PropertyType.Name, gameObjectProperty.PropertyType.Name);
-                            continue;
-                        }
-
-                        gameObjectProperty.SetValue(attachedProp.CallingGameObject, attachedProperty.GetValue(attachedProp.CallingScript));
-                    }
-                    else
-                    {
-                        GameEngine.Logger.LogInfo("Invalid binding: {0} but {1} is invalid", attachedProp.GameObjectNameProperty.Name, attachedProp.AttachedProperty.Name);
-                        continue;
-                    }
-                }
-            }
 
             OnUpdate(dt);
         }
@@ -161,6 +125,57 @@ namespace ZeldaEngine.Base.Game.GameObjects
         protected virtual void OnUpdate(float dt) { }
 
         protected virtual void OnDraw(IRenderEngine renderEngine) { }
+
+        private void ApplyAttachPropertyBinding()
+        {
+            foreach (var attachedProp in AttachedValues)
+            {
+                //attachedProp.AttachedProperty.
+                var gameObjectProperty = attachedProp.GameObjectNameProperty as PropertyInfo;
+                var attachedProperty = attachedProp.AttachedProperty as PropertyInfo;
+                if (gameObjectProperty != null)
+                {
+                    if (attachedProperty != null)
+                    {
+                        if (gameObjectProperty.PropertyType != attachedProperty.PropertyType)
+                        {
+                            GameEngine.Logger.LogError(
+                                "Try to bind invalid types, Binding {0} is invalid, excpecting: {1}",
+                                attachedProperty.PropertyType.Name, gameObjectProperty.PropertyType.Name);
+                            continue;
+                        }
+
+                        //JUst test code to see if the test pass, to the set value we should pass the value of the class in the expression pass to Attach method.
+                        var testDumpCode = ((DrawableGameObject) attachedProp.CallingObject).Tile;
+                        gameObjectProperty.SetValue(testDumpCode, attachedProperty.GetValue(attachedProp.CallingScript));
+                    }
+                    else
+                    {
+                        //We have a filed not a property
+                        var attachedField = attachedProp.AttachedProperty as FieldInfo;
+                        if (attachedField != null)
+                        {
+                            if (gameObjectProperty.PropertyType != attachedField.FieldType)
+                            {
+                                GameEngine.Logger.LogError(
+                                    "Try to bind invalid types, Binding {0} is invalid, excpecting: {1}",
+                                    attachedField.FieldType.Name, gameObjectProperty.PropertyType.Name);
+                                continue;
+                            }
+
+                            gameObjectProperty.SetValue(attachedProp.CallingObject,
+                                attachedField.GetValue(attachedProp.CallingScript));
+                        }
+                        else
+                        {
+                            GameEngine.Logger.LogInfo("Invalid binding: {0} but {1} is invalid",
+                                attachedProp.GameObjectNameProperty.Name, attachedProp.AttachedProperty.Name);
+                            continue;
+                        }
+                    }
+                }
+            }
+        }
 
         public virtual void Dispose()
         {

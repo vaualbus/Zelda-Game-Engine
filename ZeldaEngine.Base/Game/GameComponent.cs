@@ -18,11 +18,5 @@ namespace ZeldaEngine.Base.Game
 
        
         public abstract bool Action(IGameObject gameObject);
-
-
-        //public void SetParent(IGameComponent component)
-        //{
-        //    Parent = component;
-        //}
     }
 }

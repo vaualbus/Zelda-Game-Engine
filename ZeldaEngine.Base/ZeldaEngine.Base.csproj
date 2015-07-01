@@ -34,8 +34,9 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,7 +72,7 @@
     <Compile Include="Abstracts\Game\IAudioEngine.cs" />
     <Compile Include="Abstracts\Game\IGame.cs" />
     <Compile Include="Abstracts\Game\IQuestLoader.cs" />
-    <Compile Include="Game\AudioEngine.cs" />
+    <Compile Include="Game\DefaultAudioEngine.cs" />
     <Compile Include="Game\BaseGameView.cs" />
     <Compile Include="BaseScriptEngine.cs" />
     <Compile Include="CSharpScriptCompiler.cs" />
@@ -106,7 +107,7 @@
     <Compile Include="Game\MapLoaders\JsonMapLoader.cs" />
     <Compile Include="Game\MapLoaders\MyMapLoader.cs" />
     <Compile Include="Game\RenderingEngine\ResourceManager\TextureResources.cs" />
-    <Compile Include="ValueObjects\Game\GameObjectAttachedValues.cs" />
+    <Compile Include="ValueObjects\Game\GameObjectAttachedValue.cs" />
     <Compile Include="ValueObjects\MapLoaderDataTypes\EnemyDefinition.cs" />
     <Compile Include="ValueObjects\MapLoaderDataTypes\EnemySpawnLocation.cs" />
     <Compile Include="ValueObjects\MapLoaderDataTypes\GameConfigurationDefinition.cs" />

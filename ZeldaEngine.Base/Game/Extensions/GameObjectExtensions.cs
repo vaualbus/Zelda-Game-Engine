@@ -22,10 +22,9 @@ namespace ZeldaEngine.Base.Game.Extensions
             var attachMemberInfo = (MemberExpression) attachPropertyExpr.Operand;
             var attachMemberRuntimeProperty = attachMemberInfo.Member;
 
-            var decleringAttachPropMemberExpr = ((MemberExpression) goPropertyMemberInfo.Expression);         
+            var decleringAttachPropMemberExpr = ((MemberExpression) goPropertyMemberInfo.Expression);
 
-
-            that.AttachedValues.Add(new GameObjectAttachedValues(goPropertyMemberRuntimeProperty, attachMemberRuntimeProperty, that, callingScript));
+            that.AttachedValues.Add(new GameObjectAttachedValue(goPropertyMemberRuntimeProperty, attachMemberRuntimeProperty, that, callingScript));
 
             return that;
         }

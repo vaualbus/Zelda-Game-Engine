@@ -2,35 +2,35 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// Le informazioni generali relative a un assembly sono controllate dal seguente 
-// set di attributi. Per modificare le informazioni associate a un assembly
-// occorre quindi modificare i valori di questi attributi.
-[assembly: AssemblyTitle("ZeldaEngine.Editor")]
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+[assembly: AssemblyTitle("ZeldaEngine.SharpDXTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ZeldaEngine.Editor")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyProduct("ZeldaEngine.SharpDXTest")]
+[assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// Se si imposta ComVisible su false, i tipi in questo assembly non saranno visibili 
-// ai componenti COM.  Se è necessario accedere a un tipo in questo assembly da 
-// COM, impostare su true l'attributo ComVisible per tale tipo.
+// Setting ComVisible to false makes the types in this assembly not visible 
+// to COM components.  If you need to access a type in this assembly from 
+// COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// Se il progetto viene esposto a COM, il GUID che segue verrà utilizzato per creare l'ID della libreria dei tipi
-[assembly: Guid("2a092ffa-1282-4268-8536-361e23ef35f7")]
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("85c4a0de-e558-47df-8463-53ab0c6a8d7c")]
 
-// Le informazioni sulla versione di un assembly sono costituite dai seguenti quattro valori:
+// Version information for an assembly consists of the following four values:
 //
-//      Numero di versione principale
-//      Numero di versione secondario 
-//      Numero build
-//      Revisione
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
 //
-// È possibile specificare tutti i valori oppure impostare valori predefiniti per i numeri relativi alla revisione e alla build 
-// utilizzando l'asterisco (*) come descritto di seguito:
+// You can specify all the values or you can default the Build and Revision Numbers 
+// by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

@@ -149,13 +149,13 @@
     <Compile Include="RoslynCSharpScriptCompiler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ZeldaEngine.Base\ZeldaEngine.Base.csproj">
       <Project>{CF09735E-6093-4F65-9BA1-62F1FEAAD7F3}</Project>
       <Name>ZeldaEngine.Base</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.0.0-rc2\tools\analyzers\C#\Microsoft.CodeAnalysis.Analyzers.dll" />

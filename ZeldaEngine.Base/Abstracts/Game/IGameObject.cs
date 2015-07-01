@@ -24,7 +24,7 @@ namespace ZeldaEngine.Base.Abstracts.Game
 
         ObjectType ObjectType { get; }
 
-        List<GameObjectAttachedValues> AttachedValues { get; }
+        List<GameObjectAttachedValue> AttachedValues { get; }
 
         TComponent GetComponent<TComponent>(string name) where TComponent : class, IGameComponent;
 

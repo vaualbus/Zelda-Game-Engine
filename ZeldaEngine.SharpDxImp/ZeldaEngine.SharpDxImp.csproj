@@ -1,22 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <!-- Common Properties -->
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C12F58CA-CCC2-4BF7-BC95-66807BE582C9}</ProjectGuid>
+    <ProjectGuid>{40AB6318-AE57-451C-91FF-4EB3D7E861C2}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ZeldaEngine.Game</RootNamespace>
-    <AssemblyName>ZeldaEngine.Game</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <!-- Platform Dependent Properties -->
-    <OutputType>WinExe</OutputType>
+    <RootNamespace>ZeldaEngine.SharpDxImp</RootNamespace>
+    <AssemblyName>ZeldaEngine.SharpDxImp</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <NuGetPackageImportStamp>282a5569</NuGetPackageImportStamp>
+    <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>09db0a47</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,7 +51,7 @@
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.Graphics.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Toolkit.Input">
-      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.Input.dll</HintPath>
+      <HintPath>..\packages\SharpDX.2.6.3\Bin\DirectX11-Signed-net40\SharpDX.Toolkit.Input.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -68,40 +64,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstracts\IUIAction.cs" />
-    <Compile Include="Abstracts\IUIContext.cs" />
-    <Compile Include="Abstracts\IUIElement.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="DataFormat\Texture2DResourceData.cs" />
+    <Compile Include="GameCode\ValueObjects\UIContext.cs" />
+    <Compile Include="GameEngineClasses\CustomAudioEngine.cs" />
+    <Compile Include="GameEngineClasses\CustomInputManager.cs" />
+    <Compile Include="GameEngineClasses\CustomRenderEngine.cs" />
+    <Compile Include="GameEngineClasses\CustomResourceLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\GameObjects\UIGameObject.cs" />
-    <Compile Include="ValueObjects\UIState.cs" />
-    <Compile Include="ZeldaEditor.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="MiniCube.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <ToolkitTexture Include="Resources\Textures\Default.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </ToolkitTexture>
-    <ToolkitTexture Include="Resources\Textures\2.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ToolkitTexture>
-    <ToolkitFont Include="Resources\Fonts\DefaultFont.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </ToolkitFont>
-    <ToolkitTexture Include="Resources\Textures\Grass.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </ToolkitTexture>
-    <ToolkitFont Include="Resources\Fonts\Arial16.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </ToolkitFont>
-    <ToolkitTexture Include="Resources\Balls.dds" />
-    <ToolkitTexture Include="Resources\Textures\test.jpg" />
+    <Compile Include="SharpDxCoreEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZeldaEngine.Base\ZeldaEngine.Base.csproj">
@@ -112,26 +82,20 @@
       <Project>{40667d01-c27e-4711-9cf3-5975d715a9ff}</Project>
       <Name>ZeldaEngine.ScriptEngine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZeldaEngine.SharpDxImp\ZeldaEngine.SharpDxImp.csproj">
-      <Project>{40ab6318-ae57-451c-91ff-4eb3d7e861c2}</Project>
-      <Name>ZeldaEngine.SharpDxImp</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Maps\" />
-    <Folder Include="Resources\Scripts\" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\SharpDX.2.6.3\build\SharpDX.targets" Condition="Exists('..\packages\SharpDX.2.6.3\build\SharpDX.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>Questo progetto fa riferimento a uno o più pacchetti NuGet che non sono presenti sul computer in uso. Abilitare il ripristino dei pacchetti NuGet per scaricarli. Per ulteriori informazioni, visitare http://go.microsoft.com/fwlink/?LinkID=322105. Il file mancante è {0}.</ErrorText>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\SharpDX.2.6.3\build\SharpDX.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SharpDX.2.6.3\build\SharpDX.targets'))" />
     <Error Condition="!Exists('..\packages\SharpDX.Toolkit.2.6.3\build\SharpDX.Toolkit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SharpDX.Toolkit.2.6.3\build\SharpDX.Toolkit.targets'))" />
   </Target>
   <Import Project="..\packages\SharpDX.Toolkit.2.6.3\build\SharpDX.Toolkit.targets" Condition="Exists('..\packages\SharpDX.Toolkit.2.6.3\build\SharpDX.Toolkit.targets')" />
-  <ProjectExtensions />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

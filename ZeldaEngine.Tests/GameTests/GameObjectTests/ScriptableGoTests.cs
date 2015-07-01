@@ -11,7 +11,7 @@ using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.Game;
 using ZeldaEngine.Base.ValueObjects.ScriptEngine;
 using ZeldaEngine.ScriptEngine;
-using ZeldaEngine.SharpDx;
+using ZeldaEngine.SharpDxImp;
 using ZeldaEngine.Tests.TestRig;
 using GameScriptEngine = ZeldaEngine.ScriptEngine.GameScriptEngine;
 

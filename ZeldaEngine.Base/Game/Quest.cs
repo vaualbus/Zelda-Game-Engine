@@ -9,6 +9,7 @@ namespace ZeldaEngine.Base.Game
     public class Quest
     {
         private readonly IGameEngine _gameEngine;
+
         public string Name { get; private set; }
 
         public string Version { get; private set; }

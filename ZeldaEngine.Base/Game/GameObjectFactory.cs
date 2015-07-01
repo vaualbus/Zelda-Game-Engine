@@ -11,9 +11,8 @@ namespace ZeldaEngine.Base.Game
     public class GameObjectFactory : IGameObjectFactory
     {
         private readonly IGameEngine _gameEngine;
-        private static Dictionary<Tuple<Type, string>, IGameObject> _registeredGameObjects;
 
-        public static IEnumerable<IGameObject> RegisteredGameObjects => _registeredGameObjects.Values;
+        private readonly Dictionary<Tuple<Type, string>, IGameObject> _registeredGameObjects;
 
         public GameObjectFactory(IGameEngine gameEngine)
         {
