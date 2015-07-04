@@ -5,6 +5,7 @@ using SharpDX.Toolkit.Graphics;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.Game.GameObjects;
 using ZeldaEngine.Base.ValueObjects.Game;
+using ZeldaEngine.SharpDxImp.DataFormat;
 using RectangleF = SharpDX.RectangleF;
 using Texture2D = SharpDX.Toolkit.Graphics.Texture2D;
 
@@ -98,6 +99,51 @@ namespace ZeldaEngine.SharpDxImp.GameEngineClasses
             SpriteBatch.Begin();
             SpriteBatch.DrawString(font, text, new Vector2(position.X, position.Y), (Color)color);
             SpriteBatch.End();
+        }
+
+        public void DrawBorder(IResourceData texture, int borderWidth, object borderColor)
+        {
+            var texture2D = (Texture2D) texture.Value;
+            if (texture2D == null)
+            {
+                _gameEngine.Logger.LogError("Invalid Texture Object, Expect a texture 2D.");
+                return;
+            }
+
+            var textureColor = new Color[texture2D.Width * texture2D.Width];
+            for (var x = 0; x < texture.Width; x++)
+            {
+                for (var y = 0; y < texture.Height; y++)
+                {
+                    var colored = false;
+                    for (var i = 0; i <= borderWidth; i++)
+                    {
+                        if (x == i || y == i || x == texture.Width - 1 - i || y == texture.Height - 1 - i)
+                        {
+                            textureColor[x + y * texture.Width] = (Color) borderColor;
+                            colored = true;
+                            break;
+                        }
+                    }
+
+                    if (!colored)
+                        textureColor[x + y + texture2D.Width] = Color.Transparent;
+                }
+            }
+
+            texture2D.SetData(textureColor);
+        }
+
+        public IResourceData GenerateEmptyTexture2D(int width, int height)
+        {
+            var texture = Texture2D.New(_graphicsDevice, width, height, 0, PixelFormat.R8G8B8A8.UNormSRgb);
+            var pixels = new Color[texture.Width * texture.Height];
+            for (int i = 0; i < pixels.Length; i++)
+                pixels[i] = Color.Transparent;
+            
+            texture.SetData(pixels);
+
+            return new Texture2DResourceData(texture);
         }
 
         public void DrawCircle(Base.ValueObjects.Vector2 position, int radius, object lineColor)
@@ -232,6 +278,17 @@ namespace ZeldaEngine.SharpDxImp.GameEngineClasses
 
             SpriteBatch.Begin();
             SpriteBatch.Draw((Texture2D) texture.Value, rect, null, (Color) color, rotation, new Vector2(0,0), SpriteEffects.None, layer);
+            SpriteBatch.End();
+        }
+
+        public void DrawTexture(Base.ValueObjects.Vector2 position, IResourceData texture, int width, int height, object color, float rotation = 0,
+            int layer = 0)
+        {
+            var texture2D = (Texture2D)texture.Value;
+            var rect = new Rectangle((int)position.X, (int)position.Y, width, height);
+
+            SpriteBatch.Begin();
+            SpriteBatch.Draw((Texture2D)texture.Value, rect, null, (Color)color, rotation, new Vector2(0, 0), SpriteEffects.None, layer);
             SpriteBatch.End();
         }
 

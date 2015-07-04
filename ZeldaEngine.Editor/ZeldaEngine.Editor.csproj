@@ -71,6 +71,7 @@
     <Compile Include="Abstracts\IUIAction.cs" />
     <Compile Include="Abstracts\IUIContext.cs" />
     <Compile Include="Abstracts\IUIElement.cs" />
+    <Compile Include="Extensions\Texture2DExtensionMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Elements\UIButton.cs" />

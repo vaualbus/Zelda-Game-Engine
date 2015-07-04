@@ -2,36 +2,40 @@
 using System.Linq;
 using SharpDX.Toolkit.Input;
 using ZeldaEngine.Base.Abstracts.Game;
+using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.MapLoaderDataTypes;
 
 namespace ZeldaEngine.SharpDxImp.GameEngineClasses
 {
     public class CustomInputManager : IInputManager
     {
-        private readonly InputConfigurationDefinition _inputConfigurationDefinition;
         private readonly SharpDxCoreEngine _sharpDxCoreEngine;
+        private readonly InputConfigurationDefinition _inputConfigurationDefinition;
+
         private readonly KeyboardManager _keyboardManager;
-        private KeyboardState _keyBoardState;
+
+
+        private readonly MouseManager _mouseManager;
+
+        public Vector2 MousePosition => new Vector2(_mouseManager.GetState().X * _sharpDxCoreEngine.GameConfig.ScreenWidth, _mouseManager.GetState().Y * _sharpDxCoreEngine.GameConfig.ScreenHeight);
 
         public CustomInputManager(SharpDxCoreEngine sharpDxCoreEngine, InputConfigurationDefinition inputConfigurationDefinition)
-        {   _sharpDxCoreEngine = sharpDxCoreEngine;
+        {
+            _sharpDxCoreEngine = sharpDxCoreEngine;
             _inputConfigurationDefinition = inputConfigurationDefinition;
 
-            _keyboardManager = new KeyboardManager(_sharpDxCoreEngine);
+            _keyboardManager = new KeyboardManager(sharpDxCoreEngine);
+            _mouseManager = new MouseManager(sharpDxCoreEngine);
         }
 
         public bool IsKeyDown(Keys key)
         {
-            var state =_keyBoardState.IsKeyPressed(key);
-            Update();
-            return state;
+            return _keyboardManager.GetState().IsKeyPressed(key);
         }
 
         public bool IsKeyUp(Keys key)
         {
-            var temp = _keyBoardState.IsKeyReleased(key);
-            Update();
-            return temp;
+            return _keyboardManager.GetState().IsKeyReleased(key);
         }
 
         public bool IsKeyUp<TData>(TData data) where TData : struct, IConvertible
@@ -70,9 +74,38 @@ namespace ZeldaEngine.SharpDxImp.GameEngineClasses
             return IsKeyDown((Keys)Enum.Parse(typeof(Keys), keyName));
         }
 
+        public bool IsMouseButtonPressed(string btnName)
+        {
+            switch (btnName)
+            {
+                case "Left":
+                    return _mouseManager.GetState().LeftButton.Down;
+
+                case "Right":
+                    return _mouseManager.GetState().RightButton.Down;
+
+                default:
+                    return false;
+            }
+        }
+
+        public bool IsMouseButtonReleased(string btnName)
+        {
+            switch (btnName)
+            {
+                case "Left":
+                    return !_mouseManager.GetState().LeftButton.Down;
+
+                case "Right":
+                    return !_mouseManager.GetState().RightButton.Down;
+
+                default:
+                    return false;
+            }
+        }
+
         public void Update()
         {
-            _keyBoardState = _keyboardManager.GetState();
         }
     }
 }

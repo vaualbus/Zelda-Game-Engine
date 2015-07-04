@@ -32,6 +32,8 @@ namespace ZeldaEngine.Base.Abstracts.Game
 
         void DrawTexture(Vector2 position, IResourceData texture, float rotation, object color, int layer = 0);
 
+        void DrawTexture(Vector2 position, IResourceData texture, int width, int height, object color, float rotation = 0, int layer = 0);
+
         void DrawTriangle(Vector2 position, Vertex[] verticies, object lineColor, int thickness = 1);
 
         void DrawFillTriangle(Vector2 position, Vertex[] verticies);
@@ -45,5 +47,9 @@ namespace ZeldaEngine.Base.Abstracts.Game
         void DrawString(Vector2 position, string text, float size, object color);
 
         void DrawString(Vector2 position, string text, string fontName, float size, object color);
+
+        void DrawBorder(IResourceData texture, int borderWidth, object color);
+
+        IResourceData GenerateEmptyTexture2D(int width, int height);
     }
 }

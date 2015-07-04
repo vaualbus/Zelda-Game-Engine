@@ -26,7 +26,7 @@ namespace ZeldaEngine.Game.UI.GameObjects
             UIElements = new Dictionary<string, IUIContext>();
         }
 
-        public TElement AddElement<TElement>(string name, Action<IUIElement> action, bool isActive = true) 
+        public TElement AddElement<TElement>(string name, Action<TElement> action, bool isActive = true) 
             where TElement : class, IUIElement
         {
             if (UIElements.Select(t => t.Value).Any(t => t.ControlName == name))
@@ -35,14 +35,17 @@ namespace ZeldaEngine.Game.UI.GameObjects
                 return default(TElement);
             }
 
-            var temp = (TElement) Activator.CreateInstance(typeof(TElement));
+            var ctorParams = new {_gameEngine};
+
+            var temp = (TElement) Activator.CreateInstance(typeof(TElement), _gameEngine);
             temp.Name = name;
-            temp.GameEngine = _gameEngine;
 
             temp.Width = 300;
             temp.Height = 50;
 
             action(temp);
+
+            temp.Init();
 
             var uiContext = new UIContext(name, isActive ? UIState.Active : UIState.Disabled, temp);
 
@@ -59,6 +62,25 @@ namespace ZeldaEngine.Game.UI.GameObjects
             {
                 uiElement.Element.Draw(renderEngine);
             }
+        }
+
+        protected override void OnUpdate(float dt)
+        {
+            base.OnUpdate(dt);
+            foreach (var uiElement in UIElements.Values)
+            {
+                uiElement.Element.Update(dt);
+            }
+        }
+
+        public TElement GetElement<TElement>(string elementName) where TElement : class, IUIElement
+        {
+            return (TElement) UIElements[elementName].Element;
+        }
+
+        public UIElement GetElement(string elementName)
+        {
+            return(UIElement) UIElements[elementName].Element;
         }
     }
 }

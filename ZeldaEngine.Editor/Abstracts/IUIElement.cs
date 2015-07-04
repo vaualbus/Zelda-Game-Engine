@@ -39,6 +39,9 @@ namespace ZeldaEngine.Game.Abstracts
         void Draw(IRenderEngine renderEngine);
 
         void Update(float dt);
+
+        void Init();
+
         void ReAdjustUiElements(Vector2 newPosition);
     }
 }

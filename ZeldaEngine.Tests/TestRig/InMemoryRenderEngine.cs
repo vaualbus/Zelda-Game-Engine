@@ -68,6 +68,12 @@ namespace ZeldaEngine.Tests.TestRig
             _gameEngine.Logger.LogInfo("Drawing texture {0} rotation {1}", position, rotation);
         }
 
+        public void DrawTexture(Vector2 position, IResourceData texture, int width, int height, object color, float rotation = 0,
+            int layer = 0)
+        {
+            _gameEngine.Logger.LogInfo("Drawing texture {0}. Width: {0}, Height: {1}, rotation {1}", width, height, position, rotation);
+        }
+
         public void DrawTriangle(Vector2 position, Vertex[] verticies, object lineColor, int thickness = 1)
         {
         }
@@ -98,6 +104,17 @@ namespace ZeldaEngine.Tests.TestRig
         public void DrawString(Vector2 position, string text, string fontName, float size, object color)
         {
             _gameEngine.Logger.LogInfo("Drawing string {0} - {1} - {2} with font", position, text, size, fontName);
+        }
+
+        public void DrawBorder(IResourceData texture, int borderWidth, object color)
+        {
+            _gameEngine.Logger.LogInfo("Drawing border Width: {1}, Color: {2}", borderWidth, color);
+        }
+
+        public IResourceData GenerateEmptyTexture2D(int width, int height)
+        {
+            _gameEngine.Logger.LogInfo("Create Empty Texture2D. Width: {0}, Height: {1}", width, height);
+            return new InMemoryResourceData(_gameEngine, "");
         }
 
         public void Dispose()
