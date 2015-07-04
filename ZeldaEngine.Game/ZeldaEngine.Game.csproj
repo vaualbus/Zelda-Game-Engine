@@ -92,9 +92,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MiniCube.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <ToolkitTexture Include="Resources\Textures\Default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </ToolkitTexture>
