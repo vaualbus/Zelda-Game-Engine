@@ -19,8 +19,6 @@ namespace ZeldaEngine.SharpDxImp
     {
         private readonly IGame _currentGame;
 
-        private readonly GraphicsDeviceManager _graphicsDeviceManager;
-
         private SpriteBatch _spriteBatch;
 
         public GameConfig GameConfig { get; set; }
@@ -43,7 +41,7 @@ namespace ZeldaEngine.SharpDxImp
         {
             Logger = logger;
 
-            _graphicsDeviceManager = new GraphicsDeviceManager(this);
+            var graphicsDeviceManager1 = new GraphicsDeviceManager(this);
 
             Content.RootDirectory = config.ResourceDirectory;
 
@@ -59,8 +57,8 @@ namespace ZeldaEngine.SharpDxImp
             game.GameEngine = this;
             _currentGame = game;
 
-            _graphicsDeviceManager.PreferredBackBufferWidth = GameConfig.ScreenWidth;
-            _graphicsDeviceManager.PreferredBackBufferHeight = GameConfig.ScreenHeight;
+            graphicsDeviceManager1.PreferredBackBufferWidth = GameConfig.ScreenWidth;
+            graphicsDeviceManager1.PreferredBackBufferHeight = GameConfig.ScreenHeight;
 
 #if DEBUG
             IsMouseVisible = true;
@@ -100,26 +98,26 @@ namespace ZeldaEngine.SharpDxImp
             base.LoadContent();
         }
 
-        protected override void Update(GameTime gameTime)
+        protected override void Update(GameTime gTime)
         {
             //GameObjectFactory.Update(gameTime.ElapsedGameTime.Milliseconds);
 
-            _currentGame.HandleInput(gameTime.ElapsedGameTime.Milliseconds);
+            _currentGame.HandleInput(gTime.ElapsedGameTime.Milliseconds);
 
-            _currentGame.Update(gameTime.ElapsedGameTime.Milliseconds);
+            _currentGame.Update(gTime.ElapsedGameTime.Milliseconds);
 
-            RenderEngine.UpdateRenderGameTime(gameTime.ElapsedGameTime.Milliseconds);
+            RenderEngine.UpdateRenderGameTime(gTime.ElapsedGameTime.Milliseconds);
 
-            base.Update(gameTime);
+            base.Update(gTime);
         }
 
-        protected override void Draw(GameTime gameTime)
+        protected override void Draw(GameTime gTime)
         {
             GraphicsDevice.Clear(SharpDX.Color.Black);
 
             _currentGame.Render(RenderEngine);
 
-            base.Draw(gameTime);
+            base.Draw(gTime);
         }
 
         protected override void Dispose(bool disposeManagedResources)
