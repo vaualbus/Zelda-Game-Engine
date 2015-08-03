@@ -19,7 +19,6 @@ namespace ZeldaEngine.Game.Scripts
         private MovableGameObject _playerBar;
         private AiBar _aiBar;
         private Walls _walls;
-        private DrawableGameObject _testGo;
 
         const float BallRadious = 10.0f;
         const int BarSize = 10;
@@ -28,45 +27,25 @@ namespace ZeldaEngine.Game.Scripts
         private int _tileWidth = 50, _tileHeigh = 50;
         private DrawableGameObject _drawableGo;
 
-        private  IResourceData[] _testTextures;
-        private int _currentTextureIndex;
-
         [DataFrom("dataScript.Text")]
         public string TestProp { get; private set; }
 
         public override void OnInit()
-        {
-            _testTextures = new IResourceData[5];
-
+        { 
             Logger.LogInfo("Initializing the game.....");
             SetUpGameObjects();
         }
 
         public void Run()
         {
-            if (InputManager.IsKeyDown("Right"))
-            {
-                _currentTextureIndex++;
-                if (_currentTextureIndex > _testTextures.Length - 1)
-                    _currentTextureIndex = 0;
-
-                _drawableGo.Tile.Width += 10;
-                //_drawableGo.Tile.Width += 10;
-            }
             if (InputManager.IsKeyDown("Left"))
             {
-                _currentTextureIndex--;
-                if (_currentTextureIndex < 0)
-                    _currentTextureIndex = _testTextures.Length - 1;
-
-                if (_drawableGo.Tile.Width < _tileWidth)
-                    _drawableGo.Tile.Width = _tileWidth;
-
-                _drawableGo.Tile.Width -= 10;
+                _drawableGo.Tile.Width -= 1;
             }
-
-
-            _testGo.Tile.Texture = _testTextures[_currentTextureIndex];
+            if (InputManager.IsKeyDown("Right"))
+            {
+                _drawableGo.Tile.Width += 1;
+            }
 
             PerformCollision();
 
@@ -78,8 +57,8 @@ namespace ZeldaEngine.Game.Scripts
         {
             _playerBar = GameObjectFactory.Create<PlayerBar>("playerBar", g =>
             {
-                g.MoveDirection = MovableDirection.Left | MovableDirection.Right;
-                g.MoveVelocity = 50.0f;
+                g.MoveDirection = MovableDirection.UDLR;
+                g.MoveVelocity = 1.0f;
                 g.Color = Color.White;
                 g.Position = new Vector2(100, 250);
             }).AttachProperty(t => t.Tile.Width, () => _tileWidth, this);
@@ -91,14 +70,6 @@ namespace ZeldaEngine.Game.Scripts
                 g.Color = Color.Pink;
             });
 
-           // _testTexture = LoadTexture2D("Default");
-            //Populate the textures array
-            _testTextures = new[]
-            {
-                LoadTexture2D("test"),
-                LoadTexture2D("Grass"),
-                LoadTexture2D("2"),
-            };
 
             _ball = GameObjectFactory.Create<BallGameObject>("ball", g =>
             {
@@ -111,13 +82,6 @@ namespace ZeldaEngine.Game.Scripts
             {
                 go.WallSize = 15;
                 go.WallColor = Color.Gray;
-            });
-
-            _testGo = GameObjectFactory.Create<DrawableGameObject>("test", g =>
-            {
-                g.Position = new Vector2(550, 250);
-                g.Tile.Width = 500;
-                g.Tile.Height = 450;
             });
 
             _drawableGo = GameObjectFactory.Create<DrawableGameObject>("pino", g =>
@@ -148,7 +112,6 @@ namespace ZeldaEngine.Game.Scripts
              _aiBar.Draw(RenderEngine);
             _ball.Draw(RenderEngine);
             _walls.Draw(RenderEngine);
-            _testGo.Draw(RenderEngine);
             _drawableGo.Draw(RenderEngine);
         }
 
@@ -169,6 +132,7 @@ namespace ZeldaEngine.Game.Scripts
 
                 //Do the update
                 Position = _isMoved ? new Vector2(Position.X, player.Position.Y) : Position; 
+                
                 _isMoved = true;
             }
 

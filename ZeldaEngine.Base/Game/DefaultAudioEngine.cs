@@ -11,14 +11,15 @@ namespace ZeldaEngine.Base.Game
             GameEngine.Logger.LogInfo("IAudio Engine Initialized");
         }
 
-        public void AddSong(string name)
+        public virtual void AddSong(string name)
         {
-            throw new System.NotImplementedException();
+            GameEngine.Logger.LogInfo("Default Audio Engine adding {0}", name);
         }
 
-        public bool Play(string song)
+        public virtual bool Play(string song)
         {
-            throw new System.NotImplementedException();
+            GameEngine.Logger.LogInfo("Default Audio Engine: Playing {0}", song);
+            return true;
         }
     }
 }

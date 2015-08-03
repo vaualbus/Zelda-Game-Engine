@@ -48,6 +48,72 @@ namespace ZeldaEngine.Base.Game.GameComponents
                     if (InputManager.IsKeyDown("Right"))
                         mGo.Position.X += (int)mGo.MoveVelocity;
                 }
+                if (mGo.MoveDirection == (MovableDirection.Left | MovableDirection.Right | MovableDirection.Up | MovableDirection.Down))
+                {
+                    if (InputManager.IsKeyDown("Left"))
+                        mGo.Position.X -= (int)mGo.MoveVelocity;
+
+                    if (InputManager.IsKeyDown("Right"))
+                        mGo.Position.X += (int)mGo.MoveVelocity;
+
+                    if (InputManager.IsKeyDown("Down"))
+                        mGo.Position.Y += (int)mGo.MoveVelocity;
+
+                    if (InputManager.IsKeyDown("Up"))
+                        mGo.Position.Y -= (int)mGo.MoveVelocity;
+                }
+                if (mGo.MoveDirection == MovableDirection.UpDown)
+                {
+                    if (InputManager.IsKeyDown("Left"))
+                        mGo.Position.X -= (int)mGo.MoveVelocity;
+
+                    if (InputManager.IsKeyDown("Right"))
+                        mGo.Position.X += (int)mGo.MoveVelocity;
+                }
+                if (mGo.MoveDirection == (MovableDirection.Left | MovableDirection.Right | MovableDirection.UpDown))
+                {
+                    if (InputManager.IsKeyDown("Left"))
+                        mGo.Position.X -= (int)mGo.MoveVelocity;
+
+                    if (InputManager.IsKeyDown("Right"))
+                        mGo.Position.X += (int)mGo.MoveVelocity;
+                }
+                if (mGo.MoveDirection == MovableDirection.LeftRight)
+                {
+                    if (InputManager.IsKeyDown("Left"))
+                        mGo.Position.X -= (int)mGo.MoveVelocity;
+
+                    if (InputManager.IsKeyDown("Right"))
+                        mGo.Position.X += (int)mGo.MoveVelocity;
+                }
+                if (mGo.MoveDirection == (MovableDirection.LeftRight | MovableDirection.UpDown))
+                {
+                    if (InputManager.IsKeyDown("Left"))
+                        mGo.Position.X -= (int)mGo.MoveVelocity;
+
+                    if (InputManager.IsKeyDown("Right"))
+                        mGo.Position.X += (int)mGo.MoveVelocity;
+
+                    if (InputManager.IsKeyDown("Down"))
+                        mGo.Position.Y += (int)mGo.MoveVelocity;
+
+                    if (InputManager.IsKeyDown("Up"))
+                        mGo.Position.Y -= (int)mGo.MoveVelocity;
+                }
+                if (mGo.MoveDirection == MovableDirection.UDLR)
+                {
+                    if (InputManager.IsKeyDown("Left"))
+                        mGo.Position.X -= (int)mGo.MoveVelocity;
+
+                    if (InputManager.IsKeyDown("Right"))
+                        mGo.Position.X += (int)mGo.MoveVelocity;
+
+                    if (InputManager.IsKeyDown("Down"))
+                        mGo.Position.Y += (int)mGo.MoveVelocity;
+
+                    if (InputManager.IsKeyDown("Up"))
+                        mGo.Position.Y -= (int)mGo.MoveVelocity;
+                }
             }
 
             return true;

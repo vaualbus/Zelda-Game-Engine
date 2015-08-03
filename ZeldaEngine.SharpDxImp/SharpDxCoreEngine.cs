@@ -102,6 +102,8 @@ namespace ZeldaEngine.SharpDxImp
         {
             //GameObjectFactory.Update(gameTime.ElapsedGameTime.Milliseconds);
 
+            InputManager.Update();
+
             _currentGame.HandleInput(gTime.ElapsedGameTime.Milliseconds);
 
             _currentGame.Update(gTime.ElapsedGameTime.Milliseconds);

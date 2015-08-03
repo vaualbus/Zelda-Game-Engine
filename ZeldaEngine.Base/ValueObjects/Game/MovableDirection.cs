@@ -9,6 +9,9 @@ namespace ZeldaEngine.Base.ValueObjects.Game
        Down,
        Left,
        Right,
-       All 
+       UpDown,
+       LeftRight,
+       UDLR,
+       All,
     }
 }

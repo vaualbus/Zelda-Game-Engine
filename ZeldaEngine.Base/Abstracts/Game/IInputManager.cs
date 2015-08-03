@@ -19,5 +19,7 @@ namespace ZeldaEngine.Base.Abstracts.Game
         bool IsMouseButtonPressed(string button);
 
         bool IsMouseButtonReleased(string button);
+
+        void Update();
     }
 }
