@@ -14,104 +14,104 @@ namespace ZeldaEngine.Base.Game.GameComponents
                 var mGo = gameObject as MovableGameObject;
                 if (mGo.MoveDirection == (MovableDirection.Up | MovableDirection.Down))
                 {
-                    if (InputManager.IsKeyDown("Down"))
+                    if (InputManager.IsKeyDown(GameKeys.Down))
                         mGo.Position.Y += (int) mGo.MoveVelocity;
 
-                    if (InputManager.IsKeyDown("Up"))
+                    if (InputManager.IsKeyDown(GameKeys.Up))
                         mGo.Position.Y -= (int)mGo.MoveVelocity;
                 }
                 if (mGo.MoveDirection == MovableDirection.Up)
                 {
-                    if (InputManager.IsKeyDown("Up"))
+                    if (InputManager.IsKeyDown(GameKeys.Up))
                         mGo.Position.Y -= (int)mGo.MoveVelocity;
                 }
                 if (mGo.MoveDirection == MovableDirection.Down)
                 {
-                    if (InputManager.IsKeyDown("Down"))
+                    if (InputManager.IsKeyDown(GameKeys.Down))
                         mGo.Position.Y += (int)mGo.MoveVelocity;
                 }
                 if (mGo.MoveDirection == MovableDirection.Left)
                 {
-                    if (InputManager.IsKeyDown("Left"))
+                    if (InputManager.IsKeyDown(GameKeys.Left))
                         mGo.Position.X -= (int)mGo.MoveVelocity;
                 }
                 if (mGo.MoveDirection == MovableDirection.Right)
                 {
-                    if (InputManager.IsKeyDown("Right"))
+                    if (InputManager.IsKeyDown(GameKeys.Right))
                         mGo.Position.X += (int)mGo.MoveVelocity;
                 }
                 if (mGo.MoveDirection == (MovableDirection.Left | MovableDirection.Right))
                 {
-                    if (InputManager.IsKeyDown("Left"))
+                    if (InputManager.IsKeyDown(GameKeys.Left))
                         mGo.Position.X -= (int)mGo.MoveVelocity;
 
-                    if (InputManager.IsKeyDown("Right"))
+                    if (InputManager.IsKeyDown(GameKeys.Right))
                         mGo.Position.X += (int)mGo.MoveVelocity;
                 }
                 if (mGo.MoveDirection == (MovableDirection.Left | MovableDirection.Right | MovableDirection.Up | MovableDirection.Down))
                 {
-                    if (InputManager.IsKeyDown("Left"))
+                    if (InputManager.IsKeyDown(GameKeys.Left))
                         mGo.Position.X -= (int)mGo.MoveVelocity;
 
-                    if (InputManager.IsKeyDown("Right"))
+                    if (InputManager.IsKeyDown(GameKeys.Right))
                         mGo.Position.X += (int)mGo.MoveVelocity;
 
-                    if (InputManager.IsKeyDown("Down"))
+                    if (InputManager.IsKeyDown(GameKeys.Down))
                         mGo.Position.Y += (int)mGo.MoveVelocity;
 
-                    if (InputManager.IsKeyDown("Up"))
+                    if (InputManager.IsKeyDown(GameKeys.Up))
                         mGo.Position.Y -= (int)mGo.MoveVelocity;
                 }
                 if (mGo.MoveDirection == MovableDirection.UpDown)
                 {
-                    if (InputManager.IsKeyDown("Left"))
+                    if (InputManager.IsKeyDown(GameKeys.Left))
                         mGo.Position.X -= (int)mGo.MoveVelocity;
 
-                    if (InputManager.IsKeyDown("Right"))
+                    if (InputManager.IsKeyDown(GameKeys.Right))
                         mGo.Position.X += (int)mGo.MoveVelocity;
                 }
                 if (mGo.MoveDirection == (MovableDirection.Left | MovableDirection.Right | MovableDirection.UpDown))
                 {
-                    if (InputManager.IsKeyDown("Left"))
+                    if (InputManager.IsKeyDown(GameKeys.Left))
                         mGo.Position.X -= (int)mGo.MoveVelocity;
 
-                    if (InputManager.IsKeyDown("Right"))
+                    if (InputManager.IsKeyDown(GameKeys.Right))
                         mGo.Position.X += (int)mGo.MoveVelocity;
                 }
                 if (mGo.MoveDirection == MovableDirection.LeftRight)
                 {
-                    if (InputManager.IsKeyDown("Left"))
+                    if (InputManager.IsKeyDown(GameKeys.Left))
                         mGo.Position.X -= (int)mGo.MoveVelocity;
 
-                    if (InputManager.IsKeyDown("Right"))
+                    if (InputManager.IsKeyDown(GameKeys.Right))
                         mGo.Position.X += (int)mGo.MoveVelocity;
                 }
                 if (mGo.MoveDirection == (MovableDirection.LeftRight | MovableDirection.UpDown))
                 {
-                    if (InputManager.IsKeyDown("Left"))
+                    if (InputManager.IsKeyDown(GameKeys.Left))
                         mGo.Position.X -= (int)mGo.MoveVelocity;
 
-                    if (InputManager.IsKeyDown("Right"))
+                    if (InputManager.IsKeyDown(GameKeys.Right))
                         mGo.Position.X += (int)mGo.MoveVelocity;
 
-                    if (InputManager.IsKeyDown("Down"))
+                    if (InputManager.IsKeyDown(GameKeys.Down))
                         mGo.Position.Y += (int)mGo.MoveVelocity;
 
-                    if (InputManager.IsKeyDown("Up"))
+                    if (InputManager.IsKeyDown(GameKeys.Up))
                         mGo.Position.Y -= (int)mGo.MoveVelocity;
                 }
                 if (mGo.MoveDirection == MovableDirection.UDLR)
                 {
-                    if (InputManager.IsKeyDown("Left"))
+                    if (InputManager.IsKeyDown(GameKeys.Left))
                         mGo.Position.X -= (int)mGo.MoveVelocity;
 
-                    if (InputManager.IsKeyDown("Right"))
+                    if (InputManager.IsKeyDown(GameKeys.Right))
                         mGo.Position.X += (int)mGo.MoveVelocity;
 
-                    if (InputManager.IsKeyDown("Down"))
+                    if (InputManager.IsKeyDown(GameKeys.Down))
                         mGo.Position.Y += (int)mGo.MoveVelocity;
 
-                    if (InputManager.IsKeyDown("Up"))
+                    if (InputManager.IsKeyDown(GameKeys.Up))
                         mGo.Position.Y -= (int)mGo.MoveVelocity;
                 }
             }

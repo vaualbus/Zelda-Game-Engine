@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.MapLoaderDataTypes;
@@ -30,10 +31,13 @@ namespace ZeldaEngine.Base
         public const string DefaultRightKey = "Right";
         public const string DefaultAKey = "A";
         public const string DefaultBKey = "B";
-        public const string DefaultSpaceKey = "Space";
-        public const string DefaultQKey = "Q";
-
+        public const string DefaultMapKey = "Space";
+        
         public const string DefaultFont = "DefaultFont";
+        public const string DefaultStartKey = "Enter";
+        public const string DefaultExitKey = "Escape";
+
+        public const string DefaultExKey = "Q";
 
         #endregion
 
@@ -59,10 +63,10 @@ namespace ZeldaEngine.Base
 
         public static void CreateConfiguration(GameConfig gameConfig)
         {
-            var configuration = new GameConfigurationDefinition(gameConfig.BaseDirectory, gameConfig.ScreenWidth,
-                gameConfig.ScreenHeight, DefaultProjectDir,
+            var configuration = new GameConfigurationDefinition(gameConfig.BaseDirectory, DefaultWindowWidth,
+                DefaultWindowHeight, DefaultProjectDir,
                 new InputConfigurationDefinition(DefaultUpKey, DefaultDownKey, DefaultLeftKey, DefaultRightKey,
-                    DefaultAKey, DefaultBKey, DefaultSpaceKey, DefaultQKey));
+                    DefaultAKey, DefaultBKey, DefaultStartKey, DefaultMapKey, DefaultExitKey, DefaultExKey, DefaultExKey, DefaultExKey, DefaultExKey));
 
             var text = JsonConvert.SerializeObject(configuration);
             using (var fw = new FileStream(ConfigurationFileName, FileMode.Create, FileAccess.Write))

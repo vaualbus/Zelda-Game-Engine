@@ -38,18 +38,18 @@ namespace ZeldaEngine.Game.Scripts
 
         public void Run()
         {
-            if (InputManager.IsKeyDown("Left"))
+            if (InputManager.IsKeyDown(GameKeys.Left))
             {
                 _drawableGo.Tile.Width -= 1;
             }
-            if (InputManager.IsKeyDown("Right"))
+            if (InputManager.IsKeyDown(GameKeys.Right))
             {
                 _drawableGo.Tile.Width += 1;
             }
 
             PerformCollision();
 
-            if (InputManager.IsKeyDown(Keys.Escape))
+            if (InputManager.IsKeyDown(GameKeys.Exit))
                 ExitGame();
         }
 

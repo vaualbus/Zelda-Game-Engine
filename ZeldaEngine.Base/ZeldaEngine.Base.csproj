@@ -107,6 +107,7 @@
     <Compile Include="Game\MapLoaders\JsonMapLoader.cs" />
     <Compile Include="Game\MapLoaders\MyMapLoader.cs" />
     <Compile Include="Game\RenderingEngine\ResourceManager\TextureResources.cs" />
+    <Compile Include="ValueObjects\Game\GameKeys.cs" />
     <Compile Include="ValueObjects\Game\GameObjectAttachedValue.cs" />
     <Compile Include="ValueObjects\MapLoaderDataTypes\EnemyDefinition.cs" />
     <Compile Include="ValueObjects\MapLoaderDataTypes\EnemySpawnLocation.cs" />
