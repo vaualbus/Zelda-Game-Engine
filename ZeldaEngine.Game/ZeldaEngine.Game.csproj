@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Config\Config.json" />
     <None Include="packages.config" />
     <None Include="Quests\TestMap.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

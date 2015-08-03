@@ -1,0 +1,21 @@
+{
+  "BaseDirectory": "C:\\Users\\alberto\\Documents\\Visual Studio 2015\\Projects\\ZeldaEngine\\ZeldaEngine.Game\\bin\\Debug\\",
+  "DefaultProjectDirectory": "Projects",
+  "ScreenWidth": 1024,
+  "ScreenHeight": 768,
+  "InputConfiguration": {
+    "KeyUp": "Up",
+    "KeyDown": "Down",
+    "KeyLeft": "Left",
+    "KeyRight": "Right",
+    "KeyA": "A",
+    "KeyB": "B",
+    "KeyStart": "Enter",
+    "KeyMap": "Space",
+    "KeyExit": "Escape",
+    "KeyEx1": "Q",
+    "KeyEx2": "Q",
+    "KeyEx3": "Q",
+    "KeyEx4": "Q"
+  }
+}

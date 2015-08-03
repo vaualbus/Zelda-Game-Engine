@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using SharpDX.Toolkit.Input;
+using ZeldaEngine.Base;
 using ZeldaEngine.Base.Abstracts.Game;
 using ZeldaEngine.Base.ValueObjects;
 using ZeldaEngine.Base.ValueObjects.Game;
@@ -13,6 +14,8 @@ namespace ZeldaEngine.SharpDxImp.GameEngineClasses
 {
     public class CustomInputManager : IInputManager
     {
+        private const Keys NullExKey = Keys.Zoom;
+
         private const int NumKeys = (int) (Keys.Zoom + 1);
 
         private readonly List<bool> _lastKeys; 
@@ -49,11 +52,17 @@ namespace ZeldaEngine.SharpDxImp.GameEngineClasses
 
         public bool IsKeyDown(Keys key)
         {
+            if (key == NullExKey)
+                return false;
+
             return GetKey(key)  && !_lastKeys[(int) key];
         }
 
         public bool IsKeyUp(Keys key)
         {
+            if (key == NullExKey)
+                return false;
+
             return !GetKey(key) && _lastKeys[(int)key];
         }
 
@@ -101,22 +110,6 @@ namespace ZeldaEngine.SharpDxImp.GameEngineClasses
 
         public Keys MatchKey(GameKeys key)
         {
-        //public string KeyA { get; private set; }
-
-        //public string KeyB { get; private set; }
-
-        //public string KeyStart { get; private set; }
-
-        //public string KeyMap { get; private set; }
-
-        //public string Ex1 { get; private set; }
-
-        //public string Ex2 { get; private set; }
-
-        //public string Ex3 { get; private set; }
-
-        //public string Ex4 { get; private set; }
-
             var keyUp = (Keys) Enum.Parse(typeof (Keys), _inputConfigurationDefinition.KeyUp);
             var keyDown = (Keys) Enum.Parse(typeof(Keys), _inputConfigurationDefinition.KeyDown);
             var keyLeft = (Keys) Enum.Parse(typeof(Keys), _inputConfigurationDefinition.KeyLeft);
@@ -134,6 +127,11 @@ namespace ZeldaEngine.SharpDxImp.GameEngineClasses
             var keyEx3 = (Keys)Enum.Parse(typeof(Keys), _inputConfigurationDefinition.KeyEx3);
             var keyEx4 = (Keys)Enum.Parse(typeof(Keys), _inputConfigurationDefinition.KeyEx4);
 
+            if (_inputConfigurationDefinition.KeyEx1 == ConfigurationManager.DefaultExKey ||
+                _inputConfigurationDefinition.KeyEx1 == ConfigurationManager.DefaultExKey ||
+                _inputConfigurationDefinition.KeyEx1 == ConfigurationManager.DefaultExKey ||
+                _inputConfigurationDefinition.KeyEx1 == ConfigurationManager.DefaultExKey)
+                return Keys.Zoom;
 
             switch (key)
             {
